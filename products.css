@@ -1,0 +1,89 @@
+/* General Styles */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f9f9f9;
+}
+
+header {
+    background-color: #ff69b4;
+    color: white;
+    padding: 15px 0;
+    text-align: center;
+}
+
+header nav {
+    margin-top: 10px;
+}
+
+header nav a {
+    color: white;
+    margin: 0 15px;
+    text-decoration: none;
+}
+
+main {
+    padding: 20px;
+}
+
+h1 {
+    text-align: center;
+    color: #f5f5f0; /* Change to your desired color for h1 */
+}
+
+h2 {
+    text-align: center;
+    color: #f5f5f0 /* This will keep the h2 color the same */
+}
+
+/* Product Container Styles */
+.product-container {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr); /* 5 items per row */
+    gap: 20px;
+    padding: 20px 0;
+    justify-items: center;
+    grid-auto-rows: minmax(150px, auto); /* Dynamic row height */
+}
+
+.product {
+    text-align: center;
+    cursor: pointer;
+    transition: transform 0.2s, box-shadow 0.3s ease;
+}
+
+.product img {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    border: 3px solid #ff69b4; /* Border in Hot Pink */
+    object-fit: cover;
+    transition: transform 0.3s, border-color 0.3s;
+}
+
+.product p {
+    font-size: 1.2rem;
+    margin-top: 15px;
+    color: #333;
+    font-weight: 500;
+    transition: color 0.3s;
+}
+
+.product a {
+    text-decoration: none;
+    color: inherit;
+}
+
+.product:hover img {
+    transform: scale(1.1); /* Image zoom effect */
+    border-color: #e458ab; /* Change border color on hover */
+}
+
+.product:hover p {
+    color: #e458ab; /* Darker Hot Pink for text on hover */
+}
+
+.product:hover {
+    transform: translateY(-5px);
+}

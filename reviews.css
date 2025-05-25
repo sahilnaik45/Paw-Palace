@@ -1,0 +1,254 @@
+/* Global styles */
+body {
+    font-family: 'Arial', sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f4f7fa;
+    color: #333;
+}
+
+header {
+    background-color: #ff69b4;
+    color: white;
+    padding: 20px 0;
+    text-align: center;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+header nav {
+    display: flex;
+    justify-content: center;
+    gap: 25px;
+    margin-top: 10px;
+}
+
+header nav a {
+    color: white;
+    text-decoration: none;
+    font-size: 16px;
+    font-weight: bold;
+    transition: color 0.3s;
+}
+
+header nav a:hover {
+    color: #ffe6e6;
+}
+
+/* Main Section */
+main {
+    padding: 50px 0;
+    background-color: #f9f9f9;
+}
+
+.reviews-container {
+    width: 80%;
+    margin: 0 auto;
+}
+
+/* Latest Reviews */
+.latest-reviews {
+    margin-bottom: 40px;
+}
+
+.latest-reviews h2 {
+    font-size: 1.8rem;
+    color: #333;
+    margin-bottom: 15px;
+    font-weight: 600;
+}
+
+.show-all {
+    background-color: #ff4f8b;
+    color: #fff;
+    padding: 12px 25px;
+    border: none;
+    cursor: pointer;
+    border-radius: 4px;
+    transition: background 0.3s ease;
+}
+
+.show-all:hover {
+    background-color: #ff2a5d;
+}
+
+/* Submit Review Section */
+.submit-review-section {
+    background-color: #fff;
+    padding: 30px;
+    border-radius: 8px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+}
+
+.submit-review-section h2 {
+    font-size: 1.8rem;
+    color: #333;
+    margin-bottom: 20px;
+    font-weight: 600;
+}
+
+.submit-review-section input,
+.submit-review-section textarea {
+    width: 100%;
+    padding: 15px;
+    margin-bottom: 20px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    font-size: 1rem;
+    background-color: #fafafa;
+    color: #333;
+    transition: border 0.3s ease;
+}
+
+.submit-review-section input:focus,
+.submit-review-section textarea:focus {
+    border-color: #ff4f8b;
+    outline: none;
+}
+
+/* Star Rating */
+.star-rating {
+    display: flex;
+    margin-bottom: 20px;
+}
+
+.star {
+    font-size: 2rem;
+    cursor: pointer;
+    color: #ccc;
+    margin-right: 5px;
+}
+
+.star.selected {
+    color: #ffcc00; /* Paw Palace Yellow */
+}
+
+button[type="submit"] {
+    background-color: #ff4f8b;
+    color: white;
+    padding: 15px 30px;
+    border: none;
+    border-radius: 6px;
+    font-size: 1.1rem;
+    cursor: pointer;
+    transition: background 0.3s ease;
+}
+
+button[type="submit"]:hover {
+    background-color: #ff2a5d;
+}
+
+/* Review List (Latest Reviews) */
+.review {
+    background-color: #fff;
+    padding: 15px;
+    margin-bottom: 20px;
+    border-radius: 6px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+}
+
+.review-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.review-name {
+    font-weight: 600;
+    color: #333;
+}
+
+.review-rating {
+    color: #ffcc00;
+}
+
+.review p {
+    font-size: 1rem;
+    color: #666;
+    line-height: 1.5;
+}
+
+/* Reviews Slide-in Section */
+.reviews-slide {
+    position: fixed;
+    bottom: -100%;
+    left: 0;
+    right: 0;
+    background-color: #fff;
+    box-shadow: 0 -4px 15px rgba(0, 0, 0, 0.15);
+    padding: 25px;
+    max-height: 80%;
+    overflow-y: auto;
+    transition: bottom 0.5s ease-in-out;
+    border-radius: 12px 12px 0 0;
+}
+
+.reviews-slide-content {
+    max-height: 100%;
+}
+
+.reviews-slide h2 {
+    font-size: 2rem;
+    color: #333;
+    margin-bottom: 25px;
+    font-weight: 600;
+}
+
+.reviews-slide button {
+    background-color: #ff4f8b;
+    color: white;
+    padding: 15px 25px;
+    border: none;
+    cursor: pointer;
+    transition: background 0.3s ease;
+    font-size: 1.1rem;
+    border-radius: 6px;
+    margin-top: 20px;
+}
+
+.reviews-slide button:hover {
+    background-color: #ff2a5d;
+}
+
+/* Footer */
+footer {
+    background-color: #333;
+    color: #fff;
+    text-align: center;
+    padding: 15px 0;
+}
+
+footer p {
+    font-size: 1rem;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .reviews-container {
+        width: 90%;
+    }
+
+    .latest-reviews h2,
+    .submit-review-section h2 {
+        font-size: 1.6rem;
+    }
+
+    .star-rating .star {
+        font-size: 1.8rem;
+    }
+}
+
+@media (max-width: 480px) {
+    header .container {
+        flex-direction: column;
+        text-align: center;
+    }
+
+    nav a {
+        margin: 10px 0;
+    }
+
+    .review p {
+        font-size: 0.9rem;
+    }
+}

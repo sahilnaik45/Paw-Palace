@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dog Accessories - Paw Palace</title>
+  <link rel="stylesheet" href="product.css" />
+</head>
+<body>
+  <header>
+    <h1>Paw Palace</h1>
+    <div class="header-extras">
+      <a href="products.html" style="color: #fff; text-decoration: none;">All Products</a>
+      <a href="cart.html" style="color: #fff; text-decoration: none;">Cart <span id="cart-count" class="cart-count">0</span></a>
+      <span class="compare-link" onclick="openCompareModal()">View Compare (<span id="compare-count">0</span>)</span>
+    </div>
+  </header>
+  
+  <!-- Category Tabs -->
+  <div class="category-tabs">
+    <a href="food.html" class="tab">Food</a>
+    <a href="accessories.html" class="tab active">Accessories</a>
+    <a href="toys.html" class="tab">Toys</a>
+    <a href="treats.html" class="tab">Treats</a>
+    <a href="pharmacy.html" class="tab">Pharmacy</a>
+    <a href="grooming.html" class="tab">Grooming</a>
+    <a href="clothes.html" class="tab">Clothes</a>
+</div>
+
+  
+  <div class="container">
+    <h2 style="text-align: center; color: #ff4f8b; margin-bottom: 1rem;">Dog Accessories</h2>
+    
+    <!-- Filter Section: Sort on Left, Search on Right -->
+    <div class="filter-section">
+      <div class="filter-left">
+        <select id="sort-filter">
+          <option value="">Sort By</option>
+          <option value="popularity">Popularity</option>
+          <option value="price-low-high">Price: Low to High</option>
+          <option value="price-high-low">Price: High to Low</option>
+        </select>
+      </div>
+      <div class="filter-right">
+        <input type="text" id="search-bar" placeholder="Search Dog Food...">
+      </div>
+    </div>
+    
+    <!-- Product Grid -->
+    <div class="product-grid" id="product-grid">
+      <!-- Products will be appended here dynamically -->
+    </div>
+    <div id="load-more-container">
+      <button id="load-more-btn" onclick="loadMoreProducts()">Load More</button>
+    </div>
+  </div>
+  
+  <!-- Quick View Modal -->
+  <div id="quick-view-modal" class="modal">
+    <div class="modal-content">
+      <span class="close-modal" id="close-modal">&times;</span>
+      <div id="quick-view-content">
+        <!-- Quick view details here -->
+      </div>
+    </div>
+  </div>
+  
+  <!-- Compare Modal -->
+  <div id="compare-modal" class="compare-modal">
+    <div class="compare-modal-content">
+      <span class="close-modal" id="close-compare-modal">&times;</span>
+      <h2 style="color: #ff4f8b; text-align: center;">Compare Products</h2>
+      <div id="compare-list" class="compare-list">
+        <!-- Compared products here -->
+      </div>
+    </div>
+  </div>
+  
+  <script>
+    // Global arrays and variables
+    let compareList = [];
+    const selectedRatings = {};
+    let productsPerPage = 8;  // 8 products per load
+    let currentDisplayCount = 0;
+    let filteredProductsGlobal = [];
+    
+    // Dog Products Array with total 16 products
+    const products = [
+    { "id": 1, "category": "accessories", "name": "Pookie Dog Collar", "price": 499, "image": "access1.webp", "description": "Stylish and durable collar for your dog.", "rating": 4.2, "ratingCount": 10, "availableSizes": ["S", "M", "L"], "features": "Adjustable size, strong buckle, soft padding." },
+{ "id": 2, "category": "accessories", "name": "Dog Bed", "price": 1899, "image": "access 2.webp", "description": "Soft and cozy bed for ultimate comfort.", "rating": 4.7, "ratingCount": 15, "availableSizes": ["M", "L", "XL"], "features": "Our Dog Bed is durable and resistant to chews and scratches! Tail-wagging comfort for your fur baby." },
+{ "id": 3, "category": "accessories", "name": "Chew Dog Bone", "price": 349, "image": "access3.jpg", "description": "Durable toy for aggressive chewers.", "rating": 4.1, "ratingCount": 9, "availableSizes": ["Small", "Medium"], "features": "Non-toxic material, promotes dental health." },
+{ "id": 4, "category": "accessories", "name": "Retractable Dog Leash", "price": 799, "image": "access4.webp", "description": "Easy to use and tangle-free leash.", "rating": 4.3, "ratingCount": 10, "availableSizes": ["3m", "5m", "8m"], "features": "One-hand braking system, comfortable grip." },
+{ "id": 5, "category": "accessories", "name": "Dog Grooming Kit", "price": 1599, "image": "access5.jpg", "description": "Complete grooming kit for a healthy coat.", "rating": 4.7, "ratingCount": 12, "availableSizes": ["One Size"], "features": "Includes brushes, nail clippers, shampoo, and more." },
+{ "id": 6, "category": "accessories", "name": "Personalized Dog Tag", "price": 299, "image": "access6.jpg", "description": "Custom engraved tag for your pet’s safety.", "rating": 4.0, "ratingCount": 7, "availableSizes": ["Small", "Medium", "Large"], "features": "Waterproof, durable engraving, lightweight." },
+{ "id": 7, "category": "accessories", "name": "Portable Dog Water Bottle", "price": 699, "image": "access7.jpg", "description": "Leak-proof water bottle for dogs on the go.", "rating": 4.3, "ratingCount": 9, "availableSizes": ["350ml", "500ml"], "features": "Easy one-hand use, built-in bowl." },
+{ "id": 8, "category": "accessories", "name": "LED Dog Safety Collar", "price": 899, "image": "access8.webp", "description": "Keep your dog visible at night.", "rating": 4.5, "ratingCount": 12, "availableSizes": ["S", "M", "L"], "features": "USB rechargeable, weather-resistant, adjustable." },
+{ "id": 9, "category": "accessories", "name": "Dog Car Seat Cover", "price": 1999, "image": "access9.jpg", "description": "Protects your car seat from fur and dirt.", "rating": 4.6, "ratingCount": 14, "availableSizes": ["Universal Fit"], "features": "Waterproof, scratch-resistant, easy to clean." },
+{ "id": 10, "category": "accessories", "name": "Anti-Slip Dog Socks", "price": 499, "image": "access10.avif", "description": "Protects paws and prevents slipping.", "rating": 4.4, "ratingCount": 11, "availableSizes": ["S", "M", "L"], "features": "Breathable fabric, non-slip grip." },
+{ "id": 11, "category": "accessories", "name": "Dog Training Clicker", "price": 250, "image": "access11.webp", "description": "Perfect for positive reinforcement training.", "rating": 4.2, "ratingCount": 10, "availableSizes": ["One Size"], "features": "Comfortable grip, loud click sound." },
+{ "id": 12, "category": "accessories", "name": "Cooling Dog Mat", "price": 1499, "image": "access12.jpg", "description": "Keeps your dog cool in hot weather.", "rating": 4.7, "ratingCount": 16, "availableSizes": ["M", "L", "XL"], "features": "Self-cooling gel, non-toxic, lightweight." },
+{ "id": 13, "category": "accessories", "name": "Dog Raincoat", "price": 899, "image": "access13.jpg", "description": "Waterproof raincoat to keep your pet dry.", "rating": 4.0, "ratingCount": 8, "availableSizes": ["S", "M", "L", "XL"], "features": "Adjustable straps, reflective strips." },
+{ "id": 14, "category": "accessories", "name": "Soft Plush Dog Blanket", "price": 1299, "image": "access14.jpg", "description": "Cozy blanket for warmth and comfort.", "rating": 4.8, "ratingCount": 20, "availableSizes": ["M", "L", "XL"], "features": "Ultra-soft, machine washable." },
+{ "id": 15, "category": "accessories", "name": "Dog Poop Bag Dispenser", "price": 399, "image": "access15.webp", "description": "Convenient waste bag dispenser for walks.", "rating": 4.5, "ratingCount": 13, "availableSizes": ["One Size"], "features": "Includes 30 bags, easy to attach to leash." },
+{ "id": 16, "category": "accessories", "name": "Dog Sunglasses", "price": 999, "image": "access16.jpg", "description": "Protects your dog’s eyes from sun and wind.", "rating": 4.8, "ratingCount": 18, "availableSizes": ["One Size"], "features": "UV protection, adjustable strap, shatterproof lenses." }
+    ];
+  </script>
+  <script src="products.js" defer></script>
+  <script>
+    function loadProducts() {
+        fetch('fetch_products.php?category=accessories')
+        .then(response => response.json())
+        .then(data => {
+            let productContainer = document.getElementById("products");
+            productContainer.innerHTML = "";
+            data.forEach(product => {
+                productContainer.innerHTML += `
+                    <div>
+                        <img src="${product.image_url}" width="100" />
+                        <h3>${product.name}</h3>
+                        <p>Price: ₹${product.price}</p>
+                        <p>${product.description}</p>
+                        <p>Stock: ${product.stock}</p>
+                    </div>
+                `;
+            });
+        });
+    }
+    window.onload = loadProducts;
+</script>
+
+</body>
+</html>

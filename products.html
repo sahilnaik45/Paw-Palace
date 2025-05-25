@@ -1,0 +1,488 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Products - Paw Palace</title>
+  <!-- Bootstrap CSS for carousel & grid system -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+  <!-- Font Awesome for icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+  <style>
+    /* Custom Styles */
+    .bg-pink { background-color: #ff4f8b; }
+    .nav-link {
+      color: white;
+      font-weight: 500;
+      transition: all 0.3s ease;
+    }
+    .nav-link:hover {
+      color: #ffd700 !important;
+      transform: translateY(-2px);
+    }
+   /* Featured Carousel Styles */
+.featured-carousel .carousel-item {
+  text-align: center;
+  padding: 2rem;
+}
+.featured-carousel img {
+  width: 1600px;       /* Rectangle width */
+  height: 375px;      /* Rectangle height */
+  object-fit: cover;
+  border-radius: 0;   /* Circular border removed */
+  margin: 0 auto 1rem;
+  transition: transform 0.3s ease;
+}
+.featured-carousel img:hover {
+  transform: scale(1.1);
+}
+.featured-carousel .carousel-caption {
+  position: static;
+  color: #ff4f8b;
+  font-weight: bold;
+  font-size: 1.2rem;
+}
+
+    /* Controls for category search and sort */
+    .controls {
+      display: flex;
+      justify-content: center;
+      gap: 1rem;
+      margin-bottom: 1rem;
+    }
+    .controls input, .controls select {
+      padding: 0.5rem;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+    }
+    /* Category Cards using Bootstrap Grid */
+    .category-card {
+      overflow: hidden;
+      border: none;
+      transition: transform 0.3s ease;
+      cursor: pointer;
+    }
+    .category-card:hover { transform: scale(1.03); }
+    .category-card img {
+      width: 100%;
+      height: 200px;
+      object-fit: cover;
+      border-radius: 8px;
+      transition: transform 0.3s ease;
+    }
+    .category-card img:hover { transform: scale(1.05); }
+    .category-card .card-body {
+      text-align: center;
+      padding: 0.75rem;
+    }
+    .category-card .card-title { font-weight: bold; margin-bottom: 0; }
+    /* Back-to-Top Button Styling */
+    #backToTop {
+      display: none;
+      position: fixed;
+      bottom: 40px;
+      right: 40px;
+      z-index: 1000;
+      background-color: #ff4f8b;
+      color: white;
+      border: none;
+      padding: 10px 15px;
+      border-radius: 50%;
+      cursor: pointer;
+      font-size: 18px;
+      transition: opacity 0.3s ease;
+    }
+    #backToTop:hover { background-color: #ffd700; color: #333; }
+    /* Modal Styles (Chat Modal Only) */
+    .modal-custom {
+      display: none;
+      position: fixed;
+      z-index: 2000;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      overflow: auto;
+      background-color: rgba(0,0,0,0.5);
+    }
+    .modal-content-custom {
+      background-color: #fff;
+      margin: 5% auto;
+      padding: 20px;
+      width: 90%;
+      max-width: 400px;
+      border-radius: 8px;
+      position: relative;
+    }
+    .close-modal {
+      color: #aaa;
+      position: absolute;
+      right: 20px;
+      top: 10px;
+      font-size: 28px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+    .close-modal:hover { color: #000; }
+    /* Chat Modal Chat Window Styles */
+    .chat-window {
+      height: 300px;
+      overflow-y: auto;
+      border: 1px solid #ddd;
+      padding: 10px;
+      margin-bottom: 10px;
+      background: #f9f9f9;
+      border-radius: 4px;
+    }
+    .chat-message {
+      margin: 5px 0;
+      padding: 8px;
+      border-radius: 4px;
+      max-width: 80%;
+      word-wrap: break-word;
+    }
+    .user-message {
+      background-color: #ffd700;
+      text-align: right;
+      margin-left: auto;
+    }
+    .bot-message {
+      background-color: #ff4f8b;
+      color: #fff;
+      text-align: left;
+      margin-right: auto;
+    }
+    /* Chat Button */
+    #chatButton {
+      position: fixed;
+      bottom: 20px;
+      left: 20px;
+      background-color: #ff4f8b;
+      color: #fff;
+      border: none;
+      padding: 12px 18px;
+      border-radius: 50px;
+      cursor: pointer;
+      font-size: 1rem;
+      z-index: 3000;
+      transition: background-color 0.3s ease;
+    }
+    #chatButton:hover { background-color: #ff5e94; }
+  </style>
+</head>
+<body>
+  <!-- Header Section -->
+  <header class="bg-pink text-white py-4 shadow">
+    <div class="container text-center">
+      <h1 class="fs-3 mb-3">Paw Palace</h1>
+      <nav>
+        <ul class="nav justify-content-center">
+          <li class="nav-item"><a href="index.html" class="nav-link">Home</a></li>
+          <li class="nav-item"><a href="products.html" class="nav-link">Products</a></li>
+          <li class="nav-item"><a href="dogs by breeds.html" class="nav-link">Dog Breeds</a></li>
+          <li class="nav-item"><a href="dog-adoption.html" class="nav-link">Dog Adoption</a></li>
+          <li class="nav-item"><a href="vet.html" class="nav-link">Consult a Vet</a></li>
+          <li class="nav-item"><a href="about.html" class="nav-link">About Us</a></li>
+          <li class="nav-item"><a href="contact.html" class="nav-link">Contact</a></li>
+          <li class="nav-item"><a href="reviews.html" class="nav-link">Reviews</a></li>
+          <li class="nav-item"><a href="faq.html" class="nav-link">FAQ</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+  
+ <!-- Featured Carousel Section with Auto Slider and Clickable Items -->
+<section class="container my-4">
+  <div id="featuredCarousel" class="carousel slide featured-carousel" data-bs-ride="carousel" data-bs-interval="3000" data-bs-pause="hover">
+    <div class="carousel-inner">
+      <!-- Carousel Item for Food -->
+      <div class="carousel-item active">
+        <a href="food.html">
+          <img src="feature food.webp" class="d-block w-100" alt="Food">
+          <div class="carousel-caption">
+            Featured: Food
+          </div>
+        </a>
+      </div>
+      <!-- Carousel Item for Clothes -->
+      <div class="carousel-item">
+        <a href="clothes.html">
+          <img src="feature clothes.webp" class="d-block w-100" alt="Clothes">
+          <div class="carousel-caption">
+            Featured: Clothes
+          </div>
+        </a>
+      </div>
+      <!-- Carousel Item for Pharmacy -->
+      <div class="carousel-item">
+        <a href="pharmacy.html">
+          <img src="pharmacy featurs.webp" class="d-block w-100" alt="Pharmacy">
+          <div class="carousel-caption">
+            Featured: Pharmacy
+          </div>
+        </a>
+      </div>
+      <!-- Carousel Item for Dog Treats -->
+      <div class="carousel-item">
+        <a href="dog-treats.html">
+          <img src="treat features.webp" class="d-block w-100" alt="Dog Treats">
+          <div class="carousel-caption">
+            Featured: Dog Treats
+          </div>
+        </a>
+      </div>
+      <!-- Carousel Item for Accessories -->
+      <div class="carousel-item">
+        <a href="accessories.html">
+          <img src="feature accessories.jpg" class="d-block w-100" alt="Accessories">
+          <div class="carousel-caption">
+            Featured: Accessories
+          </div>
+        </a>
+      </div>
+      <!-- Carousel Item for Toys -->
+      <div class="carousel-item">
+        <a href="toys.html">
+          <img src="toys features.jpg" class="d-block w-100" alt="Toys">
+          <div class="carousel-caption">
+            Featured: Toys
+          </div>
+        </a>
+      </div>
+      <!-- Carousel Item for Dog Grooming -->
+      <div class="carousel-item">
+        <a href="dog-grooming.html">
+          <img src="grooming features.png" class="d-block w-100" alt="Dog Grooming">
+          <div class="carousel-caption">
+            Featured: Dog Grooming
+          </div>
+        </a>
+      </div>
+    </div>
+    <!-- Carousel Controls -->
+    <button class="carousel-control-prev" type="button" data-bs-target="#featuredCarousel" data-bs-slide="prev">
+      <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+    </button>
+    <button class="carousel-control-next" type="button" data-bs-target="#featuredCarousel" data-bs-slide="next">
+      <span class="carousel-control-next-icon" aria-hidden="true"></span>
+    </button>
+  </div>
+</section>
+
+
+  
+  <!-- Search & Sort Controls for Categories -->
+  <section class="container">
+    <div class="controls">
+      <input type="text" id="category-search" placeholder="Search Categories...">
+      <select id="category-sort">
+        <option value="default">Sort By</option>
+        <option value="alphabetical">Alphabetical</option>
+      </select>
+    </div>
+  </section>
+  
+  <!-- Categories Section -->
+  <section class="container my-4">
+    <div class="row" id="category-container">
+      <!-- Category Cards will be rendered here dynamically -->
+    </div>
+  </section>
+  
+  <!-- Back-to-Top Button -->
+  <button id="backToTop" title="Back to Top"><i class="fas fa-arrow-up"></i></button>
+  
+  <!-- Chat Button -->
+  <button id="chatButton" onclick="openChat()">Chat with Us</button>
+  
+  <!-- Footer Section -->
+  <footer class="bg-pink text-white py-4">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-6 text-center text-md-start">
+          <p>&copy; 2024 Paw Palace. All Rights Reserved.</p>
+        </div>
+        <div class="col-md-6 text-center text-md-end">
+          <a href="https://www.facebook.com/profile.php?id=100063566378453" class="social-link"><i class="fab fa-facebook"></i></a>
+          <a href="https://www.instagram.com/_sahilnaik_45/" class="social-link"><i class="fab fa-instagram"></i></a>
+          <a href="https://x.com/_sahilnaik_45" class="social-link"><i class="fab fa-twitter"></i></a>
+          <a href="https://www.youtube.com" class="social-link"><i class="fab fa-youtube"></i></a>
+        </div>
+      </div>
+    </div>
+  </footer>
+  
+  <!-- Chat Modal (Enhanced Chat Bot) -->
+  <div id="chat-modal" class="modal-custom">
+    <div class="modal-content-custom">
+      <span class="close-modal" id="close-chat-modal">&times;</span>
+      <h2 style="color: #ff4f8b; text-align: center;">Chat with Us</h2>
+      <div id="chat-conversation" class="chat-window"></div>
+      <input type="text" id="chat-input" placeholder="Type your question..." style="width: 100%; padding: 10px; margin-bottom: 10px; border: 1px solid #ddd; border-radius: 4px;">
+      <button id="send-button" class="btn" style="width: 100%; background-color: #ff4f8b; color: white; border: none; padding: 10px; border-radius: 4px;">Send</button>
+    </div>
+  </div>
+  
+  <!-- JavaScript Section -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+  <script>
+    // Category Data
+    const categories = [
+      { name: "Food", image: "food.jpg", page: "food.html", description: "Delicious and nutritious pet food options to keep your pet healthy and happy." },
+      { name: "Clothes", image: "clothes.webp", page: "clothes.html", description: "Stylish and comfortable pet clothing for every season." },
+      { name: "Pharmacy", image: "pharamcy.jpg", page: "pharmacy.html", description: "Quality veterinary products, supplements, and medicines for your pet's well-being." },
+      { name: "Dog Treats", image: "treats.jpeg", page: "dog-treats.html", description: "Tasty and healthy treats your dog will love." },
+      { name: "Accessories", image: "accessories.webp", page: "accessories.html", description: "Trendy accessories to add style and comfort to your pet's life." },
+      { name: "Toys", image: "toys.jpg", page: "toys.html", description: "Fun and engaging toys to keep your pet entertained for hours." },
+      { name: "Dog Grooming", image: "grooming.webp", page: "dog-grooming.html", description: "Premium grooming products and services to keep your dog looking its best." }
+    ];
+    
+    // Render Categories using Bootstrap Grid
+    function renderCategories(categoryArray) {
+      const container = document.getElementById('category-container');
+      container.innerHTML = '';
+      categoryArray.forEach((cat) => {
+        const col = document.createElement('div');
+        col.className = 'col-sm-6 col-md-4 col-lg-3';
+        col.innerHTML = `
+          <div class="card category-card mb-4" onclick="window.location.href='${cat.page}'">
+            <img src="${cat.image}" class="card-img-top" alt="${cat.name}" loading="lazy">
+            <div class="card-body">
+              <h5 class="card-title">${cat.name}</h5>
+            </div>
+          </div>
+        `;
+        container.appendChild(col);
+      });
+    }
+    
+    // Search and Sort for Categories
+    function filterAndSortCategories() {
+      const searchQuery = document.getElementById('category-search').value.toLowerCase();
+      const sortBy = document.getElementById('category-sort').value;
+      let filtered = categories.filter(cat => cat.name.toLowerCase().includes(searchQuery));
+      if (sortBy === 'alphabetical') {
+        filtered.sort((a, b) => a.name.localeCompare(b.name));
+      }
+      renderCategories(filtered);
+    }
+    
+    document.getElementById('category-search').addEventListener('input', filterAndSortCategories);
+    document.getElementById('category-sort').addEventListener('change', filterAndSortCategories);
+    
+    // Initial render of categories
+    renderCategories(categories);
+    
+    // Back-to-Top Button Functionality
+    const backToTopButton = document.getElementById('backToTop');
+    window.addEventListener('scroll', function() {
+      backToTopButton.style.display = window.pageYOffset > 300 ? 'block' : 'none';
+    });
+    backToTopButton.addEventListener('click', function() {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+    
+    // ---------------------------
+    // Enhanced Chat Bot Functionality (Messages in English)
+    // ---------------------------
+    
+    // Open Chat Modal and display a welcome message
+    function openChat() {
+      document.getElementById('chat-modal').style.display = 'block';
+      const conv = document.getElementById('chat-conversation');
+      if (conv.innerHTML.trim() === '') {
+        addBotMessage("Hello! How are you? I'm your assistant. What would you like to know about our products?");
+      }
+    }
+    
+    // Add a user message to the conversation window
+    function addUserMessage(message) {
+      const conversation = document.getElementById('chat-conversation');
+      const msgDiv = document.createElement('div');
+      msgDiv.className = "chat-message user-message";
+      msgDiv.innerText = message;
+      conversation.appendChild(msgDiv);
+      conversation.scrollTop = conversation.scrollHeight;
+    }
+    
+    // Add a bot message to the conversation window
+    function addBotMessage(message) {
+      const conversation = document.getElementById('chat-conversation');
+      const msgDiv = document.createElement('div');
+      msgDiv.className = "chat-message bot-message";
+      msgDiv.innerText = message;
+      conversation.appendChild(msgDiv);
+      conversation.scrollTop = conversation.scrollHeight;
+    }
+    
+    // Process user input and simulate a bot response with conversational dialogue
+    function sendMessage() {
+      const input = document.getElementById('chat-input');
+      const message = input.value.trim();
+      if(message === "") return;
+      addUserMessage(message);
+      input.value = "";
+      setTimeout(() => {
+          simulateBotResponse(message);
+      }, 500);
+    }
+    
+    // Enhanced keyword-based response simulation (in English)
+    function simulateBotResponse(message) {
+      message = message.toLowerCase();
+      let response = "";
+      
+      if(message.includes("hello") || message.includes("hi")) {
+         response = "Hello! How are you? Do you have any questions about our products?";
+      } else if(message.includes("how are you") || message.includes("how's it going")) {
+         response = "I'm fine, thank you! Which product category are you interested in?";
+      } else if ((message.includes("best") || message.includes("top") || message.includes("popular") || message.includes("popularity")) &&
+          (message.includes("price") || message.includes("cost"))) {
+         response = "Our premium dog food is considered the best based on customer feedback and competitive pricing. Would you like more details on its ingredients or pricing?";
+      } else if(message.includes("food")) {
+         response = "Our Food category includes premium dog food, cat food, and various nutritious options. Would you like specific details?";
+      } else if(message.includes("clothes")) {
+         response = "Our Clothes collection features stylish and comfortable pet clothing, perfect for every season. Do you have any further questions?";
+      } else if(message.includes("pharmacy") || message.includes("medicine")) {
+         response = "Our Pharmacy section offers quality veterinary products, supplements, and medicines. Would you like to know about a specific product?";
+      } else if(message.includes("treats")) {
+         response = "Our Dog Treats category has tasty and healthy snacks that your dog will surely love. Would you like more details?";
+      } else if(message.includes("accessories")) {
+         response = "Our Accessories section offers trendy items that enhance your pet's look. Are you looking for any specific accessory?";
+      } else if(message.includes("toys")) {
+         response = "Our Toys category includes fun and engaging toys that keep your pet entertained. Would you like a recommendation?";
+      } else if(message.includes("grooming")) {
+         response = "Our Dog Grooming products are of premium quality, meeting all your dog's grooming needs. Would you like more information?";
+      } else if(message.includes("price") || message.includes("cost")) {
+         response = "Pricing varies by product. Which product category's prices are you interested in? I can help you with that.";
+      } else if(message.includes("delivery") || message.includes("shipping")) {
+         response = "We offer prompt and reliable shipping. Delivery details depend on your location. Could you please share your location?";
+      } else {
+         response = "I'm sorry, I didn't quite understand your question. Could you please provide more details or ask a specific query?";
+      }
+      
+      addBotMessage(response);
+    }
+
+    // Event listeners for chat send button and enter key press
+    document.getElementById('send-button').addEventListener('click', sendMessage);
+    document.getElementById('chat-input').addEventListener('keypress', function(e) {
+      if(e.key === 'Enter') {
+        sendMessage();
+      }
+    });
+    
+    // Close Chat Modal
+    document.getElementById('close-chat-modal').addEventListener('click', function() {
+      document.getElementById('chat-modal').style.display = 'none';
+    });
+    
+    // Global Modal Close Handler for chat modal
+    window.addEventListener('click', function(event) {
+      if (event.target === document.getElementById('chat-modal')) {
+        document.getElementById('chat-modal').style.display = 'none';
+      }
+    });
+  </script>
+</body>
+</html>

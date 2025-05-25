@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Paw Palace - Find Your Pet</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+  <link rel="stylesheet" href="index.css">
+  <style>
+    /* Modal styles */
+    .modal {
+      display: none; 
+      position: fixed; 
+      z-index: 1000;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      overflow: auto; 
+      background-color: rgba(0,0,0,0.4);
+    }
+    .modal-content {
+      background-color: #fefefe;
+      margin: 10% auto;
+      padding: 20px;
+      border: 1px solid #888;
+      width: 80%;
+      max-width: 500px;
+      border-radius: 5px;
+    }
+    .close {
+      color: #aaa;
+      float: right;
+      font-size: 28px;
+      font-weight: bold;
+    }
+    .close:hover,
+    .close:focus {
+      color: black;
+      text-decoration: none;
+      cursor: pointer;
+    }
+    /* Back-to-top button styles */
+    #backToTop {
+      display: none;
+      position: fixed;
+      bottom: 40px;
+      right: 40px;
+      z-index: 1000;
+      background-color: #333;
+      color: #fff;
+      border: none;
+      padding: 10px 15px;
+      border-radius: 50%;
+      cursor: pointer;
+      font-size: 18px;
+    }
+  </style>
+</head>
+<body>
+  <header class="navbar">
+    <div class="logo">
+      <h1 id="hiddenAdminLink" style="cursor: pointer;">Paw Palace</h1>
+    </div>
+    <nav>
+      <ul>
+        <li><a href="login.html">Login</a></li>
+        <li><a href="signup.html">Sign Up</a></li>
+      </ul>
+    </nav>
+</header>
+
+<script>
+    document.getElementById("hiddenAdminLink").addEventListener("click", function() {
+        window.location.href = "admin_login.html"; // Admin login page open hoil
+    });
+</script>
+
+
+  <section class="cover">
+    <div class="content">
+      <h1>Welcome to Paw Palace</h1>
+      <p>Your one-stop destination for everything your furry friend needs! From premium-quality dog food to trendy clothes, durable accessories, and stylish bowls, we offer a wide range of products designed to pamper your pets. At Paw Palace, we ensure the best quality for your beloved companions. Because happy pets make happy homes!</p>
+      <button class="cta-button" onclick="window.location.href='products.html'">Let's Shop</button>
+      <!-- New Learn More button -->
+      <button id="learnMoreBtn" class="cta-button" style="margin-left:10px;">Learn More</button>
+    </div>
+  </section>
+
+  <!-- New Modal for Learn More -->
+  <div id="learnMoreModal" class="modal">
+    <div class="modal-content">
+      <span class="close">&times;</span>
+      <h2>About Paw Palace</h2>
+      <p>
+        Welcome to Paw Palace, your premier destination for all things pet! Founded with a passion for pet care, we have grown into a trusted name in the pet industry. We offer a diverse range of premium products – from high-quality pet food and treats to stylish accessories, durable toys, and grooming essentials. Our team is dedicated to ensuring that every product is chosen with your pet’s happiness and well-being in mind.
+      </p>
+      <p>
+        At Paw Palace, we believe that a pet is not just an animal – they're family. That's why we continuously update our collections with the latest trends in pet care, blending innovation with practicality. Our commitment to quality and customer service means you can shop with confidence, knowing that every item is designed to enhance your pet’s life.
+      </p>
+      <p>
+        Discover the Paw Palace difference today – because when your pet is happy and healthy, your home is too!
+      </p>
+    </div>
+  </div>
+
+  <!-- Enhanced Footer -->
+  <footer class="bg-pink text-white py-4">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-6 text-center text-md-start">
+          <p>&copy; 2024 Paw Palace. All Rights Reserved.</p>
+        </div>
+        <div class="col-md-6 text-center text-md-end">
+          <a href="https://www.facebook.com/profile.php?id=100063566378453" class="social-link"><i class="fab fa-facebook"></i></a>
+          <a href="https://www.instagram.com/_sahilnaik_45/" class="social-link"><i class="fab fa-instagram"></i></a>
+          <a href="https://x.com/_sahilnaik_45" class="social-link"><i class="fab fa-twitter"></i></a>
+          <a href="https://www.youtube.com" class="social-link"><i class="fab fa-youtube"></i></a>
+        </div>
+      </div>
+    </div>
+  </footer>
+  
+  <script>
+    // Modal script
+    var modal = document.getElementById("learnMoreModal");
+    var btn = document.getElementById("learnMoreBtn");
+    var span = document.getElementsByClassName("close")[0];
+
+    btn.onclick = function() {
+      modal.style.display = "block";
+    }
+    span.onclick = function() {
+      modal.style.display = "none";
+    }
+    window.onclick = function(event) {
+      if (event.target == modal) {
+        modal.style.display = "none";
+      }
+    }
+
+    // Back-to-top button script
+    var backToTop = document.getElementById("backToTop");
+    window.onscroll = function() {
+      if (document.body.scrollTop > 200 || document.documentElement.scrollTop > 200) {
+        backToTop.style.display = "block";
+      } else {
+        backToTop.style.display = "none";
+      }
+    };
+    backToTop.onclick = function() {
+      window.scrollTo({top: 0, behavior: 'smooth'});
+    };
+  </script>
+</body>
+</html>

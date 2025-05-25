@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dog Food - Paw Palace</title>
+  <link rel="stylesheet" href="product.css" />
+</head>
+<body>
+  <header>
+    <h1>Paw Palace</h1>
+    <div class="header-extras">
+      <a href="products.html" style="color: #fff; text-decoration: none;">All Products</a>
+      <a href="cart.html" style="color: #fff; text-decoration: none;">Cart <span id="cart-count" class="cart-count">0</span></a>
+      <span class="compare-link" onclick="openCompareModal()">View Compare (<span id="compare-count">0</span>)</span>
+    </div>
+  </header>
+  
+  <!-- Category Tabs -->
+  <div class="category-tabs">
+    <a href="food.html" class="tab active">Food</a>
+    <a href="accessories.html" class="tab">Accessories</a>
+    <a href="toys.html" class="tab">Toys</a>
+    <a href="treats.html" class="tab">Treats</a>
+    <a href="pharmacy.html" class="tab">Pharmacy</a>
+    <a href="grooming.html" class="tab">Grooming</a>
+    <a href="clothes.html" class="tab">Clothes</a>
+</div>
+
+  
+  <div class="container">
+    <h2 style="text-align: center; color: #ff4f8b; margin-bottom: 1rem;">Dog Food</h2>
+    
+    <!-- Filter Section: Sort on Left, Search on Right -->
+    <div class="filter-section">
+      <div class="filter-left">
+        <select id="sort-filter">
+          <option value="">Sort By</option>
+          <option value="popularity">Popularity</option>
+          <option value="price-low-high">Price: Low to High</option>
+          <option value="price-high-low">Price: High to Low</option>
+        </select>
+      </div>
+      <div class="filter-right">
+        <input type="text" id="search-bar" placeholder="Search Dog Food...">
+      </div>
+    </div>
+    
+    <!-- Product Grid -->
+    <div class="product-grid" id="product-grid">
+      <!-- Products will be appended here dynamically -->
+    </div>
+    <div id="load-more-container">
+      <button id="load-more-btn" onclick="loadMoreProducts()">Load More</button>
+    </div>
+  </div>
+  
+  <!-- Quick View Modal -->
+  <div id="quick-view-modal" class="modal">
+    <div class="modal-content">
+      <span class="close-modal" id="close-modal">&times;</span>
+      <div id="quick-view-content">
+        <!-- Quick view details here -->
+      </div>
+    </div>
+  </div>
+  
+  <!-- Compare Modal -->
+  <div id="compare-modal" class="compare-modal">
+    <div class="compare-modal-content">
+      <span class="close-modal" id="close-compare-modal">&times;</span>
+      <h2 style="color: #ff4f8b; text-align: center;">Compare Products</h2>
+      <div id="compare-list" class="compare-list">
+        <!-- Compared products here -->
+      </div>
+    </div>
+  </div>
+  
+  <script>
+    // Global arrays and variables
+    let compareList = [];
+    const selectedRatings = {};
+    let productsPerPage = 8;  // 8 products per load
+    let currentDisplayCount = 0;
+    let filteredProductsGlobal = [];
+    
+    // Dog Products Array with total 16 products
+    const products = [
+      { id: 1, category: 'dog', name: 'Arden Grange Premium Dog Food', price: 799, image: 'food1.jpg', description: 'Nutritious and balanced meal for your dog.', rating: 4.2, ratingCount: 10, availableSizes: ['2kg', '5kg', '10kg'], features: 'Rich in proteins and vitamins; supports healthy digestion.' },
+      { id: 2, category: 'dog', name: 'Luvin Grain-Free Dog Food', price: 899, image: 'food2.jpg', description: 'Ideal for dogs with grain sensitivities.', rating: 4.7, ratingCount: 15, availableSizes: ['2kg', '5kg', '10kg'], features: 'No grains; high meat content for energy and vitality.' },
+      { id: 3, category: 'dog', name: 'Natural Dog Delights', price: 820, image: 'food3.jpg', description: 'Natural and delicious dog food for all breeds.', rating: 4.1, ratingCount: 9, availableSizes: ['2kg', '5kg', '10kg'], features: 'No artificial flavors.' },
+      { id: 4, category: 'dog', name: 'Carniwell Super Healthy Dog Kibble', price: 920, image: 'food4.webp', description: 'Super healthy kibble for your canine friend.', rating: 4.3, ratingCount: 10, availableSizes: ['2kg', '5kg', '10kg'], features: 'Balanced diet for a healthy life.' },
+      { id: 5, category: 'dog', name: '01 Roy Deluxe Canine Cuisine', price: 1150, image: 'food5.avif', description: 'Deluxe cuisine for the sophisticated dog.', rating: 4.7, ratingCount: 12, availableSizes: ['2kg', '5kg', '10kg'], features: 'Gourmet ingredients for premium taste.' },
+      { id: 6, category: 'dog', name: 'Krusnhi Economy Dog Feed', price: 700, image: 'food6.avif', description: 'Economical and nutritious dog food option.', rating: 4.0, ratingCount: 7, availableSizes: ['2kg', '5kg', '10kg'], features: 'Affordable nutrition for everyday needs.' },
+      { id: 7, category: 'dog', name: 'Vital Organic Dog Meal', price: 850, image: 'food7.jpg', description: 'Organic ingredients for a healthy dog diet.', rating: 4.3, ratingCount: 9, availableSizes: ['2kg', '5kg', '10kg'], features: 'Made with organic meats and vegetables.' },
+      { id: 8, category: 'dog', name: 'High-Protein Dog Kibble', price: 950, image: 'food8.webp', description: 'High-protein kibble for active dogs.', rating: 4.5, ratingCount: 12, availableSizes: ['2kg', '5kg', '10kg'], features: 'Boosts muscle growth and energy.' },
+      { id: 9, category: 'dog', name: 'Tu Meke Friend Dog Feast', price: 1050, image: 'food9.webp', description: 'Gourmet feast with premium ingredients.', rating: 4.6, ratingCount: 14, availableSizes: ['2kg', '5kg', '10kg'], features: 'Special recipe for discerning dogs.' },
+      { id: 10, category: 'dog', name: 'Hills Derm Complete Dog Food', price: 890, image: 'food10.webp', description: 'Recommended by vets for balanced nutrition.', rating: 4.4, ratingCount: 11, availableSizes: ['2kg', '5kg', '10kg'], features: 'Clinically tested formula.' },
+      { id: 11, category: 'dog', name: 'Purina Dog Chow', price: 820, image: 'food11.avif', description: 'All-natural ingredients for optimal health.', rating: 4.2, ratingCount: 10, availableSizes: ['2kg', '5kg', '10kg'], features: 'No artificial additives.' },
+      { id: 12, category: 'dog', name: 'Energy Boost Dog Food', price: 990, image: 'food12.jpg', description: 'Specially formulated for high-energy dogs.', rating: 4.7, ratingCount: 16, availableSizes: ['2kg', '5kg', '10kg'], features: 'Enhanced with vitamins and minerals.' },
+      { id: 13, category: 'dog', name: 'Merrick Backcountry Grain-Infused Dog Meal', price: 780, image: 'food13.jpg', description: 'Balanced meal with select grains.', rating: 4.0, ratingCount: 8, availableSizes: ['2kg', '5kg', '10kg'], features: 'Supports joint and bone health.' },
+      { id: 14, category: 'dog', name: 'Regale Luxury Dog Cuisine', price: 1100, image: 'food14.jpg', description: 'Luxury cuisine for your beloved dog.', rating: 4.8, ratingCount: 20, availableSizes: ['2kg', '5kg', '10kg'], features: 'Premium ingredients for a refined taste.' },
+      { id: 15, category: 'dog', name: 'Drools Dog Food', price: 950, image: 'food15.webp', description: 'Complete nutrition for every stage of your dog\'s life.', rating: 4.5, ratingCount: 13, availableSizes: ['2kg', '5kg', '10kg'], features: 'Packed with antioxidants and essential nutrients for longevity.' },
+      { id: 16, category: 'dog', name: 'Pooch & Mutt Primlal', price: 1200, image: 'food16.webp', description: 'Indulgent feast with premium cuts and organic ingredients.', rating: 4.8, ratingCount: 18, availableSizes: ['2kg', '5kg', '10kg'], features: 'Exquisite blend of flavors that pamper your pet\'s palate.' }
+    ];
+  </script>
+  <script src="products.js" defer></script>
+  <script>
+    function loadProducts() {
+        fetch('fetch_products.php?category=food')
+        .then(response => response.json())
+        .then(data => {
+            let productContainer = document.getElementById("products");
+            productContainer.innerHTML = "";
+            data.forEach(product => {
+                productContainer.innerHTML += `
+                    <div>
+                        <img src="${product.image_url}" width="100" />
+                        <h3>${product.name}</h3>
+                        <p>Price: ₹${product.price}</p>
+                        <p>${product.description}</p>
+                        <p>Stock: ${product.stock}</p>
+                    </div>
+                `;
+            });
+        });
+    }
+    window.onload = loadProducts;
+</script>
+
+</body>
+</html>

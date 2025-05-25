@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dog Breeds - Paw Palace</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+  <!-- Font Awesome for icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+   .bg-pink {
+            background-color: #ff4f8b;
+        }
+        .nav-link {
+            color: white;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+        .nav-link:hover {
+            color: #ffd700 !important;
+            transform: translateY(-2px);
+        }
+    /* Dog Breeds Section */
+    .breeds-container {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 2rem;
+      padding: 2rem;
+    }
+    .breed {
+      text-align: center;
+      cursor: pointer;
+      transition: transform 0.3s ease;
+    }
+    .breed:hover {
+      transform: scale(1.05);
+    }
+    .breed img {
+      width: 150px;
+      height: 150px;
+      border-radius: 50%;
+      object-fit: cover;
+      transition: transform 0.3s ease;
+    }
+    .breed img:hover {
+      transform: scale(1.1);
+    }
+    .breed p {
+      font-weight: bold;
+      margin-top: 0.5rem;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    /* Inline Favorite Button next to breed name */
+    .favorite-btn {
+      background: none;
+      border: none;
+      color: #ff4f8b;
+      font-size: 1.2rem;
+      cursor: pointer;
+      outline: none;
+    }
+    .favorite-btn.favorited {
+      color: #ff0000; /* Red for favorited state */
+    }
+    /* Footer Section */
+    footer {
+      background-color: #ff4f8b;
+      padding: 20px;
+      color: white;
+      text-align: center;
+      position: relative;
+      width: 100%;
+      bottom: 0;
+    }
+    footer p {
+      margin: 0;
+    }
+    /* Back to Top Button */
+    .back-to-top {
+      position: fixed;
+      bottom: 40px;
+      right: 40px;
+      background-color: #ff4f8b;
+      color: white;
+      border: none;
+      border-radius: 50%;
+      width: 50px;
+      height: 50px;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      font-size: 1.5rem;
+      z-index: 1000;
+      transition: opacity 0.3s;
+    }
+    .back-to-top:hover {
+      opacity: 0.8;
+    }
+
+    .social-link {
+            color: white;
+            font-size: 1.5rem;
+            margin: 0 0.5rem;
+            transition: transform 0.3s;
+        }
+
+        .social-link:hover {
+            color: #ffd700;
+            transform: translateY(-3px);
+        }
+  </style>
+</head>
+<body>
+  <!-- Header Section (Unchanged) -->
+  <header class="bg-pink text-white py-4 shadow">
+    <div class="container text-center">
+        <h1 class="fs-3 mb-3">Paw Palace</h1>
+        <nav>
+            <ul class="nav justify-content-center">
+                <li class="nav-item"><a href="index.html" class="nav-link">Home</a></li>
+                <li class="nav-item"><a href="products.html" class="nav-link">Products</a></li>
+                <li class="nav-item"><a href="dogs by breeds.html" class="nav-link">Dog Breeds</a></li>
+                <li class="nav-item"><a href="dog-adoption.html" class="nav-link">Dog Adoption</a></li>
+                <li class="nav-item"><a href="vet.html" class="nav-link">Consult a Vet</a></li>
+                <li class="nav-item"><a href="about.html" class="nav-link">About Us</a></li>
+                <li class="nav-item"><a href="contact.html" class="nav-link">Contact</a></li>
+                <li class="nav-item"><a href="reviews.html" class="nav-link">Reviews</a></li>
+                <li class="nav-item"><a href="faq.html" class="nav-link">FAQ</a></li>
+            </ul>
+        </nav>
+    </div>
+</header>
+
+  <!-- JavaScript to Highlight Current Page -->
+  <script>
+    const navLinks = document.querySelectorAll('.nav-link');
+    const currentPage = window.location.pathname.split('/').pop();
+    navLinks.forEach(link => {
+      if (link.getAttribute('href') === currentPage) {
+        link.classList.add('text-warning');
+      } else {
+        link.classList.remove('text-warning');
+      }
+    });
+  </script>
+  
+  <!-- Dog Breeds Section -->
+  <section class="breeds-container">
+    <div class="breed" onclick="navigateTo('goldenretriver.html')">
+      <img src="Golden Retriver.avif" alt="Golden Retriever">
+      <p>
+        Golden Retriever 
+        <button class="favorite-btn" onclick="toggleFavorite(event, 'Golden Retriever')">
+          <i class="far fa-heart"></i>
+        </button>
+      </p>
+    </div>
+    <div class="breed" onclick="navigateTo('german-shepherd.html')">
+      <img src="German Shepherd.avif" alt="German Shepherd">
+      <p>
+        German Shepherd 
+        <button class="favorite-btn" onclick="toggleFavorite(event, 'German Shepherd')">
+          <i class="far fa-heart"></i>
+        </button>
+      </p>
+    </div>
+    <div class="breed" onclick="navigateTo('labrador.html')">
+      <img src="Labrador.avif" alt="Labrador">
+      <p>
+        Labrador 
+        <button class="favorite-btn" onclick="toggleFavorite(event, 'Labrador')">
+          <i class="far fa-heart"></i>
+        </button>
+      </p>
+    </div>
+    <div class="breed" onclick="navigateTo('Rottweiler.html')">
+      <img src="Rottwieler.avif" alt="Rottweiler">
+      <p>
+        Rottweiler 
+        <button class="favorite-btn" onclick="toggleFavorite(event, 'Rottweiler')">
+          <i class="far fa-heart"></i>
+        </button>
+      </p>
+    </div>
+    <div class="breed" onclick="navigateTo('beagle.html')">
+      <img src="beagle.avif" alt="Beagle">
+      <p>
+        Beagle 
+        <button class="favorite-btn" onclick="toggleFavorite(event, 'Beagle')">
+          <i class="far fa-heart"></i>
+        </button>
+      </p>
+    </div>
+    <div class="breed" onclick="navigateTo('shih-tzu.html')">
+      <img src="shih tzu.webp" alt="Shih Tzu">
+      <p>
+        Shih Tzu 
+        <button class="favorite-btn" onclick="toggleFavorite(event, 'Shih Tzu')">
+          <i class="far fa-heart"></i>
+        </button>
+      </p>
+    </div>
+    <div class="breed" onclick="navigateTo('boxer.html')">
+      <img src="boxer.webp" alt="Boxer">
+      <p>
+        Boxer 
+        <button class="favorite-btn" onclick="toggleFavorite(event, 'Boxer')">
+          <i class="far fa-heart"></i>
+        </button>
+      </p>
+    </div>
+    <div class="breed" onclick="navigateTo('pug.html')">
+      <img src="pug.webp" alt="Pug">
+      <p>
+        Pug 
+        <button class="favorite-btn" onclick="toggleFavorite(event, 'Pug')">
+          <i class="far fa-heart"></i>
+        </button>
+      </p>
+    </div>
+    <div class="breed" onclick="navigateTo('husky.html')">
+      <img src="husky.webp" alt="Husky">
+      <p>
+        Husky 
+        <button class="favorite-btn" onclick="toggleFavorite(event, 'Husky')">
+          <i class="far fa-heart"></i>
+        </button>
+      </p>
+    </div>
+  </section>
+  
+ <!-- Enhanced Footer -->
+ <footer class="bg-pink text-white py-4">
+  <div class="container">
+      <div class="row">
+          <div class="col-md-6 text-center text-md-start">
+              <p>&copy; 2024 Paw Palace. All Rights Reserved.</p>
+          </div>
+          <div class="col-md-6 text-center text-md-end">
+              <a href="https://www.facebook.com/profile.php?id=100063566378453" class="social-link"><i class="fab fa-facebook"></i></a>
+              <a href="https://www.instagram.com/_sahilnaik_45/" class="social-link"><i class="fab fa-instagram"></i></a>
+              <a href="https://x.com/_sahilnaik_45" class="social-link"><i class="fab fa-twitter"></i></a>
+              <a href="https://www.youtube.com" class="social-link"><i class="fab fa-youtube"></i></a>
+          </div>
+      </div>
+  </div>
+</footer>
+  
+  <!-- Back to Top Button -->
+  <button class="back-to-top" onclick="scrollToTop()"><i class="fas fa-arrow-up"></i></button>
+  
+  <script>
+    function navigateTo(page) {
+      window.location.href = page;
+    }
+    // Toggle favorite button state without triggering parent's click event
+    function toggleFavorite(event, breedName) {
+      event.stopPropagation(); // Prevent navigating when clicking favorite
+      const btn = event.currentTarget;
+      if (btn.classList.contains("favorited")) {
+        btn.classList.remove("favorited");
+        btn.innerHTML = '<i class="far fa-heart"></i>';
+        // Optionally remove breedName from favorites (e.g., localStorage)
+      } else {
+        btn.classList.add("favorited");
+        btn.innerHTML = '<i class="fa-solid fa-heart"></i>';
+        // Optionally add breedName to favorites (e.g., localStorage)
+      }
+    }
+    // Back to top functionality
+    function scrollToTop() {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+    // Show or hide the back-to-top button based on scroll position
+    window.addEventListener('scroll', function() {
+      const btn = document.querySelector('.back-to-top');
+      if (window.pageYOffset > 200) {
+        btn.style.display = 'flex';
+      } else {
+        btn.style.display = 'none';
+      }
+    });
+  </script>
+</body>
+</html>
+
+
+
+
+

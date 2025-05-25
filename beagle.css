@@ -1,0 +1,282 @@
+
+          /* Global Styling */
+          body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f8f9fa;
+        }
+        
+        .breeds-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            padding: 20px;
+            gap: 20px;
+        }
+        
+        .breed {
+            text-align: center;
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+        
+        .breed img {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            border: 3px solid #ff4f8b; /* Soft pink border */
+            transition: border-color 0.2s, transform 0.2s;
+        }
+        
+        .breed p {
+            margin: 10px 0 0;
+            font-size: 16px;
+            color: #ff4f8b; /* Pinkish text */
+        }
+        
+        .breed:hover img {
+            border-color: #ff4f8b; /* Slightly darker pink on hover */
+            transform: scale(1.05);
+        }
+        
+        .breed:hover {
+            transform: translateY(-5px);
+        }
+        
+        /* Section container styling */
+        .section-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin: 20px auto;
+            gap: 20px;
+            padding: 10px;
+            width: 90%;
+            flex-wrap: wrap;
+        }
+        
+        .section-box {
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
+            background-color: #ff4f8b; /* Light pink background for section boxes */
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            padding: 15px;
+            min-width: 250px;
+            flex: 1;
+            max-width: 300px;
+            margin: 10px;
+        }
+        
+        .section-box img {
+            width: 80px;
+            height: 80px;
+            border-radius: 8px;
+            margin-right: 15px;
+        }
+        
+        .section-box .text-content h3 {
+            font-size: 18px;
+            color: white; /* Soft pink text */
+            margin: 0;
+        }
+        
+                  header {
+                    background-color: #ff4f8b; /* Softer pink for header */
+                    padding: 20px 30px;
+                    display: flex;
+                    justify-content: space-between;
+                    align-items: center;
+                    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+                    border-bottom: 3px solid ff6b81#ff4f8b; /* Elegant line under the header */
+                }
+                
+                header h1 {
+                    margin: 0;
+                    font-size: 28px;
+                    color:white; /* White color for the header text */
+                    font-weight: 600;
+                }
+                
+                header nav a {
+                    margin-left: 30px;
+                    text-decoration: none;
+                    color: white;
+                    font-size: 18px;
+                    font-weight: 500;
+                    transition: color 0.3s ease;
+                }
+                
+                header nav a:hover {
+                    color: #ff4f8b; /* Subtle hover effect */
+            
+                        /* General body styling */
+                body {
+                    font-family: 'Georgia', serif;
+                    margin: 0;
+                    padding: 0;
+                    background-color: #ffebf2;
+                    color: #333;
+                    line-height: 1.6;
+                }
+                
+                /* Container styling */
+                .container {
+                    max-width: 1200px;
+                    margin: 40px auto;
+                    padding: 30px;
+                    background-color: #ffffff;
+                    border-radius: 15px;
+                    box-shadow: 0 12px 20px rgba(0, 0, 0, 0.1);
+                }
+                
+                /* Header section styling */
+                .text-section h1 {
+                    font-size: 36px;
+                    color: #9a4e6e;
+                    text-align: center;
+                    margin-bottom: 15px;
+                    font-weight: bold;
+                    letter-spacing: 1.5px;
+                    text-transform: uppercase;
+                }
+                
+                .text-section p {
+                    font-size: 18px;
+                    color: #d36a6a;
+                    text-align: center;
+                    line-height: 1.8;
+                    font-weight: 400;
+                    letter-spacing: 1px;
+                }
+
+/* Product Cards Styling */
+/* Product Card Styles */
+.product-card {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.card-box {
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    text-align: center;
+    width: 100%;
+    max-width: 250px;
+}
+
+.card-box:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+}
+
+.product-img {
+    width: 100%;
+    height: 180px;
+    object-fit: cover;
+    transition: transform 0.3s ease;
+}
+
+.card-box:hover .product-img {
+    transform: scale(1.1);
+}
+
+.product-body {
+    padding: 15px;
+    background-color: #f8f9fa;
+}
+
+.product-name {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: #333;
+    margin-top: 10px;
+}
+
+
+/* Typography */
+h1, h2, h3, h4 {
+    font-family: 'Roboto', sans-serif;
+}
+
+h3, h4 {
+    color: #333;
+    font-weight: 600;
+}
+
+/* Buttons Styling */
+.btn-outline-light {
+    border: 2px solid #fff;
+    color: #fff;
+    font-weight: 600;
+}
+
+.btn-outline-light:hover {
+    background-color: #fff;
+    color: #e91e63;
+}
+
+/* Diet Section */
+.diet-section {
+    background-color: #f8f9fa;
+    padding: 60px 0;
+}
+
+.diet-section h1 {
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: #333;
+}
+
+.diet-section p {
+    color: #666;
+    font-size: 1.1rem;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    header {
+        padding: 20px 0;
+    }
+
+    .breeds-container {
+        padding: 30px 0;
+    }
+
+    .breed-card, .section-box, .product-card {
+        margin-bottom: 20px;
+    }
+
+    .product-img {
+        height: 200px;
+    }
+}
+
+@media (max-width: 576px) {
+    header .display-3 {
+        font-size: 2rem;
+    }
+
+    .breed-name {
+        font-size: 1rem;
+    }
+
+    .section-container .section-box img {
+        height: 200px;
+    }
+
+    .product-name {
+        font-size: 1rem;
+    }
+
+    .product-body {
+        padding: 10px;
+    }
+}
+

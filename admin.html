@@ -1,0 +1,567 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Paw Palace Admin Panel</title>
+  <!-- Font Awesome for icons -->
+  <link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
+    integrity="sha512-Fo3rlrZj/k7ujTnHq6+fZ8b5KP2i1X5bNnTqpoU21K11VPQgl8P/wYuPJ2Xw4O7FdV/olO/6RM8jdpOp+gjoww=="
+    crossorigin="anonymous"
+    referrerpolicy="no-referrer"
+  />
+  <!-- Chart.js CDN for Analytics Chart -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: #f5f5f5; /* light grey background for better contrast */
+      color: #333;
+    }
+    /* Sidebar styling */
+    .sidebar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 250px;
+      height: 100%;
+      background: #fff;
+      border-right: 2px solid #ff69b4;
+      padding: 20px;
+      box-shadow: 2px 0 8px rgba(0, 0, 0, 0.1); /* increased shadow for better depth */
+      overflow-y: auto;
+    }
+    .sidebar h2 {
+      color: #ff69b4;
+      text-align: center;
+      margin-bottom: 30px;
+      font-size: 24px;
+    }
+    .sidebar ul {
+      list-style: none;
+      padding: 0;
+    }
+    .sidebar ul li {
+      margin: 20px 0;
+    }
+    .sidebar ul li a {
+      text-decoration: none;
+      color: #ff69b4;
+      display: block;
+      padding: 10px;
+      border-radius: 5px;
+      transition: background 0.3s, color 0.3s;
+    }
+    .sidebar ul li a:hover,
+    .sidebar ul li a.active {
+      background: #ff69b4;
+      color: #fff;
+    }
+    .sidebar ul li a .fa-paw {
+      margin-right: 10px;
+    }
+    /* Main content styling */
+    .main-content {
+      margin-left: 270px;
+      padding: 20px;
+    }
+    .header {
+      padding: 15px 20px;
+      background: linear-gradient(45deg, #ff85c0, #ff69b4); /* subtle gradient */
+      border-bottom: 2px solid #ff69b4;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* added shadow */
+    }
+    .header h1 {
+      margin: 0;
+      font-size: 24px;
+      color: #fff;
+    }
+    .card {
+      background: #fff;
+      padding: 20px;
+      margin-bottom: 20px;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* enhanced card shadow */
+      border-radius: 8px;
+      border: 1px solid #ff69b4;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 20px;
+    }
+    table, th, td {
+      border: 1px solid #ff69b4;
+    }
+    th, td {
+      padding: 10px;
+      text-align: left;
+    }
+    table tbody tr:nth-child(even) {
+      background-color: #fff5fa; /* subtle alternate row color */
+    }
+    .btn {
+      padding: 5px 10px;
+      background: #ff69b4;
+      color: #fff;
+      border: none;
+      border-radius: 4px; /* slightly more rounded */
+      cursor: pointer;
+      margin: 2px;
+      transition: background 0.3s, transform 0.2s;
+    }
+    .btn:hover {
+      background: #ff85c0;
+      transform: scale(1.05);
+    }
+    form label {
+      display: inline-block;
+      margin-bottom: 10px;
+      font-weight: bold;
+    }
+    form input, form select {
+      padding: 5px;
+      border: 1px solid #ccc;
+      border-radius: 3px;
+      width: 200px;
+    }
+    /* Modal styling */
+    .modal {
+      display: none;
+      position: fixed;
+      z-index: 999;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      overflow: auto;
+      background-color: rgba(0,0,0,0.5);
+    }
+    .modal-content {
+      background: #fff;
+      margin: 10% auto;
+      padding: 20px;
+      border: 1px solid #ff69b4;
+      width: 80%;
+      max-width: 500px;
+      border-radius: 8px;
+      position: relative;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.2); /* added shadow */
+    }
+    .modal-close {
+      position: absolute;
+      right: 15px;
+      top: 10px;
+      font-size: 28px;
+      font-weight: bold;
+      color: #333;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+  <div class="sidebar">
+    <h2><i class="fas fa-paw"></i> Paw Palace</h2>
+    <ul>
+      <li><a href="#" data-page="dashboard" class="active"><i class="fas fa-home"></i>Dashboard</a></li>
+      <li><a href="#" data-page="users"><i class="fas fa-user"></i> Users</a></li>
+      <li><a href="#" data-page="products"><i class="fas fa-box"></i> Products</a></li>
+      <li><a href="#" data-page="orders"><i class="fas fa-shopping-cart"></i> Orders</a></li>
+      <li><a href="#" data-page="adoption"><i class="fas fa-paw"></i>Adoption</a></li>
+      <li><a href="#" data-page="analytics"><i class="fas fa-chart-line"></i> Analytics</a></li>
+      <li><a href="#" data-page="settings"><i class="fas fa-cogs"></i> Settings</a></li>
+    </ul>
+  </div>
+  <div class="main-content">
+    <div class="header">
+      <h1 id="page-title">Dashboard</h1>
+      <div class="user-info">
+        <span>ADMIN</span>
+      </div>
+    </div>
+    <div class="content-area" id="content-area">
+      <div class="card">
+        <h2>Welcome to Paw Palace Admin Panel</h2>
+        <p>Manage everything in style with a consistent #ff69b4 pink & white theme.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal for Order/Adoption/Product Editing Details -->
+  <div id="modal" class="modal">
+    <div class="modal-content">
+      <span class="modal-close">&times;</span>
+      <div id="modal-body"></div>
+    </div>
+  </div>
+
+  <script>
+    // Sample data for orders and adoptions
+    const orderDetails = {
+      "#001": {
+        products: "Pookie Dog Collar, Dog Car Seat Cover",
+        payment: "₹2498",
+        method: "Google Pay"
+      },
+    };
+
+    const adoptionDetails = {
+      "#A001": {
+        contact: "8788150805",
+        email: "naiksahil697@gmail.com",
+        address: "Ambegaon Pathar, Pume, 411046"
+      }
+    };
+
+    // Function to show modal with given content
+    function showModal(content) {
+      document.getElementById('modal-body').innerHTML = content;
+      document.getElementById('modal').style.display = "block";
+    }
+
+    // Function to show product edit modal
+    function showProductEditModal(productId, row) {
+      const productName = row.querySelector('td:nth-child(1)').innerText;
+      const productStock = row.querySelector('td:nth-child(2)').innerText;
+      const formHtml = `
+        <h3>Edit Product ${productId}</h3>
+        <form id="productEditForm">
+          <label>Product Name:</label><br/>
+          <input type="text" id="editProductName" value="${productName}" /><br/><br/>
+          <label>Stock:</label><br/>
+          <input type="number" id="editProductStock" value="${productStock}" /><br/><br/>
+          <button type="submit" class="btn">Save</button>
+        </form>`;
+      showModal(formHtml);
+      document.getElementById('productEditForm').addEventListener('submit', function(e) {
+        e.preventDefault();
+        const newName = document.getElementById('editProductName').value;
+        const newStock = document.getElementById('editProductStock').value;
+        row.querySelector('td:nth-child(1)').innerText = newName;
+        row.querySelector('td:nth-child(2)').innerText = newStock;
+        document.getElementById('modal').style.display = "none";
+        alert("Product updated successfully.");
+      });
+    }
+
+    // Close modal when user clicks on (x) or outside modal-content
+    document.querySelector('.modal-close').addEventListener('click', function() {
+      document.getElementById('modal').style.display = "none";
+    });
+    window.addEventListener('click', function(e) {
+      const modal = document.getElementById('modal');
+      if(e.target == modal) {
+        modal.style.display = "none";
+      }
+    });
+
+    // Function to generate product table for a given category with 16 sample products
+    function generateProductTable(category) {
+      let table = '<h3>' + category + '</h3>';
+      table += `<table>
+                  <thead>
+                    <tr>
+                      <th>Product Name</th>
+                      <th>Stock</th>
+                      <th>Qty</th>
+                      <th>Actions</th>
+                    </tr>
+                  </thead>
+                  <tbody>`;
+      for (let i = 1; i <= 16; i++) {
+        let stock = Math.floor(Math.random() * 50) + 1;
+        let productId = category + '-' + i;
+        let productName = category + " Product " + i;
+        table += `<tr data-product-id="${productId}">
+                    <td>${productName}</td>
+                    <td class="stock">${stock}</td>
+                    <td class="quantity">0</td>
+                    <td>
+                      <button class="btn" data-action="product-add" data-product-id="${productId}">+</button>
+                      <button class="btn" data-action="product-remove" data-product-id="${productId}">-</button>
+                      <button class="btn" data-action="product-edit" data-product-id="${productId}">Edit</button>
+                    </td>
+                  </tr>`;
+      }
+      table += `</tbody></table>`;
+      return table;
+    }
+
+    // Update content based on sidebar navigation
+    document.querySelectorAll('.sidebar ul li a').forEach(link => {
+      link.addEventListener('click', function(e) {
+        e.preventDefault();
+        document.querySelectorAll('.sidebar ul li a').forEach(a => a.classList.remove('active'));
+        this.classList.add('active');
+        const page = this.getAttribute('data-page');
+        document.getElementById('page-title').innerText = page.charAt(0).toUpperCase() + page.slice(1);
+        let content = '';
+        switch(page) {
+          case 'dashboard':
+            content = `
+              <div class="card">
+                <h2>Dashboard</h2>
+                <p>This is your dashboard where you can get an overview and manage everything at a glance.</p>
+              </div>`;
+            break;
+          case 'users':
+            content = `
+              <div class="card">
+                <h2>Users</h2>
+                <p>Manage users: add, update, or remove users from the system.</p>
+                <table>
+                  <thead>
+                    <tr>
+                      <th>Email</th>
+                      <th>Username</th>
+                      <th>Password</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>naiksahil697@gmail.com</td>
+                      <td>sahil@12</td>
+                      <td>12345678</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>`;
+            break;
+          case 'products':
+            content = `
+              <div class="card">
+                <h2>Products</h2>
+                <p>Manage products: update stock, add new items, remove old products, or edit to display original brands.</p>
+                ${generateProductTable("Food")}
+                ${generateProductTable("Clothes")}
+                ${generateProductTable("Pharmacy")}
+                ${generateProductTable("Toys")}
+                ${generateProductTable("Grooming")}
+                ${generateProductTable("Accessories")}
+                ${generateProductTable("Treats")}
+              </div>`;
+            break;
+          case 'orders':
+            content = `
+              <div class="card">
+                <h2>Orders</h2>
+                <p>Track and manage customer orders in real-time.</p>
+                <table>
+                  <thead>
+                    <tr>
+                      <th>Order ID</th>
+                      <th>Customer</th>
+                      <th>Status</th>
+                      <th>Actions</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr data-order-id="#001">
+                      <td>#001</td>
+                      <td>sahil@12</td>
+                      <td>Processing</td>
+                      <td><button class="btn" data-action="order-view" data-order-id="#001">View</button></td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>`;
+            break;
+          case 'adoption':
+            content = `
+              <div class="card">
+                <h2>Adoption</h2>
+                <p>Manage pet adoption requests and details.</p>
+                <table>
+                  <thead>
+                    <tr>
+                      <th>Request ID</th>
+                      <th>Pet Name</th>
+                      <th>Requester</th>
+                      <th>Status</th>
+                      <th>Actions</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr data-adoption-id="#A001">
+                      <td>#A001</td>
+                      <td>Buddy</td>
+                      <td>sahil@12</td>
+                      <td id="adoption-status">Pending</td>
+                      <td>
+                        <button class="btn" data-action="adoption-approve" data-adoption-id="#A001">Approve</button>
+                        <button class="btn" data-action="adoption-reject" data-adoption-id="#A001">Reject</button>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>`;
+            break;
+          case 'analytics':
+            content = `
+              <div class="card">
+                <h2>Analytics</h2>
+                <p>Data visible for Sir:</p>
+                <ul>
+                  <li>Total Sales: 2500</li>
+                  <li>New Orders: 45</li>
+                  <li>Active Users: 300</li>
+                  <li>Conversion Rate: 4.5%</li>
+                </ul>
+                <canvas id="analyticsChart" width="400" height="200"></canvas>
+              </div>`;
+            break;
+          case 'settings':
+            content = `
+              <div class="card">
+                <h2>Settings</h2>
+                <p>Update your preferences and system settings here.</p>
+                <form id="settingsForm">
+                  <label for="theme">Theme Color:</label>
+                  <input type="text" id="theme" name="theme" value="#ff69b4" />
+                  <br/><br/>
+                  <label for="payment">Payment Gateway:</label>
+                  <select id="payment" name="payment">
+                    <option value="UPI">UPI</option>
+                    <option value="Credit Card">Credit Card</option>
+                    <option value="Net Banking">Net Banking</option>
+                     <option value="Cash on Delivery">Cash on Delivery</option>
+                  </select>
+                  <br/><br/>
+                  <label for="shipping">Shipping Options:</label>
+                  <select id="shipping" name="shipping">
+                    <option value="standard">Standard</option>
+                    <option value="express">Express</option>
+                    <option value="overnight">Overnight</option>
+                  </select>
+                  <br/><br/>
+                  <label for="tax">Tax Configuration (%):</label>
+                  <input type="number" id="tax" name="tax" value="18" />
+                  <br/><br/>
+                  <label for="notifications">Email Notifications:</label>
+                  <select id="notifications" name="notifications">
+                    <option value="enabled">Enabled</option>
+                    <option value="disabled">Disabled</option>
+                  </select>
+                  <br/><br/>
+                  <button type="submit" class="btn">Save Settings</button>
+                </form>
+              </div>`;
+            break;
+          default:
+            content = `
+              <div class="card">
+                <h2>Welcome</h2>
+                <p>Select an option from the sidebar to begin.</p>
+              </div>`;
+        }
+        document.getElementById('content-area').innerHTML = content;
+        // If Analytics page, initialize chart after content load
+        if(page === 'analytics'){
+          setTimeout(() => {
+            var ctx = document.getElementById('analyticsChart').getContext('2d');
+            new Chart(ctx, {
+              type: 'bar',
+              data: {
+                labels: ["Total Sales", "New Orders", "Active Users", "Conversion Rate"],
+                datasets: [{
+                  label: "Metrics",
+                  data: [2500, 45, 300, 4.5],
+                  backgroundColor: "#ff69b4"
+                }]
+              },
+              options: {
+                scales: {
+                  y: { beginAtZero: true }
+                }
+              }
+            });
+          }, 100);
+        }
+      });
+    });
+
+    // Global event delegation for various button actions
+    document.addEventListener('click', function(e) {
+      const target = e.target;
+      // Product Add: Increase quantity
+      if(target.dataset.action === 'product-add') {
+        const row = target.closest('tr');
+        const qtyElem = row.querySelector('.quantity');
+        let currentQty = parseInt(qtyElem.innerText);
+        qtyElem.innerText = currentQty + 1;
+      }
+      // Product Remove: Decrease quantity (not below 0)
+      else if(target.dataset.action === 'product-remove') {
+        const row = target.closest('tr');
+        const qtyElem = row.querySelector('.quantity');
+        let currentQty = parseInt(qtyElem.innerText);
+        if(currentQty > 0) { qtyElem.innerText = currentQty - 1; }
+      }
+      // Product Edit: Open edit modal to update details (name, brand, stock)
+      else if(target.dataset.action === 'product-edit') {
+        const row = target.closest('tr');
+        const productId = target.dataset.productId;
+        showProductEditModal(productId, row);
+      }
+      // Order View: Show order details in modal
+      else if(target.dataset.action === 'order-view') {
+        const orderId = target.dataset.orderId;
+        const details = orderDetails[orderId];
+        if(details) {
+          const content = `<h3>Order ${orderId} Details</h3>
+                           <p><strong>Products:</strong> ${details.products}</p>
+                           <p><strong>Payment:</strong> ${details.payment}</p>
+                           <p><strong>Method:</strong> ${details.method}</p>`;
+          showModal(content);
+        }
+      }
+      // Adoption Approve: Replace Approve/Reject with a View Details button and update status
+      else if(target.dataset.action === 'adoption-approve') {
+        const row = target.closest('tr');
+        const adoptionId = target.dataset.adoptionId;
+        row.querySelector('td:last-child').innerHTML = `<button class="btn" data-action="adoption-view" data-adoption-id="${adoptionId}">View Details</button>`;
+        row.querySelector('#adoption-status').innerText = "Approved";
+        alert("Adoption approved. You can now view details.");
+      }
+      // Adoption Reject: Mark as rejected
+      else if(target.dataset.action === 'adoption-reject') {
+        const row = target.closest('tr');
+        const adoptionId = target.dataset.adoptionId;
+        row.querySelector('#adoption-status').innerText = "Rejected";
+        row.querySelector('td:last-child').innerHTML = "";
+        alert("Adoption " + adoptionId + " rejected.");
+      }
+      // Adoption View: Show adopter details in modal
+      else if(target.dataset.action === 'adoption-view') {
+        const adoptionId = target.dataset.adoptionId;
+        const details = adoptionDetails[adoptionId];
+        if(details) {
+          const content = `<h3>Adoption ${adoptionId} Details</h3>
+                           <p><strong>Contact:</strong> ${details.contact}</p>
+                           <p><strong>Email:</strong> ${details.email}</p>
+                           <p><strong>Address:</strong> ${details.address}</p>`;
+          showModal(content);
+        }
+      }
+    });
+
+    // Settings form: Save and show current settings
+    document.addEventListener('submit', function(e) {
+      if(e.target.id === "settingsForm") {
+        e.preventDefault();
+        const theme = document.getElementById('theme').value;
+        const payment = document.getElementById('payment').value;
+        const shipping = document.getElementById('shipping').value;
+        const tax = document.getElementById('tax').value;
+        const notifications = document.getElementById('notifications').value;
+        alert("Settings Saved:\nTheme: " + theme + "\nPayment: " + payment + "\nShipping: " + shipping + "\nTax: " + tax + "\nNotifications: " + notifications);
+      }
+    });
+  </script>
+</body>
+</html>

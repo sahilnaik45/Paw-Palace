@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dog Treat - Paw Palace</title>
+  <link rel="stylesheet" href="product.css" />
+</head>
+<body>
+  <header>
+    <h1>Paw Palace</h1>
+    <div class="header-extras">
+      <a href="products.html" style="color: #fff; text-decoration: none;">All Products</a>
+      <a href="cart.html" style="color: #fff; text-decoration: none;">Cart <span id="cart-count" class="cart-count">0</span></a>
+      <span class="compare-link" onclick="openCompareModal()">View Compare (<span id="compare-count">0</span>)</span>
+    </div>
+  </header>
+  
+  <!-- Category Tabs -->
+  <div class="category-tabs">
+    <a href="food.html" class="tab">Food</a>
+    <a href="accessories.html" class="tab">Accessories</a>
+    <a href="toys.html" class="tab">Toys</a>
+    <a href="treats.html" class="tab active">Treats</a>
+    <a href="pharmacy.html" class="tab">Pharmacy</a>
+    <a href="grooming.html" class="tab">Grooming</a>
+    <a href="clothes.html" class="tab">Clothes</a>
+</div>
+
+  
+  <div class="container">
+    <h2 style="text-align: center; color: #ff4f8b; margin-bottom: 1rem;">Dog Treats</h2>
+    
+    <!-- Filter Section: Sort on Left, Search on Right -->
+    <div class="filter-section">
+      <div class="filter-left">
+        <select id="sort-filter">
+          <option value="">Sort By</option>
+          <option value="popularity">Popularity</option>
+          <option value="price-low-high">Price: Low to High</option>
+          <option value="price-high-low">Price: High to Low</option>
+        </select>
+      </div>
+      <div class="filter-right">
+        <input type="text" id="search-bar" placeholder="Search Dog Food...">
+      </div>
+    </div>
+    
+    <!-- Product Grid -->
+    <div class="product-grid" id="product-grid">
+      <!-- Products will be appended here dynamically -->
+    </div>
+    <div id="load-more-container">
+      <button id="load-more-btn" onclick="loadMoreProducts()">Load More</button>
+    </div>
+  </div>
+  
+  <!-- Quick View Modal -->
+  <div id="quick-view-modal" class="modal">
+    <div class="modal-content">
+      <span class="close-modal" id="close-modal">&times;</span>
+      <div id="quick-view-content">
+        <!-- Quick view details here -->
+      </div>
+    </div>
+  </div>
+  
+  <!-- Compare Modal -->
+  <div id="compare-modal" class="compare-modal">
+    <div class="compare-modal-content">
+      <span class="close-modal" id="close-compare-modal">&times;</span>
+      <h2 style="color: #ff4f8b; text-align: center;">Compare Products</h2>
+      <div id="compare-list" class="compare-list">
+        <!-- Compared products here -->
+      </div>
+    </div>
+  </div>
+  
+  <script>
+    // Global arrays and variables
+    let compareList = [];
+    const selectedRatings = {};
+    let productsPerPage = 8;  // 8 products per load
+    let currentDisplayCount = 0;
+    let filteredProductsGlobal = [];
+    
+    // Dog Products Array with total 16 products
+    const products = [
+    { "id": 1, "category": "treats", "name": "Chicken Jerky Treats", "price": 699, "image": "treat1.jpg", "description": "Delicious chicken jerky for a protein boost.", "rating": 4.6, "ratingCount": 14, "availableSizes": ["100g", "250g", "500g"], "features": "High in protein, no artificial preservatives." },
+{ "id": 2, "category": "treats", "name": "Peanut Butter Dog Biscuits", "price": 499, "image": "treat2.jpg", "description": "Crunchy peanut butter-flavored biscuits.", "rating": 4.5, "ratingCount": 12, "availableSizes": ["200g", "400g"], "features": "Made with real peanut butter, no added sugar." },
+{ "id": 3, "category": "treats", "name": "Salmon Bites", "price": 799, "image": "treat3.jpg", "description": "Nutritious salmon bites rich in omega-3.", "rating": 4.7, "ratingCount": 15, "availableSizes": ["150g", "300g"], "features": "Supports skin and coat health, grain-free." },
+{ "id": 4, "category": "treats", "name": "Dental Chews", "price": 649, "image": "treat4.webp", "description": "Helps maintain oral hygiene and fresh breath.", "rating": 4.6, "ratingCount": 14, "availableSizes": ["Small", "Medium", "Large"], "features": "Reduces plaque and tartar build-up." },
+{ "id": 5, "category": "treats", "name": "Organic Sweet Potato Chews", "price": 599, "image": "treat5.jpg", "description": "All-natural, healthy chew treats.", "rating": 4.4, "ratingCount": 11, "availableSizes": ["200g", "500g"], "features": "Rich in fiber, supports digestion." },
+{ "id": 6, "category": "treats", "name": "Soft Chicken Cubes", "price": 699, "image": "treat6.jpg", "description": "Soft and tasty chicken-flavored treats.", "rating": 5, "ratingCount": 13, "availableSizes": ["150g", "300g"], "features": "Ideal for training, easy to chew." },
+{ "id": 7, "category": "treats", "name": "Bacon Strips", "price": 749, "image": "treat7.webp", "description": "Savory bacon-flavored soft chews.", "rating": 4.6, "ratingCount": 14, "availableSizes": ["100g", "250g"], "features": "Mouthwatering taste, made with real bacon." },
+{ "id": 8, "category": "treats", "name": "Grain-Free Dog Treats", "price": 699, "image": "treat8.jpg", "description": "Perfect for dogs with food sensitivities.", "rating": 4.5, "ratingCount": 12, "availableSizes": ["150g", "300g"], "features": "No grains, no artificial flavors." },
+{ "id": 9, "category": "treats", "name": "Cheese & Chicken Nuggets", "price": 849, "image": "treat9.jpg", "description": "Tasty nuggets infused with cheese and chicken.", "rating": 4.7, "ratingCount": 16, "availableSizes": ["100g", "250g"], "features": "Rich in protein and calcium." },
+{ "id": 10, "category": "treats", "name": "Meaty Training Treats", "price": 599, "image": "treat10.jpg", "description": "Soft and chewy training rewards.", "rating": 4.6, "ratingCount": 14, "availableSizes": ["150g", "300g"], "features": "Low-fat, high-protein formula." },
+{ "id": 11, "category": "treats", "name": "Freeze-Dried Lamb Treats", "price": 899, "image": "treat11.jpg", "description": "Premium lamb treats with natural flavors.", "rating": 4.8, "ratingCount": 18, "availableSizes": ["100g", "250g"], "features": "Preservative-free, rich in essential nutrients." },
+{ "id": 12, "category": "treats", "name": "Carrot & Apple Biscuits", "price": 549, "image": "treat12.webp", "description": "Healthy and delicious fruit-vegetable mix.", "rating": 4.5, "ratingCount": 13, "availableSizes": ["200g", "400g"], "features": "No artificial colors, high fiber content." },
+{ "id": 13, "category": "treats", "name": "Crunchy Duck Treats", "price": 799, "image": "treat13.webp", "description": "Premium duck-flavored crunchy treats.", "rating": 4.7, "ratingCount": 15, "availableSizes": ["100g", "250g"], "features": "Supports muscle health, rich in iron." },
+{ "id": 14, "category": "treats", "name": "Puppy Teething Sticks", "price": 599, "image": "treat14.jpg", "description": "Perfect for teething puppies.", "rating": 4.6, "ratingCount": 14, "availableSizes": ["Small", "Medium"], "features": "Soothes gums, easy to digest." },
+{ "id": 15, "category": "treats", "name": "Liver Treats", "price": 749, "image": "treat15.webp", "description": "Nutrient-rich liver-flavored treats.", "rating": 4.7, "ratingCount": 16, "availableSizes": ["100g", "250g"], "features": "Boosts immune health, high in vitamins." },
+{ "id": 16, "category": "treats", "name": "Turkey & Cranberry Bites", "price": 899, "image": "treat16.jpg", "description": "Festive turkey treats with cranberry flavor.", "rating": 4.8, "ratingCount": 18, "availableSizes": ["150g", "300g"], "features": "Rich in antioxidants, supports digestion." }
+
+
+    ];
+  </script>
+  <script src="products.js" defer></script>
+  <script>
+    function loadProducts() {
+        fetch('fetch_products.php?category=treats')
+        .then(response => response.json())
+        .then(data => {
+            let productContainer = document.getElementById("products");
+            productContainer.innerHTML = "";
+            data.forEach(product => {
+                productContainer.innerHTML += `
+                    <div>
+                        <img src="${product.image_url}" width="100" />
+                        <h3>${product.name}</h3>
+                        <p>Price: ₹${product.price}</p>
+                        <p>${product.description}</p>
+                        <p>Stock: ${product.stock}</p>
+                    </div>
+                `;
+            });
+        });
+    }
+    window.onload = loadProducts;
+</script>
+
+</body>
+</html>

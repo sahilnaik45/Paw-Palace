@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cart - Paw Palace</title>
+  <link rel="stylesheet" href="cart.css">
+</head>
+<body>
+  <header>
+    <h1>Paw Palace</h1>
+    <nav>
+      <a href="products.html">Products</a>
+    </nav>
+  </header>
+
+  <div class="cart-section">
+    <h2>Your Cart</h2>
+    <table class="cart-table">
+      <thead>
+        <tr>
+          <th>Product</th>
+          <th>Product Name</th>
+          <th>Size</th>
+          <th>Price</th>
+          <th>Quantity</th>
+          <th>Total</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+      <tbody id="cart-items"></tbody>
+    </table>
+    
+    <div class="cart-total">
+      <span>Total Amount:</span>
+      <span id="total-amount">₹0</span>
+    </div>
+
+    <div class="coupon-delivery-container">
+      <div class="estimated-delivery">
+        <span>Estimated Delivery: <strong id="delivery-date"></strong></span>
+      </div>
+      <div class="coupon-section">
+        <input type="text" id="coupon-code" placeholder="Enter Coupon Code">
+        <button onclick="applyCoupon()">Apply</button>
+      </div>
+    </div>
+    
+    <button class="checkout-btn" id="checkout-btn">Proceed to Checkout</button>
+    <div class="empty-cart" id="empty-cart-message" style="display:none;">Your cart is empty.</div>
+  </div>
+
+  <script>
+    // Load cart from localStorage
+const cart = JSON.parse(localStorage.getItem('cart')) || [];
+const cartItemsContainer = document.getElementById('cart-items');
+const totalAmountElement = document.getElementById('total-amount');
+const emptyCartMessage = document.getElementById('empty-cart-message');
+const deliveryDateElement = document.getElementById('delivery-date');
+let totalAmount = 0;
+
+// Update cart UI: iterate over cart array and populate table rows
+function updateCart() {
+  if (cart.length === 0) {
+    emptyCartMessage.style.display = 'block';
+    cartItemsContainer.style.display = 'none';
+    totalAmountElement.innerText = '₹0';
+    return;
+  }
+  emptyCartMessage.style.display = 'none';
+  cartItemsContainer.style.display = 'table-row-group';
+  totalAmount = 0;
+  cartItemsContainer.innerHTML = '';
+
+  cart.forEach((item, index) => {
+    // Destructure properties; GST removed, image added
+    const { product, size, price, quantity, image } = item;
+    // Calculate total as price * quantity (GST removed)
+    const itemTotal = price * quantity;
+    totalAmount += itemTotal;
+    const row = document.createElement('tr');
+    row.innerHTML = `
+      <td><img src="${image}" alt="${product}" style="width:50px; height:50px; object-fit: cover; border-radius: 4px;"></td>
+      <td>${product}</td>
+      <td>${size}</td>
+      <td>₹${price}</td>
+      <td>
+        <button class="quantity-btn" data-index="${index}" data-action="decrease">-</button>
+        <span class="quantity">${quantity}</span>
+        <button class="quantity-btn" data-index="${index}" data-action="increase">+</button>
+      </td>
+      <td>₹${itemTotal.toFixed(2)}</td>
+      <td>
+        <button class="remove-btn" data-index="${index}">Remove</button>
+      </td>
+    `;
+    cartItemsContainer.appendChild(row);
+  });
+  totalAmountElement.innerText = `₹${totalAmount.toFixed(2)}`;
+  calculateDeliveryDate();
+}
+
+// Calculate estimated delivery date (3 days from today)
+function calculateDeliveryDate() {
+  const today = new Date();
+  today.setDate(today.getDate() + 3);
+  deliveryDateElement.innerText = today.toDateString();
+}
+
+// Apply coupon code: if valid, apply 10% discount
+function applyCoupon() {
+  const couponCode = document.getElementById('coupon-code').value;
+  if (couponCode === 'DISCOUNT10') {
+    totalAmount *= 0.9;
+    totalAmountElement.innerText = `₹${totalAmount.toFixed(2)}`;
+    alert('Coupon Applied! 10% Discount');
+  } else {
+    alert('Invalid Coupon Code');
+  }
+}
+
+// Update quantity of an item
+function updateQuantity(index, action) {
+  if (action === 'increase') {
+    cart[index].quantity += 1;
+  } else if (action === 'decrease' && cart[index].quantity > 1) {
+    cart[index].quantity -= 1;
+  }
+  localStorage.setItem('cart', JSON.stringify(cart));
+  updateCart();
+}
+
+// Remove item from cart
+function removeItem(index) {
+  cart.splice(index, 1);
+  localStorage.setItem('cart', JSON.stringify(cart));
+  updateCart();
+}
+
+// Event delegation for quantity, remove, and save-for-later buttons
+cartItemsContainer.addEventListener('click', (e) => {
+  if (e.target.classList.contains('quantity-btn')) {
+    const index = e.target.getAttribute('data-index');
+    const action = e.target.getAttribute('data-action');
+    updateQuantity(index, action);
+  } else if (e.target.classList.contains('remove-btn')) {
+    const index = e.target.getAttribute('data-index');
+    removeItem(index);
+  } 
+});
+
+// Checkout button event:
+// Since the cart is saved in localStorage, the checkout page can read it and display the products.
+document.getElementById('checkout-btn').addEventListener('click', () => {
+  if (totalAmount > 0) {
+    window.location.href = `checkout.html?total=${totalAmount.toFixed(2)}`;
+  } else {
+    alert('Your cart is empty!');
+  }
+});
+
+// Initial load of cart items
+updateCart();
+
+  </script>
+</body>
+</html>

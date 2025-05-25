@@ -1,0 +1,99 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f9f9f9;
+}
+
+header {
+background-color: #ff4f8b; /* Softer pink for header */
+padding: 20px 30px;
+display: flex;
+justify-content: space-between;
+align-items: center;
+box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+border-bottom: 3px solid #ff4f8b; /* Elegant line under the header */
+}
+
+header h1 {
+margin: 0;
+font-size: 28px;
+color: #fff; /* White color for the header text */
+font-weight: 600;
+}
+
+header nav a {
+margin-left: 30px;
+text-decoration: none;
+color: #fff;
+font-size: 18px;
+font-weight: 500;
+transition: color 0.3s ease;
+}
+
+header nav a:hover {
+color: #fce4f1; /* Subtle hover effect */
+}
+
+.checkout-section {
+    width: 50%;
+    margin: 50px auto;
+    padding: 20px;
+    background-color: white;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+}
+
+.checkout-section h2 {
+    text-align: center;
+    margin-bottom: 30px;
+    color: #ff4f8b;
+}
+
+.checkout-section label {
+    font-weight: bold;
+}
+
+.checkout-section input,
+.checkout-section select,
+.checkout-section textarea {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+}
+
+.checkout-section textarea {
+    resize: vertical;
+}
+
+.checkout-section button {
+    background-color: #ff4f8b;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    cursor: pointer;
+    width: 100%;
+    border-radius: 5px;
+    font-size: 16px;
+}
+
+.checkout-section button:hover {
+    background-color: #e13e6e;
+}
+
+.order-placed-message {
+    text-align: center;
+    background-color: #28a745;
+    color: white;
+    padding: 10px;
+    display: none;
+    margin-top: 20px;
+}
+
+footer {
+    background-color: #ff4f8b;
+    color: white;
+    padding: 15px;
+    text-align: center;
+}

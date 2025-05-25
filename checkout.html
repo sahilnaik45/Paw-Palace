@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Checkout - Paw Palace</title>
+  <style>
+    /* Basic Styles */
+    body {
+      margin: 0;
+      font-family: 'Poppins', sans-serif;
+      background-color: #f5f5f5;
+      color: #333;
+    }
+    header {
+      background-color: #ff4f8b;
+      color: #fff;
+      padding: 1rem 2rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    header h1 {
+      margin: 0;
+      font-size: 2.5rem;
+      font-weight: 700;
+    }
+    header nav a {
+      color: #fff;
+      text-decoration: none;
+      margin-left: 1rem;
+      font-weight: 600;
+    }
+    .container {
+      max-width: 1200px;
+      margin: 2rem auto;
+      padding: 1rem;
+      background-color: #fff;
+      border-radius: 8px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    }
+    .checkout-wrapper {
+      display: flex;
+      gap: 2rem;
+      flex-wrap: wrap;
+    }
+    .form-section {
+      flex: 2;
+      min-width: 300px;
+    }
+    .summary-section {
+      flex: 1;
+      min-width: 280px;
+      background-color: #f9f9f9;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      padding: 1.5rem;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+    }
+    .summary-section h3 {
+      margin-top: 0;
+      color: #ff4f8b;
+      text-align: center;
+    }
+    form label {
+      display: block;
+      margin: 0.5rem 0 0.2rem;
+      font-weight: 600;
+    }
+    form input, form textarea, form select {
+      width: 100%;
+      padding: 0.5rem;
+      margin-bottom: 1rem;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+      font-size: 1rem;
+    }
+    .payment-method {
+      display: none;
+      margin-bottom: 1rem;
+    }
+    .terms {
+  display: flex;
+  align-items: center;
+}
+
+.terms input[type="checkbox"] {
+  margin-right: 8px;
+  width: 16px;
+  height: 16px;
+  transform: translateY(5px);
+}
+
+.terms label {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+
+
+    .btn {
+      background-color: #ff4f8b;
+      color: #fff;
+      border: none;
+      padding: 0.75rem 1.5rem;
+      border-radius: 25px;
+      font-size: 1rem;
+      cursor: pointer;
+      display: block;
+      width: 100%;
+      text-align: center;
+      transition: background-color 0.3s ease;
+      margin-top: 1rem;
+    }
+    .btn:hover {
+      background-color: #ff5e94;
+    }
+    .order-placed-message {
+      text-align: center;
+      font-size: 1.2rem;
+      color: green;
+      margin-top: 1.5rem;
+    }
+    /* Order Summary Styles */
+    .order-summary-content ul {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+    .order-summary-content li {
+      display: flex;
+      justify-content: space-between;
+      border-bottom: 1px solid #eee;
+      padding: 0.5rem 0;
+    }
+    .order-summary-content li:last-child {
+      border-bottom: none;
+    }
+    .total-amount {
+      font-size: 1.2rem;
+      font-weight: 600;
+      margin-top: 1rem;
+      text-align: center;
+      color: #ff4f8b;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Paw Palace</h1>
+    <nav>
+      <a href="products.html">Products</a>
+      <a href="cart.html">Cart</a>
+    </nav>
+  </header>
+  
+  <div class="container">
+    <h2 style="text-align: center; color: #ff4f8b; margin-bottom: 1.5rem;">Checkout</h2>
+    <div class="checkout-wrapper">
+      <!-- Left: Checkout Form -->
+      <div class="form-section">
+        <form id="checkout-form">
+          <label for="name">Name:</label>
+          <input type="text" id="name" name="name" required>
+          
+          <label for="address">Address:</label>
+          <textarea id="address" name="address" required></textarea>
+          
+          <label for="phone">Phone Number:</label>
+          <input type="tel" id="phone" name="phone" required>
+          
+          <label for="email">Email:</label>
+          <input type="email" id="email" name="email" required>
+          
+          <label for="message">Message to Delivery Boy:</label>
+          <textarea id="message" name="message"></textarea>
+          
+          <label for="payment-method">Select Payment Method:</label>
+          <select id="payment-method" name="payment-method" required>
+            <option value="">--Select--</option>
+            <option value="card">Credit/Debit Card</option>
+            <option value="upi">UPI</option>
+            <option value="net-banking">Net Banking</option>
+            <option value="cod">Cash on Delivery</option>
+          </select>
+          
+          <div id="card-details" class="payment-method">
+            <h4>Card Details</h4>
+            <label for="card-number">Card Number:</label>
+            <input type="text" id="card-number" name="card-number">
+            <label for="expiry">Expiry Date:</label>
+            <input type="text" id="expiry" name="expiry" placeholder="MM/YY">
+            <label for="cvv">CVV:</label>
+            <input type="password" id="cvv" name="cvv">
+          </div>
+          
+          <div id="upi-details" class="payment-method">
+            <h4>UPI Payment</h4>
+            <label for="upi-app">Select UPI App:</label>
+            <select id="upi-app" name="upi-app">
+              <option value="">--Select--</option>
+              <option value="gpay">Google Pay</option>
+              <option value="phonepe">PhonePe</option>
+              <option value="paytm">Paytm</option>
+            </select>
+          </div>
+          
+          <div id="net-banking-details" class="payment-method">
+            <h4>Net Banking</h4>
+            <label for="bank">Select Bank:</label>
+            <select id="bank" name="bank">
+              <option value="">--Select--</option>
+              <option value="sbi">State Bank of India</option>
+              <option value="hdfc">HDFC Bank</option>
+              <option value="icici">ICICI Bank</option>
+            </select>
+          </div>
+          
+          <div class="terms">
+            <label>
+              <input type="checkbox" id="terms" name="terms" required>
+              I agree to the <a href="terms.html" target="_blank">Terms &amp; Conditions</a>
+            </label>
+          </div>
+          
+        </form>
+      </div>
+      <!-- Right: Order Summary & Payment Button -->
+      <div class="summary-section">
+        <h3>Order Summary</h3>
+        <div class="order-summary-content" id="order-summary-content">
+          <!-- Order summary loaded dynamically -->
+        </div>
+        <div class="total-amount">Total: <span id="checkout-total">₹0</span></div>
+        <button id="main-action-btn" type="submit" class="btn">Proceed to Pay</button>
+      </div>
+    </div>
+  </div>
+  
+  <div id="order-placed-message" class="order-placed-message" style="display:none;">
+    Your Order Has Been Placed!
+  </div>
+  
+  <script>
+    // Set Total Amount from URL parameter
+    const params = new URLSearchParams(window.location.search);
+    const total = params.get('total');
+    document.getElementById('checkout-total').innerText = `₹${total}`;
+    
+    // Payment method display handling
+    const paymentMethod = document.getElementById('payment-method');
+    const cardDetails = document.getElementById('card-details');
+    const upiDetails = document.getElementById('upi-details');
+    const netBankingDetails = document.getElementById('net-banking-details');
+    const orderPlacedMessage = document.getElementById('order-placed-message');
+    
+    function hidePaymentDetails() {
+      cardDetails.style.display = 'none';
+      upiDetails.style.display = 'none';
+      netBankingDetails.style.display = 'none';
+    }
+    hidePaymentDetails();
+    
+    paymentMethod.addEventListener('change', () => {
+      hidePaymentDetails();
+      if (paymentMethod.value === 'card') {
+        cardDetails.style.display = 'block';
+      } else if (paymentMethod.value === 'upi') {
+        upiDetails.style.display = 'block';
+      } else if (paymentMethod.value === 'net-banking') {
+        netBankingDetails.style.display = 'block';
+      }
+    });
+    
+    // Load Order Summary from localStorage (assuming cart data exists)
+    function loadOrderSummary() {
+    const cart = JSON.parse(localStorage.getItem('cart')) || [];
+    const orderSummaryContent = document.getElementById('order-summary-content');
+    let totalAmount = 0;
+
+    if (cart.length === 0) {
+      orderSummaryContent.innerHTML = '<p>No items in cart.</p>';
+    } else {
+      let summaryHtml = '<ul>';
+      cart.forEach(item => {
+        let itemTotal = item.price * item.quantity; // Price * Quantity
+        totalAmount += itemTotal;
+        summaryHtml += `
+          <li>
+            <span><strong>${item.product} (x${item.quantity})</strong></span>
+            <span><strong>₹${itemTotal.toFixed(2)}</strong></span>
+          </li>`;
+      });
+      summaryHtml += '</ul>';
+      orderSummaryContent.innerHTML = summaryHtml;
+    }
+
+    // Total amount show karayla
+    document.getElementById('checkout-total').innerText = `₹${totalAmount.toFixed(2)}`;
+  }
+
+  loadOrderSummary();
+    
+    // Payment simulation and order placement
+    document.getElementById('main-action-btn').addEventListener('click', (e) => {
+      e.preventDefault();
+      const selectedPaymentMethod = paymentMethod.value;
+      if (!selectedPaymentMethod) {
+        alert('Please select a payment method.');
+        return;
+      }
+      
+      if (selectedPaymentMethod === 'upi') {
+        const upiApp = document.getElementById('upi-app').value;
+        if (!upiApp) {
+          alert('Please select a UPI app.');
+          return;
+        }
+        let paymentUrl = '';
+        switch (upiApp) {
+          case 'gpay':
+            paymentUrl = 'https://pay.google.com/intl/en_in/about/';
+            break;
+          case 'phonepe':
+            paymentUrl = 'https://www.phonepe.com/';
+            break;
+          case 'paytm':
+            paymentUrl = 'https://paytm.com/';
+            break;
+          default:
+            alert('Invalid UPI app selected.');
+            return;
+        }
+        window.open(paymentUrl, '_blank');
+      }
+      
+      // Simulate processing and then show Order Placed message
+      showOrderPlacedMessage();
+    });
+    
+    function showOrderPlacedMessage() {
+      orderPlacedMessage.style.display = 'block';
+      setTimeout(() => {
+        orderPlacedMessage.style.display = 'none';
+        // Optionally clear cart if needed:
+        // localStorage.removeItem('cart');
+        window.location.href = 'index.html';
+      }, 2000);
+    }
+  </script>
+</body>
+</html>

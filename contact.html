@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact Us - Paw Palace</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+       .bg-pink {
+            background-color: #ff4f8b;
+        }
+        .nav-link {
+            color: white;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+        .nav-link:hover {
+            color: #ffd700 !important;
+            transform: translateY(-2px);
+        }
+        .btn-pink {
+            background-color: #ff4f8b;
+            color: white;
+            transition: all 0.3s ease;
+        }
+        .btn-pink:hover {
+            background-color: #e43d73;
+            transform: translateY(-2px);
+        }
+        .contact-card {
+            transition: transform 0.3s ease;
+            border: none;
+            border-radius: 15px;
+        }
+        .contact-card:hover {
+            transform: translateY(-5px);
+        }
+        .social-icon {
+            font-size: 1.5rem;
+            margin: 0 10px;
+            color: #ff4f8b;
+            transition: all 0.3s ease;
+        }
+        .social-icon:hover {
+            color: #e43d73;
+            transform: scale(1.2);
+        }
+        .info-box {
+            padding: 20px;
+            border-radius: 10px;
+            background: rgba(255, 79, 139, 0.1);
+            transition: all 0.3s ease;
+        }
+        .info-box:hover {
+            background: rgba(255, 79, 139, 0.2);
+        }
+        #successMessage {
+            display: none;
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 1000;
+            animation: slideIn 0.5s ease-out;
+        }
+        @keyframes slideIn {
+            from { transform: translateX(100%); }
+            to { transform: translateX(0); }
+        }
+        .map-container {
+            height: 300px;
+            border-radius: 15px;
+            overflow: hidden;
+            margin-top: 30px;
+        }
+        .form-control:focus {
+            border-color: #ff4f8b;
+            box-shadow: 0 0 0 0.25rem rgba(255, 79, 139, 0.25);
+        }
+        .error-message {
+            color: #dc3545;
+            font-size: 0.875em;
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header Section (Unchanged) -->
+    <header class="bg-pink text-white py-4 shadow">
+        <div class="container text-center">
+            <h1 class="fs-3 mb-3">Paw Palace</h1>
+            <nav>
+                <ul class="nav justify-content-center">
+                    <li class="nav-item"><a href="index.html" class="nav-link">Home</a></li>
+                    <li class="nav-item"><a href="products.html" class="nav-link">Products</a></li>
+                    <li class="nav-item"><a href="dogs by breeds.html" class="nav-link">Dog Breeds</a></li>
+                    <li class="nav-item"><a href="dog-adoption.html" class="nav-link">Dog Adoption</a></li>
+                    <li class="nav-item"><a href="vet.html" class="nav-link">Consult a Vet</a></li>
+                    <li class="nav-item"><a href="about.html" class="nav-link">About Us</a></li>
+                    <li class="nav-item"><a href="contact.html" class="nav-link">Contact</a></li>
+                    <li class="nav-item"><a href="reviews.html" class="nav-link">Reviews</a></li>
+                    <li class="nav-item"><a href="faq.html" class="nav-link">FAQ</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header> 
+    
+    <!-- JavaScript to Highlight Current Page -->
+    <script>
+      const navLinks = document.querySelectorAll('.nav-link');
+      const currentPage = window.location.pathname.split('/').pop();
+      navLinks.forEach(link => {
+        if (link.getAttribute('href') === currentPage) {
+          link.classList.add('text-warning');
+        } else {
+          link.classList.remove('text-warning');
+        }
+      });
+    </script>
+
+    
+    <!-- Main Content -->
+    <main class="container my-5">
+        <!-- Success Message -->
+        <div id="successMessage" class="alert alert-success alert-dismissible fade show" role="alert">
+            Message sent successfully! We'll respond within 24 hours.
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+
+        <!-- Contact Section -->
+        <section class="mb-5 text-center">
+            <h2 class="mb-3 display-5 fw-bold">Connect With Us</h2>
+            <p class="text-muted lead">We're here to assist you with all your pet-related inquiries! Reach out anytime.</p>
+        </section>
+
+        <!-- Contact Form Section -->
+        <section class="row justify-content-center mb-5">
+            <div class="col-lg-8">
+                <div class="card shadow p-4 contact-card">
+                    <h2 class="text-center mb-4 text-pink"><i class="fas fa-paw me-2"></i>Contact Form</h2>
+                    <form id="contactForm" onsubmit="return validateForm(event)">
+                        <div class="mb-3">
+                            <label for="name" class="form-label">Your Name <span class="text-danger">*</span></label>
+                            <input type="text" class="form-control" id="name" name="name" required>
+                            <div class="error-message" id="nameError"></div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label for="email" class="form-label">Email <span class="text-danger">*</span></label>
+                                <input type="email" class="form-control" id="email" name="email" required>
+                                <div class="error-message" id="emailError"></div>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label for="phone" class="form-label">Phone</label>
+                                <input type="tel" class="form-control" id="phone" name="phone">
+                                <div class="error-message" id="phoneError"></div>
+                            </div>
+                        </div>
+                        <div class="mb-3">
+                            <label for="subject" class="form-label">Subject</label>
+                            <input type="text" class="form-control" id="subject" name="subject" maxlength="50">
+                            <div class="error-message" id="subjectError"></div>
+                        </div>
+                        <div class="mb-3">
+                            <label for="message" class="form-label">Message <span class="text-danger">*</span></label>
+                            <textarea class="form-control" id="message" name="message" rows="5" maxlength="1000" required></textarea>
+                            <div class="error-message" id="messageError"></div>
+                            <div class="text-end mt-1 text-muted"><span id="charCount">0</span>/1000</div>
+                        </div>
+                        <button type="submit" class="btn btn-pink w-100 py-2">
+                            <i class="fas fa-paper-plane me-2"></i>Send Message
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </section>
+
+        <!-- Contact Info Section -->
+        <section class="row text-center mb-5 g-4">
+            <div class="col-md-4">
+                <div class="info-box h-100">
+                    <i class="fas fa-phone-alt text-pink mb-3 fs-4"></i>
+                    <h4 class="text-pink">Phone</h4>
+                    <p class="mb-0">2642092080</p>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="info-box h-100">
+                    <i class="fas fa-envelope text-pink mb-3 fs-4"></i>
+                    <h4 class="text-pink">Email</h4>
+                    <p class="mb-0"><a href="mailto:pawpalace@gmail.com" class="text-decoration-none">pawpalace@gmail.com</a></p>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="info-box h-100">
+                    <i class="fas fa-map-marker-alt text-pink mb-3 fs-4"></i>
+                    <h4 class="text-pink">Address</h4>
+                    <p class="mb-0">456 Dhanakawadi, Pune, Maharashtra, India</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Map Section -->
+        <section class="map-container">
+            <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3784.460887402458!2d73.85678931489503!3d18.448475987443785!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3bc2ebc7d9e51c17%3A0x9c2f1c6d5d8e7b1a!2sDhanakawadi%2C%20Pune%2C%20Maharashtra!5e0!3m2!1sen!2sin!4v1623931234567!5m2!1sen!2sin" 
+                    width="100%" 
+                    height="100%" 
+                    style="border:0;" 
+                    allowfullscreen="" 
+                    loading="lazy">
+            </iframe>
+        </section>
+
+        <!-- Social Media Section -->
+        <section class="text-center my-5">
+            <h2 class="mb-4">Follow Our Journey</h2>
+            <div class="d-flex justify-content-center">
+                <a href="https://www.facebook.com/profile.php?id=100063566378453" target="_blank" class="social-icon">
+                    <i class="fab fa-facebook"></i>
+                </a>
+                <a href="https://www.instagram.com/_sahilnaik_45/" target="_blank" class="social-icon">
+                    <i class="fab fa-instagram"></i>
+                </a>
+                <a href="https://x.com/_sahilnaik_45" target="_blank" class="social-icon">
+                    <i class="fab fa-twitter"></i>
+                </a>
+                <a href="https://www.youtube.com" target="_blank" class="social-icon">
+                    <i class="fab fa-youtube"></i>
+                </a>
+            </div>
+        </section>
+    </main>
+
+    <!-- Enhanced Footer -->
+    <footer class="bg-pink text-white py-4">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6 text-center text-md-start">
+                    <p>&copy; 2024 Paw Palace. All Rights Reserved.</p>
+                </div>
+                <div class="col-md-6 text-center text-md-end">
+                    <a href="https://www.facebook.com/profile.php?id=100063566378453" class="social-link"><i class="fab fa-facebook"></i></a>
+                    <a href="https://www.instagram.com/_sahilnaik_45/" class="social-link"><i class="fab fa-instagram"></i></a>
+                    <a href="https://x.com/_sahilnaik_45" class="social-link"><i class="fab fa-twitter"></i></a>
+                    <a href="https://www.youtube.com" class="social-link"><i class="fab fa-youtube"></i></a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Form Validation with Improved Feedback
+        function validateForm(event) {
+            event.preventDefault();
+            let isValid = true;
+
+            // Clear previous errors
+            document.querySelectorAll('.error-message').forEach(el => el.style.display = 'none');
+            document.querySelectorAll('.form-control').forEach(el => el.classList.remove('is-invalid'));
+
+            // Name validation
+            const name = document.getElementById("name").value.trim();
+            const nameRegex = /^[a-zA-Z\s]{2,30}$/;
+            if (!nameRegex.test(name)) {
+                showError('nameError', 'Please enter a valid name (2-30 letters)');
+                isValid = false;
+            }
+
+            // Email validation
+            const email = document.getElementById("email").value.trim();
+            const emailRegex = /^[a-zA-Z0-9._%+-]+@gmail\.com$/;
+            if (!emailRegex.test(email)) {
+                showError('emailError', 'Please enter a valid Gmail address');
+                isValid = false;
+            }
+
+            // Phone validation
+            const phone = document.getElementById("phone").value.trim();
+            const phoneRegex = /^\d{10}$/;
+            if (phone && !phoneRegex.test(phone)) {
+                showError('phoneError', 'Please enter a 10-digit phone number');
+                isValid = false;
+            }
+
+            // Subject validation
+            const subject = document.getElementById("subject").value.trim();
+            if (subject.length > 50) {
+                showError('subjectError', 'Subject cannot exceed 50 characters');
+                isValid = false;
+            }
+
+            // Message validation
+            const message = document.getElementById("message").value.trim();
+            if (message.length === 0) {
+                showError('messageError', 'Message is required');
+                isValid = false;
+            } else if (message.length > 1000) {
+                showError('messageError', 'Message cannot exceed 1000 characters');
+                isValid = false;
+            }
+
+            if (isValid) {
+                document.getElementById("successMessage").style.display = "block";
+                document.getElementById("contactForm").reset();
+                document.getElementById("charCount").textContent = 0;
+                setTimeout(() => {
+                    document.getElementById("successMessage").style.display = "none";
+                }, 5000);
+            }
+
+            return false;
+        }
+
+        function showError(elementId, message) {
+            const errorElement = document.getElementById(elementId);
+            errorElement.textContent = message;
+            errorElement.style.display = 'block';
+            document.getElementById(elementId.replace('Error', '')).classList.add('is-invalid');
+        }
+
+        // Character Counter
+        document.getElementById('message').addEventListener('input', function() {
+            document.getElementById('charCount').textContent = this.value.length;
+        });
+    </script>
+</body>
+</html>

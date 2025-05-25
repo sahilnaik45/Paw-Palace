@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Wishlist - Paw Palace</title>
+  <link rel="stylesheet" href="wishlist.css">
+</head>
+<body>
+  <header>
+    <h1>Paw Palace</h1>
+    <div class="header-extras">
+      <a href="products.html">All Products</a>
+      <a href="cart.html">Cart <span id="cart-count" class="cart-count">0</span></a>
+      <a href="wishlist.html">Wishlist (<span id="wishlist-count">0</span>)</a>
+    </div>
+  </header>
+
+  <div class="container">
+    <h2 style="text-align: center; color: #ff4f8b; margin-bottom: 1rem;">My Wishlist</h2>
+    
+    <div class="wishlist-grid" id="wishlist-grid">
+      <!-- Wishlist items will be displayed here -->
+    </div>
+  </div>
+
+  <script>
+    function loadWishlist() {
+      const wishlistGrid = document.getElementById("wishlist-grid");
+      wishlistGrid.innerHTML = "";
+      let wishlist = JSON.parse(localStorage.getItem("wishlist")) || [];
+      
+      if (wishlist.length === 0) {
+        wishlistGrid.innerHTML = "<p style='text-align: center;'>Your wishlist is empty.</p>";
+        return;
+      }
+      
+      wishlist.forEach(product => {
+        if (!product.id || !product.name || !product.size || !product.price || !product.image) {
+          console.error("Invalid wishlist data:", product);
+          return;
+        }
+        
+        const productDiv = document.createElement("div");
+        productDiv.classList.add("product-item");
+        
+        productDiv.innerHTML = `
+          <img src="${product.image}" alt="${product.name}" style="width: 100px;">
+          <h3>${product.name}</h3>
+          <p>Size: ${product.size}</p>
+          <p>Price: ₹${product.price}</p>
+          <button onclick="removeFromWishlist(${product.id})">Remove</button>
+          <button onclick="addToCart(${product.id}, '${product.name}', '${product.size}', ${product.price}, '${product.image}')">Add to Cart</button>
+        `;
+
+        wishlistGrid.appendChild(productDiv);
+      });
+    }
+
+    function removeFromWishlist(productId) {
+      let wishlist = JSON.parse(localStorage.getItem("wishlist")) || [];
+      wishlist = wishlist.filter(product => product.id !== productId);
+      localStorage.setItem("wishlist", JSON.stringify(wishlist));
+      loadWishlist();
+    }
+
+    function addToCart(id, name, size, price, image) {
+      if (!id || !name || !size || !price || !image) {
+        console.error("Invalid product details:", { id, name, size, price, image });
+        return;
+      }
+      
+      let cart = JSON.parse(localStorage.getItem("cart")) || [];
+      
+      let existingProduct = cart.find(item => item.id === id);
+      if (existingProduct) {
+        alert("Product already in cart!");
+        return;
+      }
+      
+      cart.push({ id, name, size, price, image, quantity: 1 });
+      localStorage.setItem("cart", JSON.stringify(cart));
+      updateCartCount();
+      alert(name + " added to Cart!");
+    }
+    
+    function updateCartCount() {
+      let cart = JSON.parse(localStorage.getItem("cart")) || [];
+      document.getElementById("cart-count").innerText = cart.length;
+    }
+    
+    document.addEventListener("DOMContentLoaded", function() {
+      loadWishlist();
+      updateCartCount();
+    });
+  </script>
+</body>
+</html>

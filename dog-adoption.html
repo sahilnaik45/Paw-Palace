@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dog Adoption - Paw Palace</title>
+  <!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+    .bg-pink {
+            background-color: #ff4f8b;
+        }
+        .nav-link {
+            color: white;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+        .nav-link:hover {
+            color: #ffd700 !important;
+            transform: translateY(-2px);
+        }
+    .btn-pink {
+      background-color: #ff4f8b;
+      color: white;
+      font-size: 14px;
+      padding: 8px 20px;
+      border-radius: 5px;
+      text-decoration: none;
+      border: none;
+      transition: background-color 0.3s ease;
+    }
+    .btn-pink:hover { background-color: #e03b6d; }
+    .dog-card {
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      border-radius: 8px;
+      overflow: hidden;
+      padding: 15px;
+      background: white;
+      text-align: center;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      margin-bottom: 20px;
+    }
+    .dog-card img {
+      width: 100%;
+      height: 200px;
+      object-fit: cover;
+      border-radius: 8px;
+    }
+    .dog-card:hover {
+      transform: scale(1.05);
+      box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+    }
+  </style>
+</head>
+<body>
+
+ <!-- Header Section (Unchanged) -->
+ <header class="bg-pink text-white py-4 shadow">
+    <div class="container text-center">
+        <h1 class="fs-3 mb-3">Paw Palace</h1>
+        <nav>
+            <ul class="nav justify-content-center">
+                <li class="nav-item"><a href="index.html" class="nav-link">Home</a></li>
+                <li class="nav-item"><a href="products.html" class="nav-link">Products</a></li>
+                <li class="nav-item"><a href="dogs by breeds.html" class="nav-link">Dog Breeds</a></li>
+                <li class="nav-item"><a href="dog-adoption.html" class="nav-link">Dog Adoption</a></li>
+                <li class="nav-item"><a href="vet.html" class="nav-link">Consult a Vet</a></li>
+                <li class="nav-item"><a href="about.html" class="nav-link">About Us</a></li>
+                <li class="nav-item"><a href="contact.html" class="nav-link">Contact</a></li>
+                <li class="nav-item"><a href="reviews.html" class="nav-link">Reviews</a></li>
+                <li class="nav-item"><a href="faq.html" class="nav-link">FAQ</a></li>
+            </ul>
+        </nav>
+    </div>
+</header>
+ <!-- JavaScript to Highlight Current Page -->
+ <script>
+    const navLinks = document.querySelectorAll('.nav-link');
+    const currentPage = window.location.pathname.split('/').pop();
+    navLinks.forEach(link => {
+      if (link.getAttribute('href') === currentPage) {
+        link.classList.add('text-warning');
+      } else {
+        link.classList.remove('text-warning');
+      }
+    });
+  </script>
+
+  <!-- Dog Search & Cards Section -->
+  <div class="container my-5">
+    <!-- New Search Filter Feature -->
+    <div class="row mb-4">
+      <div class="col-md-6 offset-md-3">
+        <input type="text" id="searchInput" class="form-control" placeholder="Search by dog name or breed...">
+      </div>
+    </div>
+    <div class="row" id="dog-container"></div>
+  </div>
+
+  <script>
+    document.addEventListener("DOMContentLoaded", function() {
+      const dogs = [
+        { "name": "Buddy", "breed": "Golden Retriever", "age": "3 Years", "contact": "+91 9876543210", "price": "₹25,000", "image": "golden.webp" },
+        { "name": "Rocky", "breed": "Labrador", "age": "2 Years", "contact": "+91 9123456789", "price": "₹22,000", "image": "labra.jpeg" },
+        { "name": "Lucy", "breed": "Beagle", "age": "1.5 Years", "contact": "+91 9988776655", "price": "₹18,500", "image": "beagle.webp" },
+        { "name": "Bella", "breed": "Poodle", "age": "2.5 Years", "contact": "+91 9786543210", "price": "₹30,000", "image": "poodle.jpeg" },
+        { "name": "Charlie", "breed": "German Shepherd", "age": "4 Years", "contact": "+91 9112233445", "price": "₹28,000", "image": "german.jpeg" },
+        { "name": "Max", "breed": "Husky", "age": "3 Years", "contact": "+91 9665544332", "price": "₹40,000", "image": "husku.jpeg" },
+        { "name": "Daisy", "breed": "Shih Tzu", "age": "1 Year", "contact": "+91 9556677889", "price": "₹35,000", "image": "shitzu.jpeg" },
+        { "name": "Milo", "breed": "Pomeranian", "age": "2 Years", "contact": "+91 9223344556", "price": "₹20,000", "image": "pomerani.webp" },
+        { "name": "Oscar", "breed": "Boxer", "age": "3.5 Years", "contact": "+91 9876123456", "price": "₹27,000", "image": "boxy.jpeg" },
+        { "name": "Coco", "breed": "Dalmatian", "age": "2 Years", "contact": "+91 9312345678", "price": "₹26,500", "image": "dalmatian.jpeg" },
+        { "name": "Zoe", "breed": "Chow Chow", "age": "1.8 Years", "contact": "+91 9123456780", "price": "₹38,000", "image": "chow.jpeg" },
+        { "name": "Luna", "breed": "Doberman", "age": "2.7 Years", "contact": "+91 9998887776", "price": "₹32,000", "image": "doberman.webp" },
+        { "name": "Bruno", "breed": "Corgi", "age": "2.2 Years", "contact": "+91 9876543120", "price": "₹29,000", "image": "corgi.jpeg" },
+        { "name": "Bailey", "breed": "Maltese", "age": "1.6 Years", "contact": "+91 9234567891", "price": "₹31,500", "image": "maltese.jpeg" },
+        { "name": "Shadow", "breed": "Rottweiler", "age": "3.3 Years", "contact": "+91 9123456782", "price": "₹33,000", "image": "rott.webp" },
+        { "name": "Teddy", "breed": "Bichon Frise", "age": "1.9 Years", "contact": "+91 9988776611", "price": "₹34,500", "image": "bichon.webp" },
+        { "name": "Simba", "breed": "Saint Bernard", "age": "4.1 Years", "contact": "+91 9543216789", "price": "₹50,000", "image": "saint.jpeg" },
+        { "name": "Pepper", "breed": "Bulldog", "age": "2.4 Years", "contact": "+91 9123456767", "price": "₹37,500", "image": "bulldog.jpeg" },
+        { "name": "Jack", "breed": "Great Dane", "age": "3.2 Years", "contact": "+91 9001122334", "price": "₹45,000", "image": "great dane.jpeg" },
+        { "name": "Misty", "breed": "Cavalier King Charles Spaniel", "age": "2.1 Years", "contact": "+91 9098765432", "price": "₹28,500", "image": "king.jpeg" }
+      ];
+
+      const dogContainer = document.getElementById("dog-container");
+      const searchInput = document.getElementById("searchInput");
+
+      // Function to display dogs from a given array
+      function displayDogs(dogsArray) {
+        dogContainer.innerHTML = "";
+        dogsArray.forEach(dog => {
+          const dogCard = document.createElement("div");
+          dogCard.classList.add("col-md-3");
+          dogCard.innerHTML = `
+            <div class="dog-card">
+              <img src="${dog.image}" alt="${dog.name}">
+              <h4>${dog.name}</h4>
+              <p>Breed: ${dog.breed}</p>
+              <p>Age: ${dog.age}</p>
+              <p>Contact: <strong>${dog.contact}</strong></p>
+              <p><strong>Price: ${dog.price}</strong></p>
+              <button class="btn btn-pink adopt-btn"
+                data-name="${dog.name}"
+                data-breed="${dog.breed}"
+                data-age="${dog.age}"
+                data-contact="${dog.contact}"
+                data-price="${dog.price}"
+                data-image="${dog.image}">
+                Adopt
+              </button>
+            </div>
+          `;
+          dogContainer.appendChild(dogCard);
+        });
+
+        // Attach event listener to each adopt button
+        document.querySelectorAll(".adopt-btn").forEach(button => {
+          button.addEventListener("click", function() {
+            const dogInfo = {
+              name: this.dataset.name,
+              breed: this.dataset.breed,
+              age: this.dataset.age,
+              contact: this.dataset.contact,
+              price: this.dataset.price,
+              image: this.dataset.image
+            };
+            localStorage.setItem("adoptedDog", JSON.stringify(dogInfo));
+            window.location.href = "form.html";
+          });
+        });
+      }
+
+      // Initial display of all dogs
+      displayDogs(dogs);
+
+      // Filter dogs based on search input
+      searchInput.addEventListener("input", function() {
+        const query = this.value.toLowerCase();
+        const filteredDogs = dogs.filter(dog =>
+          dog.name.toLowerCase().includes(query) ||
+          dog.breed.toLowerCase().includes(query)
+        );
+        displayDogs(filteredDogs);
+      });
+    });
+  </script>
+
+</body>
+</html>

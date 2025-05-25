@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dog Toys - Paw Palace</title>
+  <link rel="stylesheet" href="product.css" />
+</head>
+<body>
+  <header>
+    <h1>Paw Palace</h1>
+    <div class="header-extras">
+      <a href="products.html" style="color: #fff; text-decoration: none;">All Products</a>
+      <a href="cart.html" style="color: #fff; text-decoration: none;">Cart <span id="cart-count" class="cart-count">0</span></a>
+      <span class="compare-link" onclick="openCompareModal()">View Compare (<span id="compare-count">0</span>)</span>
+    </div>
+  </header>
+  
+  <!-- Category Tabs -->
+  <div class="category-tabs">
+    <a href="food.html" class="tab">Food</a>
+    <a href="accessories.html" class="tab">Accessories</a>
+    <a href="toys.html" class="tab active">Toys</a>
+    <a href="treats.html" class="tab">Treats</a>
+    <a href="pharmacy.html" class="tab">Pharmacy</a>
+    <a href="grooming.html" class="tab">Grooming</a>
+    <a href="clothes.html" class="tab">Clothes</a>
+</div>
+
+  
+  <div class="container">
+    <h2 style="text-align: center; color: #ff4f8b; margin-bottom: 1rem;">Dog Toys</h2>
+    
+    <!-- Filter Section: Sort on Left, Search on Right -->
+    <div class="filter-section">
+      <div class="filter-left">
+        <select id="sort-filter">
+          <option value="">Sort By</option>
+          <option value="popularity">Popularity</option>
+          <option value="price-low-high">Price: Low to High</option>
+          <option value="price-high-low">Price: High to Low</option>
+        </select>
+      </div>
+      <div class="filter-right">
+        <input type="text" id="search-bar" placeholder="Search Dog Food...">
+      </div>
+    </div>
+    
+    <!-- Product Grid -->
+    <div class="product-grid" id="product-grid">
+      <!-- Products will be appended here dynamically -->
+    </div>
+    <div id="load-more-container">
+      <button id="load-more-btn" onclick="loadMoreProducts()">Load More</button>
+    </div>
+  </div>
+  
+  <!-- Quick View Modal -->
+  <div id="quick-view-modal" class="modal">
+    <div class="modal-content">
+      <span class="close-modal" id="close-modal">&times;</span>
+      <div id="quick-view-content">
+        <!-- Quick view details here -->
+      </div>
+    </div>
+  </div>
+  
+  <!-- Compare Modal -->
+  <div id="compare-modal" class="compare-modal">
+    <div class="compare-modal-content">
+      <span class="close-modal" id="close-compare-modal">&times;</span>
+      <h2 style="color: #ff4f8b; text-align: center;">Compare Products</h2>
+      <div id="compare-list" class="compare-list">
+        <!-- Compared products here -->
+      </div>
+    </div>
+  </div>
+  
+  <script>
+    // Global arrays and variables
+    let compareList = [];
+    const selectedRatings = {};
+    let productsPerPage = 8;  // 8 products per load
+    let currentDisplayCount = 0;
+    let filteredProductsGlobal = [];
+    
+    // Dog Products Array with total 16 products
+    const products = [
+    { "id": 1, "category": "toys", "name": "Rhino Rubber Toy", "price": 499, "image": "toy1.webp", "description": "Durable bone toy for aggressive chewers.", "rating": 4.5, "ratingCount": 12, "availableSizes": ["Small", "Medium", "Large"], "features": "Non-toxic, promotes dental health." },
+{ "id": 2, "category": "toys", "name": "Squeaky Plush Dog Toy", "price": 699, "image": "toy2.webp", "description": "Soft plush toy with built-in squeaker.", "rating": 4.7, "ratingCount": 15, "availableSizes": ["One Size"], "features": "Safe for all breeds, interactive play." },
+{ "id": 3, "category": "toys", "name": "Rope Tug Toy", "price": 399, "image": "toy3.jpg", "description": "Strong rope for interactive tug-of-war games.", "rating": 4.3, "ratingCount": 10, "availableSizes": ["Medium", "Large"], "features": "Strengthens jaw muscles, improves bonding." },
+{ "id": 4, "category": "toys", "name": "Interactive Treat Dispensing Toy", "price": 899, "image": "toy4.jpg", "description": "Fun toy that dispenses treats while playing.", "rating": 4.6, "ratingCount": 14, "availableSizes": ["One Size"], "features": "Encourages mental stimulation, slows down eating." },
+{ "id": 5, "category": "toys", "name": "Tennis Ball Set for Dogs", "price": 499, "image": "toy5.jpg", "description": "Soft, durable tennis balls designed for dogs.", "rating": 4.5, "ratingCount": 13, "availableSizes": ["Pack of 3"], "features": "Non-abrasive felt, perfect for fetching." },
+{ "id": 6, "category": "toys", "name": "Flying Disc Dog Toy", "price": 599, "image": "toy6.jpg", "description": "Lightweight frisbee for outdoor fun.", "rating": 4.4, "ratingCount": 11, "availableSizes": ["Medium", "Large"], "features": "Soft rubber edges, easy to throw and catch." },
+{ "id": 7, "category": "toys", "name": "Rubber Ball with Bell", "price": 349, "image": "toy7.jpg", "description": "Bouncy rubber ball with a fun jingling bell.", "rating": 4.2, "ratingCount": 9, "availableSizes": ["Small", "Medium"], "features": "Safe, durable, great for active play." },
+{ "id": 8, "category": "toys", "name": "Suction Cup Tug Toy", "price": 999, "image": "toy8.jpg", "description": "Strong suction tug toy for solo play.", "rating": 4.7, "ratingCount": 16, "availableSizes": ["One Size"], "features": "Enhances grip strength, interactive design." },
+{ "id": 9, "category": "toys", "name": "LED Light-Up Dog Ball", "price": 799, "image": "toy9.jpg", "description": "Glowing ball for night-time fetch games.", "rating": 4.6, "ratingCount": 14, "availableSizes": ["One Size"], "features": "Water-resistant, rechargeable LED." },
+{ "id": 10, "category": "toys", "name": "Floating Water Toy", "price": 749, "image": "toy10.jpg", "description": "Perfect toy for dogs who love to swim.", "rating": 4.5, "ratingCount": 12, "availableSizes": ["Medium", "Large"], "features": "Floats on water, high visibility colors." },
+{ "id": 11, "category": "toys", "name": "Puzzle Feeder Toy", "price": 1199, "image": "toy11.jpg", "description": "Challenging puzzle game that rewards treats.", "rating": 4.8, "ratingCount": 18, "availableSizes": ["One Size"], "features": "Improves cognitive skills, fun and engaging." },
+{ "id": 12, "category": "toys", "name": "Rubber Spiky Ball", "price": 449, "image": "toy12.jpg", "description": "Textured ball that massages gums while chewing.", "rating": 4.3, "ratingCount": 10, "availableSizes": ["Small", "Medium"], "features": "Great for teething puppies, durable rubber." },
+{ "id": 13, "category": "toys", "name": "Soft Plush Elephant Toy", "price": 899, "image": "toy13.jpg", "description": "Cute elephant plush for snuggling.", "rating": 4.7, "ratingCount": 15, "availableSizes": ["One Size"], "features": "Ultra-soft, machine washable." },
+{ "id": 14, "category": "toys", "name": "Automatic Ball Launcher", "price": 4999, "image": "toy14.jpg", "description": "Hands-free fetch toy for your dog.", "rating": 4.9, "ratingCount": 20, "availableSizes": ["One Size"], "features": "Adjustable launch distance, rechargeable battery." },
+{ "id": 15, "category": "toys", "name": "Cactus Chew Toy", "price": 699, "image": "toy15.jpg", "description": "Rubber chew toy with bristles for dental care.", "rating": 4.5, "ratingCount": 13, "availableSizes": ["Small", "Medium", "Large"], "features": "Massages gums, infused with mint flavor." },
+{ "id": 16, "category": "toys", "name": "Squeaky Hot Dog Toy", "price": 399, "image": "toy16.jpg", "description": "Fun hot dog-shaped squeaky toy.", "rating": 4.4, "ratingCount": 11, "availableSizes": ["One Size"], "features": "Lightweight, safe for chewing and fetching." }
+
+    ];
+  </script>
+  <script src="products.js" defer></script>
+  <script>
+    function loadProducts() {
+        fetch('fetch_products.php?category=toys')
+        .then(response => response.json())
+        .then(data => {
+            let productContainer = document.getElementById("products");
+            productContainer.innerHTML = "";
+            data.forEach(product => {
+                productContainer.innerHTML += `
+                    <div>
+                        <img src="${product.image_url}" width="100" />
+                        <h3>${product.name}</h3>
+                        <p>Price: ₹${product.price}</p>
+                        <p>${product.description}</p>
+                        <p>Stock: ${product.stock}</p>
+                    </div>
+                `;
+            });
+        });
+    }
+    window.onload = loadProducts;
+</script>
+
+</body>
+</html>

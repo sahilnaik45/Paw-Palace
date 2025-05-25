@@ -1,0 +1,297 @@
+/* General Body Styles */
+body {
+    margin: 0;
+    font-family: 'Poppins', sans-serif;
+    color: #333;
+    background-color: #f5f5f5; /* Ivory Mist background */
+}
+
+header {
+    background-color: #ff4f8b; /* Softer pink for header */
+    padding: 20px 30px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+    border-bottom: 3px solid #ff4f8b; /* Elegant line under the header */
+}
+
+header h1 {
+    margin: 0;
+    font-size: 28px;
+    color: #fff; /* White color for the header text */
+    font-weight: 600;
+}
+
+header nav a {
+    margin-left: 30px;
+    text-decoration: none;
+    color: #fff;
+    font-size: 18px;
+    font-weight: 500;
+    transition: color 0.3s ease;
+}
+
+header nav a:hover {
+    color: #fce4f1; /* Subtle hover effect */
+}
+
+/* Cart Section */
+.cart-section {
+    padding: 2rem;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.cart-section h2 {
+    text-align: center;
+    font-size: 2rem;
+    margin-bottom: 2rem;
+}
+
+/* Cart Table */
+.cart-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 2rem;
+}
+
+.cart-table th,
+.cart-table td {
+    padding: 12px;
+    text-align: center;
+    border: 1px solid #ddd;
+    font-size: 1rem;
+}
+
+.cart-table th {
+    background-color: #ff4f8b;
+    color: #f5f5f5;
+    font-weight: 600;
+}
+
+.cart-table td {
+    background-color: #f5f5f5;
+}
+
+/* Quantity Buttons */
+.quantity-control {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 5px;
+}
+
+.quantity-control button {
+    background-color: #ff4f8b;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    padding: 5px 10px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.quantity-control button:hover {
+    background-color: #ff5e94;
+}
+
+/* Total Calculation */
+.cart-total {
+    font-size: 1.2rem;
+    text-align: right;
+    font-weight: 600;
+    margin-bottom: 2rem;
+}
+
+#total-amount {
+    color: #ff4f8b;
+}
+
+/* Checkout Button */
+.checkout-btn {
+    background-color: #ff4f8b;
+    color: #f5f5f5;
+    border: none;
+    border-radius: 25px;
+    padding: 0.7rem 2rem;
+    font-size: 1.2rem;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.3s;
+    display: block;
+    margin: 0 auto;
+}
+
+.checkout-btn:hover {
+    background-color: #ff5e94;
+    transform: scale(1.05);
+}
+
+/* Empty Cart Message */
+.empty-cart {
+    text-align: center;
+    font-size: 1.2rem;
+    font-weight: bold;
+    color: #777;
+    margin-top: 2rem;
+}
+
+/* Additional Features */
+.product-recommendations {
+    margin-top: 2rem;
+    padding: 1rem;
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.stock-status {
+    font-weight: bold;
+    color: green;
+}
+
+.out-of-stock {
+    color: red;
+}
+
+.estimated-delivery {
+    font-size: 1rem;
+    color: #777;
+}
+
+.save-for-later {
+    background-color: #ff4f8b;
+    color: #fff;
+    border: none;
+    padding: 0.5rem 1rem;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.save-for-later:hover {
+    background-color: #ff5e94;
+}
+
+.coupon-section {
+    margin-top: 1rem;
+    text-align: right;
+}
+
+.coupon-input {
+    padding: 0.5rem;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+}
+
+.apply-coupon {
+    background-color: #ff4f8b;
+    color: #fff;
+    border: none;
+    padding: 0.5rem 1rem;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.apply-coupon:hover {
+    background-color: #ff5e94;
+}
+
+/* Remove Button - Red */
+.remove-btn {
+    background-color: #ff4f4f; /* Red for Remove */
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    padding: 0.5rem 1rem;
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.remove-btn:hover {
+    background-color: #ff2f2f; /* Darker Red on Hover */
+}
+
+/* Save for Later Button - Green */
+.save-later-btn {
+    background-color: #28a745; /* Green for Save for Later */
+    color: #fff;
+    border: none;
+    padding: 0.5rem 1rem;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.save-later-btn:hover {
+    background-color: #218838; /* Darker Green on Hover */
+}
+
+/* Quantity Buttons */
+.quantity-btn {
+    background-color: #ff4f8b; /* Medium pink for buttons */
+    color: #fff;
+    border: none;
+    border-radius: 50%;  /* Circular buttons for a neat look */
+    width: 25px;
+    height: 25px;
+    font-size: 1.2rem;
+    line-height: 25px;  /* Center the text vertically */
+    text-align: center;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+    margin: 0 5px;
+}
+
+.quantity-btn:hover {
+    background-color: #ff5e94; /* Brighter pink on hover */
+    transform: scale(1.05);
+}
+
+/* Estimated Delivery Section */
+
+
+/* Coupon Code Section */
+.coupon-delivery-container {
+    display: flex;
+    justify-content: space-between; /* Left & Right alignment */
+    align-items: center;
+    margin-top: 1rem;
+    padding: 0 1rem;
+}
+
+.estimated-delivery {
+    font-size: 1rem;
+    color: #777;
+}
+
+.coupon-section {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.coupon-section input {
+    padding: 0.5rem;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    font-size: 1rem;
+    width: 200px;
+}
+
+.coupon-section button {
+    background-color: #ff4f8b;
+    color: #fff;
+    border: none;
+    padding: 0.5rem 1rem;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.coupon-section button:hover {
+    background-color: #ff5e94;
+}

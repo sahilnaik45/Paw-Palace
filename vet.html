@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Consult a Vet - Paw Palace</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+  <!-- Font Awesome for icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="vet.css">
+  <style>
+    .bg-pink {
+            background-color: #ff4f8b;
+        }
+        .nav-link {
+            color: white;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+        .nav-link:hover {
+            color: #ffd700 !important;
+            transform: translateY(-2px);
+        }
+    footer {
+      background-color: #ff4f8b;
+      padding: 20px;
+      color: white;
+      text-align: center;
+      position: relative;
+      width: 100%;
+      bottom: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+    footer p {
+      color: white !important;
+    }
+    /* Fade-in animation for sections */
+    .fade-in {
+      animation: fadeIn 1.5s ease-in;
+    }
+    .social-link {
+            color: white;
+            font-size: 1.5rem;
+            margin: 0 0.5rem;
+            transition: transform 0.3s;
+        }
+
+        .social-link:hover {
+            color: #ffd700;
+            transform: translateY(-3px);
+        }
+  </style>
+</head>
+<body>
+  <!-- Header Section (Unchanged) -->
+  <header class="bg-pink text-white py-4 shadow">
+    <div class="container text-center">
+        <h1 class="fs-3 mb-3">Paw Palace</h1>
+        <nav>
+            <ul class="nav justify-content-center">
+                <li class="nav-item"><a href="index.html" class="nav-link">Home</a></li>
+                <li class="nav-item"><a href="products.html" class="nav-link">Products</a></li>
+                <li class="nav-item"><a href="dogs by breeds.html" class="nav-link">Dog Breeds</a></li>
+                <li class="nav-item"><a href="dog-adoption.html" class="nav-link">Dog Adoption</a></li>
+                <li class="nav-item"><a href="vet.html" class="nav-link">Consult a Vet</a></li>
+                <li class="nav-item"><a href="about.html" class="nav-link">About Us</a></li>
+                <li class="nav-item"><a href="contact.html" class="nav-link">Contact</a></li>
+                <li class="nav-item"><a href="reviews.html" class="nav-link">Reviews</a></li>
+                <li class="nav-item"><a href="faq.html" class="nav-link">FAQ</a></li>
+            </ul>
+        </nav>
+    </div>
+</header>
+  
+  <!-- JavaScript to Highlight Current Page -->
+  <script>
+    const navLinks = document.querySelectorAll('.nav-link');
+    const currentPage = window.location.pathname.split('/').pop();
+    navLinks.forEach(link => {
+      if (link.getAttribute('href') === currentPage) {
+        link.classList.add('text-warning');
+      } else {
+        link.classList.remove('text-warning');
+      }
+    });
+  </script>
+  
+  <!-- Main Content -->
+  <main class="container my-5">
+    <section class="about-section fade-in">
+      <h2><i class="fas fa-stethoscope"></i> Expert Veterinary Services</h2>
+      <p>At Paw Palace, our professional veterinarians offer a wide range of services, including regular health check-ups, vaccinations, dietary consultations, and more, to ensure your pet leads a happy and healthy life.</p>
+    </section>
+    
+    <section class="mission-section fade-in">
+      <h2><i class="fas fa-heart"></i> Why Choose Our Vets?</h2>
+      <p>Our veterinarians are not only highly qualified but also passionate about animals. We strive to provide top-notch care for your beloved pets.</p>
+    </section>
+    
+    <section class="services-section fade-in">
+      <h2><i class="fas fa-list"></i> Services We Provide</h2>
+      <ul>
+        <li><i class="fas fa-check-circle"></i> General Checkup</li>
+        <li><i class="fas fa-check-circle"></i> New Pet Parent</li>
+        <li><i class="fas fa-check-circle"></i> Skin Issues</li>
+        <li><i class="fas fa-check-circle"></i> Digestive Issues</li>
+        <li><i class="fas fa-check-circle"></i> Paws & Limbs</li>
+        <li><i class="fas fa-check-circle"></i> Dental Issues</li>
+        <li><i class="fas fa-check-circle"></i> Ears Issues</li>
+        <li><i class="fas fa-check-circle"></i> Eyes Issues</li>
+        <li><i class="fas fa-check-circle"></i> Reproduction</li>
+        <li><i class="fas fa-check-circle"></i> Nutrition</li>
+      </ul>
+    </section>
+    
+    <section class="cta-section text-center fade-in">
+      <h2><i class="fas fa-calendar-check"></i> Book Your Consultation Now</h2>
+      <p>Take the first step towards ensuring your pet's health and happiness. Our expert veterinarians are here to help!</p>
+      <a href="consultatio.html" class="btn btn-warning"><i class="fas fa-book-medical"></i> Book a Consultation</a>
+    </section>
+  </main>
+  
+ <!-- Enhanced Footer -->
+ <footer class="bg-pink text-white py-4">
+  <div class="container">
+      <div class="row">
+          <div class="col-md-6 text-center text-md-start">
+              <p>&copy; 2024 Paw Palace. All Rights Reserved.</p>
+          </div>
+          <div class="col-md-6 text-center text-md-end">
+              <a href="https://www.facebook.com/profile.php?id=100063566378453" class="social-link"><i class="fab fa-facebook"></i></a>
+              <a href="https://www.instagram.com/_sahilnaik_45/" class="social-link"><i class="fab fa-instagram"></i></a>
+              <a href="https://x.com/_sahilnaik_45" class="social-link"><i class="fab fa-twitter"></i></a>
+              <a href="https://www.youtube.com" class="social-link"><i class="fab fa-youtube"></i></a>
+          </div>
+      </div>
+  </div>
+</footer>
+</body>
+</html>

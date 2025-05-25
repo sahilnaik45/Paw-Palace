@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Doctor Selection - Paw Palace</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="doctor-selection.css">
+    <style>
+        .bg-pink {
+            background-color: #ff4f8b;
+        }
+
+        .nav-link {
+            color: white;
+            font-weight: 500;
+        }
+
+        .nav-link:hover {
+            text-decoration: underline;
+        }
+
+        header {
+background-color: #ff4f8b; /* Softer pink for header */
+padding: 20px 30px;
+display: flex;
+justify-content: space-between;
+align-items: center;
+box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+border-bottom: 3px solid #ff4f8b; /* Elegant line under the header */
+}
+
+header h1 {
+margin: 0;
+font-size: 28px;
+color: #fff; /* White color for the header text */
+font-weight: 600;
+}
+
+header nav a {
+margin-left: 30px;
+text-decoration: none;
+color: #fff;
+font-size: 18px;
+font-weight: 500;
+transition: color 0.3s ease;
+}
+
+header nav a:hover {
+color: #fce4f1; /* Subtle hover effect */
+}
+    </style>
+</head>
+<body>
+
+    <!-- Header Section -->
+    <header>
+        <h1>Paw Palace</h1>
+        <nav>
+            <a href="vet.html">Back</a>
+        </nav>
+    </header>
+
+    <!-- Doctor Selection Section -->
+    <div class="container my-5">
+        <h2 class="text-center" style="color: #ff4f8b;">Our Expert Vets</h2>
+    </div>
+    
+
+        <!-- Doctor Cards -->
+        <div class="row row-cols-1 row-cols-md-3 g-4">
+
+            <!-- Doctor 1 -->
+<div class="col">
+    <div class="card shadow-sm">
+        <img src="C:\Users\naiks\OneDrive\Desktop\PAW PALACE\doctor\dr1.jpg" class="card-img-top" alt="Dr. John Doe">
+        <div class="card-body">
+            <h5 class="card-title">Dr. Rajesh Kumar</h5>
+            <p><strong>Specialization:</strong> General Checkup, Skin Issues</p>
+            <p><strong>Phone:</strong> 9876543210</p>
+            <p><strong>Email:</strong>rjkumar@gmail.com</p>
+            <a href="#" class="btn btn-danger disabled" aria-disabled="true">Doctor Unavailable</a>
+        </div>
+    </div>
+</div>
+
+<!-- Doctor 2 -->
+<div class="col">
+    <div class="card shadow-sm">
+        <img src="C:\Users\naiks\OneDrive\Desktop\PAW PALACE\doctor\dr2.jpg" class="card-img-top" alt="Dr. Jane Smith">
+        <div class="card-body">
+            <h5 class="card-title">Dr. Amit Verma</h5>
+            <p><strong>Specialization:</strong> Nutrition, Digestive Issues</p>
+            <p><strong>Phone:</strong> 9123456789</p>
+            <p><strong>Email:</strong> dramit@gmail.com</p>
+            <a href="#" class="btn btn-danger disabled" aria-disabled="true">Doctor Unavailable</a>
+        </div>
+    </div>
+</div>
+
+<!-- Doctor 3 -->
+<div class="col">
+    <div class="card shadow-sm">
+        <img src="C:\Users\naiks\OneDrive\Desktop\PAW PALACE\doctor\dr3.jpg" class="card-img-top" alt="Dr. Emily Brown">
+        <div class="card-body">
+            <h5 class="card-title">Dr. Priya Sharma</h5>
+            <p><strong>Specialization:</strong> Dental Issues, Paws & Limbs</p>
+            <p><strong>Phone:</strong> 9234567890</p>
+            <p><strong>Email:</strong> priyapetdr@gmail.com</p>
+            <a href="#" class="btn btn-danger disabled" aria-disabled="true">Doctor Unavailable</a>
+        </div>
+    </div>
+</div>
+
+<!-- Doctor 4 -->
+<div class="col">
+    <div class="card shadow-sm">
+        <img src="C:\Users\naiks\OneDrive\Desktop\PAW PALACE\doctor\dr5.jpg" class="card-img-top" alt="Dr. Michael Green">
+        <div class="card-body">
+            <h5 class="card-title">Dr. Michael Green</h5>
+            <p><strong>Specialization:</strong> Skin Issues, Dental Care</p>
+            <p><strong>Phone:</strong> 9345678901</p>
+            <p><strong>Email:</strong> michaelgreen@gmail.com</p>
+            <a href="#" class="btn btn-danger disabled" aria-disabled="true">Doctor Unavailable</a>
+        </div>
+    </div>
+</div>
+
+<!-- Doctor 5 -->
+<div class="col">
+    <div class="card shadow-sm">
+        <img src="C:\Users\naiks\OneDrive\Desktop\PAW PALACE\doctor\dr4.avif" class="card-img-top" alt="Dr. Olivia White">
+        <div class="card-body">
+            <h5 class="card-title">Dr. Olivia White</h5>
+            <p><strong>Specialization:</strong> Paws & Limbs, Nutrition</p>
+            <p><strong>Phone:</strong> 9456789012</p>
+            <p><strong>Email:</strong> oliviawhite@gmail.com</p>
+            <a href="#" class="btn btn-danger disabled" aria-disabled="true">Doctor Unavailable</a>
+        </div>
+    </div>
+</div>
+
+<!-- Doctor 6 -->
+<div class="col">
+    <div class="card shadow-sm">
+        <img src="doctor/dr6.jpg" class="card-img-top" alt="Dr. Sarah Black">
+        <div class="card-body">
+            <h5 class="card-title">Dr. Sarah Black</h5>
+            <p><strong>Specialization:</strong> Reproduction, General Checkup</p>
+            <p><strong>Phone:</strong> 9567890123</p>
+            <p><strong>Email:</strong> sarahblack@gmail.com</p>
+            <a href="#" class="btn btn-danger disabled" aria-disabled="true">Doctor Unavailable</a>
+        </div>
+    </div>
+</div>
+
+
+            <!-- Additional Doctors can be added in a similar way -->
+
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-pink py-3">
+        <div class="container text-center">
+            <p class="text-white">&copy; 2025 Paw Palace. All Rights Reserved.</p>
+        </div>
+    </footer>
+
+    <!-- Bootstrap JS (Optional) -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

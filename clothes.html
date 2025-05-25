@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dog clothes - Paw Palace</title>
+  <link rel="stylesheet" href="product.css" />
+</head>
+<body>
+  <header>
+    <h1>Paw Palace</h1>
+    <div class="header-extras">
+      <a href="products.html" style="color: #fff; text-decoration: none;">All Products</a>
+      <a href="cart.html" style="color: #fff; text-decoration: none;">Cart <span id="cart-count" class="cart-count">0</span></a>
+      <span class="compare-link" onclick="openCompareModal()">View Compare (<span id="compare-count">0</span>)</span>
+    </div>
+  </header>
+  
+  <!-- Category Tabs -->
+  <div class="category-tabs">
+    <a href="food.html" class="tab">Food</a>
+    <a href="accessories.html" class="tab">Accessories</a>
+    <a href="toys.html" class="tab">Toys</a>
+    <a href="treats.html" class="tab">Treats</a>
+    <a href="pharmacy.html" class="tab">Pharmacy</a>
+    <a href="grooming.html" class="tab">Grooming</a>
+    <a href="clothes.html" class="tab active">Clothes</a>
+</div>
+
+  
+  <div class="container">
+    <h2 style="text-align: center; color: #ff4f8b; margin-bottom: 1rem;">Dog Clothes</h2>
+    
+    <!-- Filter Section: Sort on Left, Search on Right -->
+    <div class="filter-section">
+      <div class="filter-left">
+        <select id="sort-filter">
+          <option value="">Sort By</option>
+          <option value="popularity">Popularity</option>
+          <option value="price-low-high">Price: Low to High</option>
+          <option value="price-high-low">Price: High to Low</option>
+        </select>
+      </div>
+      <div class="filter-right">
+        <input type="text" id="search-bar" placeholder="Search Dog Food...">
+      </div>
+    </div>
+    
+    <!-- Product Grid -->
+    <div class="product-grid" id="product-grid">
+      <!-- Products will be appended here dynamically -->
+    </div>
+    <div id="load-more-container">
+      <button id="load-more-btn" onclick="loadMoreProducts()">Load More</button>
+    </div>
+  </div>
+  
+  <!-- Quick View Modal -->
+  <div id="quick-view-modal" class="modal">
+    <div class="modal-content">
+      <span class="close-modal" id="close-modal">&times;</span>
+      <div id="quick-view-content">
+        <!-- Quick view details here -->
+      </div>
+    </div>
+  </div>
+  
+  <!-- Compare Modal -->
+  <div id="compare-modal" class="compare-modal">
+    <div class="compare-modal-content">
+      <span class="close-modal" id="close-compare-modal">&times;</span>
+      <h2 style="color: #ff4f8b; text-align: center;">Compare Products</h2>
+      <div id="compare-list" class="compare-list">
+        <!-- Compared products here -->
+      </div>
+    </div>
+  </div>
+  
+  <script>
+    // Global arrays and variables
+    let compareList = [];
+    const selectedRatings = {};
+    let productsPerPage = 8;  // 8 products per load
+    let currentDisplayCount = 0;
+    let filteredProductsGlobal = [];
+    
+    // Dog Products Array with total 16 products
+    const products = [
+    { id: 1, category: 'clothes', name: 'Winter Dog Jacket', price: 1200, image: 'clothes1.webp', description: 'Warm and stylish winter jacket for dogs.', rating: 4.5, ratingCount: 12, availableSizes: ['S', 'M', 'L', 'XL'], features: 'Water-resistant; fleece-lined for warmth.' },
+{ id: 2, category: 'clothes', name: 'Cute Dog Hoodie', price: 950, image: 'clothes2.jpg', description: 'Soft and comfy hoodie for your furry friend.', rating: 4.3, ratingCount: 10, availableSizes: ['XS', 'S', 'M', 'L'], features: 'Hooded design with breathable fabric.' },
+{ id: 3, category: 'clothes', name: 'Fancy Party Outfit', price: 1800, image: 'clothes3.jpg', description: 'Elegant party outfit for special occasions.', rating: 4.8, ratingCount: 14, availableSizes: ['S', 'M', 'L'], features: 'Premium fabric with stylish bow tie.' },
+{ id: 4, category: 'clothes', name: 'Raincoat for Dogs', price: 1100, image: 'clothes4.jpg', description: 'Lightweight and waterproof raincoat.', rating: 4.6, ratingCount: 11, availableSizes: ['M', 'L', 'XL'], features: 'Waterproof material; easy to wear.' },
+{ id: 5, category: 'clothes', name: 'Summer T-Shirt', price: 700, image: 'clothes5.jpg', description: 'Cool and breathable t-shirt for summer.', rating: 4.2, ratingCount: 9, availableSizes: ['XS', 'S', 'M', 'L', 'XL'], features: 'Soft cotton fabric; machine washable.' },
+{ id: 6, category: 'clothes', name: 'Cozy Dog Sweater', price: 1300, image: 'clothes6.webp', description: 'Knitted sweater to keep your dog warm.', rating: 4.7, ratingCount: 13, availableSizes: ['S', 'M', 'L', 'XL'], features: 'Stretchable knit; stylish and comfy.' },
+{ id: 7, category: 'clothes', name: 'Classic Denim Jacket', price: 1450, image: 'clothes7.jpg', description: 'Trendy denim jacket for your pup.', rating: 4.5, ratingCount: 10, availableSizes: ['S', 'M', 'L'], features: 'Stylish and durable fabric.' },
+{ id: 8, category: 'clothes', name: 'Fluffy Dog Pajamas', price: 850, image: 'clothes8.jpg', description: 'Super soft pajamas for a comfy sleep.', rating: 4.3, ratingCount: 8, availableSizes: ['XS', 'S', 'M'], features: 'Made with breathable cotton fabric.' },
+{ id: 9, category: 'clothes', name: 'Formal Dog Suit', price: 2000, image: 'clothes9.jpg', description: 'Elegant suit for stylish dogs.', rating: 4.9, ratingCount: 15, availableSizes: ['M', 'L', 'XL'], features: 'Premium tuxedo design for events.' },
+{ id: 10, category: 'clothes', name: 'Soft Woolen Vest', price: 1000, image: 'clothes10.jpeg', description: 'Warm woolen vest for chilly days.', rating: 4.4, ratingCount: 9, availableSizes: ['S', 'M', 'L'], features: 'Knitted wool for extra warmth.' },
+{ id: 11, category: 'clothes', name: 'Sun Protection Shirt', price: 900, image: 'clothes11.webp', description: 'Protects your dog from UV rays.', rating: 4.3, ratingCount: 10, availableSizes: ['XS', 'S', 'M', 'L'], features: 'UPF fabric; lightweight and breathable.' },
+{ id: 12, category: 'clothes', name: 'Halloween Costume', price: 1350, image: 'clothes12.jpg', description: 'Perfect costume for Halloween parties.', rating: 4.6, ratingCount: 12, availableSizes: ['S', 'M', 'L', 'XL'], features: 'Funny and spooky design.' },
+{ id: 13, category: 'clothes', name: 'Christmas Sweater', price: 1250, image: 'clothes13.jpg', description: 'Festive sweater for Christmas vibes.', rating: 4.8, ratingCount: 14, availableSizes: ['S', 'M', 'L'], features: 'Warm and stylish holiday print.' },
+{ id: 14, category: 'clothes', name: 'Reflective Night Jacket', price: 1500, image: 'clothes14.jpg', description: 'Reflective jacket for night walks.', rating: 4.7, ratingCount: 11, availableSizes: ['M', 'L', 'XL'], features: 'High-visibility design for safety.' },
+{ id: 15, category: 'clothes', name: 'Striped Beach Shirt', price: 850, image: 'clothes15.jpg', description: 'Lightweight beachwear for dogs.', rating: 4.2, ratingCount: 8, availableSizes: ['XS', 'S', 'M', 'L'], features: 'Breathable and comfortable fabric.' },
+{ id: 16, category: 'clothes', name: 'Luxury Fur Coat', price: 2200, image: 'clothes16.jpg', description: 'Premium fur coat for elite dogs.', rating: 4.9, ratingCount: 16, availableSizes: ['S', 'M', 'L'], features: 'Ultra-soft faux fur; elegant design.' }
+    ];
+  </script>
+  <script src="products.js" defer></script>
+  <script>
+    function loadProducts() {
+        fetch('fetch_products.php?category=clothes')
+        .then(response => response.json())
+        .then(data => {
+            let productContainer = document.getElementById("products");
+            productContainer.innerHTML = "";
+            data.forEach(product => {
+                productContainer.innerHTML += `
+                    <div>
+                        <img src="${product.image_url}" width="100" />
+                        <h3>${product.name}</h3>
+                        <p>Price: ₹${product.price}</p>
+                        <p>${product.description}</p>
+                        <p>Stock: ${product.stock}</p>
+                    </div>
+                `;
+            });
+        });
+    }
+    window.onload = loadProducts;
+</script>
+
+</body>
+</html>

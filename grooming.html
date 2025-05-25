@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dog Grooming - Paw Palace</title>
+  <link rel="stylesheet" href="product.css" />
+</head>
+<body>
+  <header>
+    <h1>Paw Palace</h1>
+    <div class="header-extras">
+      <a href="products.html" style="color: #fff; text-decoration: none;">All Products</a>
+      <a href="cart.html" style="color: #fff; text-decoration: none;">Cart <span id="cart-count" class="cart-count">0</span></a>
+      <span class="compare-link" onclick="openCompareModal()">View Compare (<span id="compare-count">0</span>)</span>
+    </div>
+  </header>
+  
+  <!-- Category Tabs -->
+  <div class="category-tabs">
+    <a href="food.html" class="tab">Food</a>
+    <a href="accessories.html" class="tab">Accessories</a>
+    <a href="toys.html" class="tab">Toys</a>
+    <a href="treats.html" class="tab">Treats</a>
+    <a href="pharmacy.html" class="tab">Pharmacy</a>
+    <a href="grooming.html" class="tab active">Grooming</a>
+    <a href="clothes.html" class="tab">Clothes</a>
+</div>
+
+  
+  <div class="container">
+    <h2 style="text-align: center; color: #ff4f8b; margin-bottom: 1rem;">Dog Grooming</h2>
+    
+    <!-- Filter Section: Sort on Left, Search on Right -->
+    <div class="filter-section">
+      <div class="filter-left">
+        <select id="sort-filter">
+          <option value="">Sort By</option>
+          <option value="popularity">Popularity</option>
+          <option value="price-low-high">Price: Low to High</option>
+          <option value="price-high-low">Price: High to Low</option>
+        </select>
+      </div>
+      <div class="filter-right">
+        <input type="text" id="search-bar" placeholder="Search Dog Food...">
+      </div>
+    </div>
+    
+    <!-- Product Grid -->
+    <div class="product-grid" id="product-grid">
+      <!-- Products will be appended here dynamically -->
+    </div>
+    <div id="load-more-container">
+      <button id="load-more-btn" onclick="loadMoreProducts()">Load More</button>
+    </div>
+  </div>
+  
+  <!-- Quick View Modal -->
+  <div id="quick-view-modal" class="modal">
+    <div class="modal-content">
+      <span class="close-modal" id="close-modal">&times;</span>
+      <div id="quick-view-content">
+        <!-- Quick view details here -->
+      </div>
+    </div>
+  </div>
+  
+  <!-- Compare Modal -->
+  <div id="compare-modal" class="compare-modal">
+    <div class="compare-modal-content">
+      <span class="close-modal" id="close-compare-modal">&times;</span>
+      <h2 style="color: #ff4f8b; text-align: center;">Compare Products</h2>
+      <div id="compare-list" class="compare-list">
+        <!-- Compared products here -->
+      </div>
+    </div>
+  </div>
+  
+  <script>
+    // Global arrays and variables
+    let compareList = [];
+    const selectedRatings = {};
+    let productsPerPage = 8;  // 8 products per load
+    let currentDisplayCount = 0;
+    let filteredProductsGlobal = [];
+    
+    // Dog Products Array with total 16 products
+    const products = [
+{ "id": 1, "category": "pharmacy", "name": "Multivitamin Supplements", "price": 799, "image": "groom1.jpg", "description": "Essential vitamins and minerals for overall health.", "rating": 4.6, "ratingCount": 14, "availableSizes": ["60 tablets", "120 tablets"], "features": "Supports immune system and joint health." },
+{ "id": 2, "category": "grooming", "name": "Hypoallergenic Dog Shampoo", "price": 699, "image": "groom2.jpg", "description": "Gentle and soothing shampoo for all breeds.", "rating": 4.7, "ratingCount": 15, "availableSizes": ["250ml", "500ml"], "features": "Tear-free formula with natural extracts." },
+{ "id": 3, "category": "grooming", "name": "Fur Friendly Detangling Dog Conditioner", "price": 799, "image": "groom3.jpg", "description": "Leaves coat soft, shiny, and tangle-free.", "rating": 4.6, "ratingCount": 14, "availableSizes": ["250ml", "500ml"], "features": "Infused with aloe vera and coconut oil." },
+{ "id": 4, "category": "grooming", "name": "Boltz Flea & Tick Shampoo", "price": 899, "image": "groom4.jpg", "description": "Kills and repels fleas and ticks naturally.", "rating": 4.7, "ratingCount": 16, "availableSizes": ["250ml", "500ml"], "features": "Contains neem and tea tree oil." },
+{ "id": 5, "category": "grooming", "name": "Hachiko Deodorizing Spray", "price": 699, "image": "groom5.jpg", "description": "Keeps your pet fresh and odor-free.", "rating": 4.5, "ratingCount": 13, "availableSizes": ["150ml", "300ml"], "features": "Long-lasting fragrance with antibacterial properties." },
+{ "id": 6, "category": "grooming", "name": "Nail Clipper & File Set", "price": 749, "image": "groom6.jpg", "description": "Safe and precise nail trimming kit.", "rating": 4.6, "ratingCount": 14, "availableSizes": ["One Size"], "features": "Ergonomic handle with safety guard." },
+{ "id": 7, "category": "grooming", "name": "Double-Sided Grooming Brush", "price": 850, "image": "groom7.webp", "description": "Detangles fur and removes loose hair.", "rating": 4.7, "ratingCount": 15, "availableSizes": ["Small", "Large"], "features": "Soft bristles and stainless steel pins." },
+{ "id": 8, "category": "grooming", "name": "Self-Cleaning Slicker Brush", "price": 999, "image": "groom9.jpg", "description": "Effortlessly removes loose hair and mats.", "rating": 4.8, "ratingCount": 18, "availableSizes": ["Medium", "Large"], "features": "Easy-to-clean retractable bristles." },
+{ "id": 9, "category": "grooming", "name": "Pet Wipes", "price": 599, "image": "groom8.webp", "description": "Quick clean-up for paws, coat, and face.", "rating": 4.5, "ratingCount": 12, "availableSizes": ["50 wipes", "100 wipes"], "features": "Alcohol-free with aloe and vitamin E." },
+{ "id": 10, "category": "grooming", "name": "Paw & Nose Moisturizer", "price": 749, "image": "groom10.webp", "description": "Hydrates and heals dry paws and noses.", "rating": 4.7, "ratingCount": 16, "availableSizes": ["50g", "100g"], "features": "Organic shea butter and beeswax formula." },
+{ "id": 11, "category": "grooming", "name": "Ear Cleaning Solution", "price": 699, "image": "groom11.jpg", "description": "Prevents ear infections and removes wax.", "rating": 4.6, "ratingCount": 14, "availableSizes": ["100ml", "200ml"], "features": "Gentle, non-irritating formula." },
+{ "id": 12, "category": "grooming", "name": "Toothbrush & Toothpaste Kit", "price": 849, "image": "groom12.jpg", "description": "Complete dental hygiene for fresh breath.", "rating": 4.8, "ratingCount": 17, "availableSizes": ["One Size"], "features": "Enzymatic toothpaste for plaque control." },
+{ "id": 13, "category": "grooming", "name": "Deshedding Glove", "price": 799, "image": "groom13.jpg", "description": "Removes loose fur while petting your dog.", "rating": 4.6, "ratingCount": 14, "availableSizes": ["One Size"], "features": "Comfortable fit with soft rubber tips." },
+{ "id": 14, "category": "grooming", "name": "Bathing Glove", "price": 650, "image": "groom14.jpg", "description": "Makes bathing easy with gentle scrubbing.", "rating": 4.5, "ratingCount": 13, "availableSizes": ["One Size"], "features": "Silicone bristles for deep cleaning." },
+{ "id": 15, "category": "grooming", "name": "Cooling Pet Towel", "price": 899, "image": "groom15.webp", "description": "Keeps your pet cool during hot days.", "rating": 4.7, "ratingCount": 16, "availableSizes": ["Small", "Large"], "features": "Super absorbent and reusable." },
+{ "id": 16, "category": "grooming", "name": "Waterless Dog Shampoo", "price": 799, "image": "groom16.webp", "description": "Cleans and freshens without water.", "rating": 4.6, "ratingCount": 14, "availableSizes": ["150ml", "300ml"], "features": "Ideal for quick clean-ups and travel." },
+    ];
+  </script>
+  <script src="products.js" defer></script>
+  <script>
+    function loadProducts() {
+        fetch('fetch_products.php?category=grooming')
+        .then(response => response.json())
+        .then(data => {
+            let productContainer = document.getElementById("products");
+            productContainer.innerHTML = "";
+            data.forEach(product => {
+                productContainer.innerHTML += `
+                    <div>
+                        <img src="${product.image_url}" width="100" />
+                        <h3>${product.name}</h3>
+                        <p>Price: ₹${product.price}</p>
+                        <p>${product.description}</p>
+                        <p>Stock: ${product.stock}</p>
+                    </div>
+                `;
+            });
+        });
+    }
+    window.onload = loadProducts;
+</script>
+
+  
+</body>
+</html>

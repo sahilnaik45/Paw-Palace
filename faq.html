@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FAQ - Paw Palace</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        .bg-pink {
+            background-color: #ff4f8b;
+        }
+        .nav-link {
+            color: white;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+        .nav-link:hover {
+            color: #ffd700 !important;
+            transform: translateY(-2px);
+        }
+        .accordion-button:not(.collapsed) {
+            background-color: rgba(255, 79, 139, 0.1);
+            color: #ff4f8b;
+        }
+        .accordion-button:focus {
+            box-shadow: none;
+        }
+        .faq-section {
+            background: rgba(255, 79, 139, 0.05);
+            border-radius: 15px;
+            padding: 2rem;
+        }
+        .accordion-item {
+            margin-bottom: 1rem;
+            border: 1px solid rgba(0,0,0,0.1);
+            border-radius: 10px !important;
+        }
+        .stat-box {
+            background: white;
+            border-radius: 15px;
+            padding: 2rem;
+            margin: 2rem 0;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        .search-box {
+            max-width: 500px;
+            margin: 2rem auto;
+        }
+        .category-filter {
+            margin: 2rem 0;
+            justify-content: center;
+        }
+        .category-btn {
+            margin: 0 10px;
+            transition: all 0.3s ease;
+        }
+        .highlight {
+            background-color: #fff3cd;
+            padding: 2px 4px;
+            border-radius: 3px;
+        }
+        .sticky-contact {
+            position: sticky;
+            bottom: 20px;
+            z-index: 100;
+            text-align: center;
+        }
+        .social-link {
+            color: white;
+            font-size: 1.5rem;
+            margin: 0 0.5rem;
+            transition: transform 0.3s;
+        }
+
+        .social-link:hover {
+            color: #ffd700;
+            transform: translateY(-3px);
+        }
+    </style>
+</head>
+<body>
+     <!-- Header Section (Unchanged) -->
+     <header class="bg-pink text-white py-4 shadow">
+        <div class="container text-center">
+            <h1 class="fs-3 mb-3">Paw Palace</h1>
+            <nav>
+                <ul class="nav justify-content-center">
+                    <li class="nav-item"><a href="index.html" class="nav-link">Home</a></li>
+                    <li class="nav-item"><a href="products.html" class="nav-link">Products</a></li>
+                    <li class="nav-item"><a href="dogs by breeds.html" class="nav-link">Dog Breeds</a></li>
+                    <li class="nav-item"><a href="dog-adoption.html" class="nav-link">Dog Adoption</a></li>
+                    <li class="nav-item"><a href="vet.html" class="nav-link">Consult a Vet</a></li>
+                    <li class="nav-item"><a href="about.html" class="nav-link">About Us</a></li>
+                    <li class="nav-item"><a href="contact.html" class="nav-link">Contact</a></li>
+                    <li class="nav-item"><a href="reviews.html" class="nav-link">Reviews</a></li>
+                    <li class="nav-item"><a href="faq.html" class="nav-link">FAQ</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+     <!-- JavaScript to Highlight Current Page -->
+  <script>
+    const navLinks = document.querySelectorAll('.nav-link');
+    const currentPage = window.location.pathname.split('/').pop();
+    navLinks.forEach(link => {
+      if (link.getAttribute('href') === currentPage) {
+        link.classList.add('text-warning');
+      } else {
+        link.classList.remove('text-warning');
+      }
+    });
+  </script>
+  
+    <!-- Main Content -->
+    <main class="container my-5">
+        <!-- Search Box -->
+        <div class="search-box">
+            <div class="input-group">
+                <span class="input-group-text"><i class="fas fa-search"></i></span>
+                <input type="text" id="faqSearch" class="form-control" placeholder="Search FAQs...">
+            </div>
+        </div>
+
+        <!-- FAQ Statistics -->
+        <div class="stat-box text-center">
+            <div class="row">
+                <div class="col-md-4">
+                    <h3>10,000+</h3>
+                    <p>Happy Pets Helped</p>
+                </div>
+                <div class="col-md-4">
+                    <h3>24/7</h3>
+                    <p>Customer Support</p>
+                </div>
+                <div class="col-md-4">
+                    <h3>98%</h3>
+                    <p>Satisfaction Rate</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- FAQ Categories -->
+        <div class="category-filter d-flex">
+            <button class="btn btn-outline-pink category-btn" data-category="all">All</button>
+            <button class="btn btn-outline-pink category-btn" data-category="orders">Orders & Shipping</button>
+            <button class="btn btn-outline-pink category-btn" data-category="products">Products</button>
+            <button class="btn btn-outline-pink category-btn" data-category="services">Services</button>
+        </div>
+
+        <!-- FAQ Section -->
+        <section class="faq-section">
+            <h2 class="text-center mb-4 display-5 fw-bold">Frequently Asked Questions</h2>
+            
+            <div class="accordion" id="faqAccordion">
+                <!-- FAQ Items (Added data-category attribute) -->
+                <div class="accordion-item" data-category="orders">
+                    <h2 class="accordion-header">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseFive">
+                            <i class="fas fa-shipping-fast me-2"></i>What are your shipping options and delivery times?
+                        </button>
+                    </h2>
+                    <div id="collapseFive" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+                        <div class="accordion-body">
+                            We offer standard and express shipping options. Standard shipping takes 3-5 business days, while express delivery takes 1-2 business days, depending on your location.
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="accordion-item" data-category="orders">
+                    <h2 class="accordion-header">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSix">
+                            <i class="fas fa-shipping-fast me-2"></i>How can I track my order?
+                        </button>
+                    </h2>
+                    <div id="collapseSix" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+                        <div class="accordion-body">
+                            Once your order is shipped, you will receive a tracking number via email or SMS. You can use this tracking number to check the status of your delivery on our website.
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="accordion-item" data-category="orders">
+                    <h2 class="accordion-header">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSeven">
+                            <i class="fas fa-shipping-fast me-2"></i>Do you offer international shipping?
+                        </button>
+                    </h2>
+                    <div id="collapseSeven" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+                        <div class="accordion-body">
+                            Currently, we only ship within [your country]. However, we are working on expanding our shipping options to international locations soon!
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="accordion-item" data-category="orders">
+                    <h2 class="accordion-header">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseEight">
+                            <i class="fas fa-shipping-fast me-2"></i>What is your return and refund policy?
+                        </button>
+                    </h2>
+                    <div id="collapseEight" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+                        <div class="accordion-body">
+                            We offer a hassle-free return policy within 14 days of purchase. If you’re not satisfied with your order, you can request a return or exchange. Refunds are processed within 5-7 business days after receiving the returned item.
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class="accordion-item" data-category="products">
+                    <h2 class="accordion-header">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne">
+                            <i class="fas fa-paw me-2"></i>What products do you offer?
+                        </button>
+                    </h2>
+                    <div id="collapseOne" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+                        <div class="accordion-body">
+                            At Paw Palace, we offer a wide range of pet products, including:
+                            <ul class="mt-2">
+                                <li>Premium pet food and treats</li>
+                                <li>Toys and accessories</li>
+                                <li>Grooming supplies</li>
+                                <li>Health and wellness products</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="accordion-item" data-category="products">
+                    <h2 class="accordion-header">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo">
+                            <i class="fas fa-paw me-2"></i>Do you offer organic or natural pet products?
+                        </button>
+                    </h2>
+                    <div id="collapseTwo" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+                        <div class="accordion-body">
+                            Yes! We offer a variety of organic and all-natural pet products, including food, treats, and grooming supplies, ensuring your pet gets the healthiest options available.
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="accordion-item" data-category="products">
+                    <h2 class="accordion-header">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree">
+                            <i class="fas fa-paw me-2"></i>Do you sell pet clothing and accessories?
+                        </button>
+                    </h2>
+                    <div id="collapseThree" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+                        <div class="accordion-body">
+                            Absolutely! We have a wide range of stylish pet clothing, collars, leashes, and accessories to keep your furry friends looking their best.
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="accordion-item" data-category="products">
+                    <h2 class="accordion-header">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseFour">
+                            <i class="fas fa-paw me-2"></i>Do you carry products for all pet sizes and breeds?
+                        </button>
+                    </h2>
+                    <div id="collapseFour" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+                        <div class="accordion-body">
+                            Yes! We offer products tailored to pets of all sizes and breeds, ensuring you find the right food, accessories, and care products for your furry companion.
+                        </div>
+                    </div>
+                </div>
+
+                <div class="accordion-item" data-category="services">
+                    <h2 class="accordion-header">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseNine">
+                            <i class="fas fa-concierge-bell me-2"></i>What pet services do you offer?
+                        </button>
+                    </h2>
+                    <div id="collapseNine" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+                        <div class="accordion-body">
+                            At Paw Palace, we offer a variety of pet services, including grooming, veterinary consultations, pet training, and boarding facilities to keep your pet happy and healthy.
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="accordion-item" data-category="services">
+                    <h2 class="accordion-header">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTen">
+                            <i class="fas fa-concierge-bell me-2"></i>Do you provide pet grooming services?
+                        </button>
+                    </h2>
+                    <div id="collapseTen" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+                        <div class="accordion-body">
+                            Yes! We offer professional pet grooming services, including bathing, hair trimming, nail clipping, and ear cleaning, ensuring your pet looks and feels great.
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="accordion-item" data-category="services">
+                    <h2 class="accordion-header">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseEleven">
+                            <i class="fas fa-concierge-bell me-2"></i>Can I book an appointment with a vet?
+                        </button>
+                    </h2>
+                    <div id="collapseEleven" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+                        <div class="accordion-body">
+                            Absolutely! We offer veterinary consultation services. You can book an appointment with a licensed vet through our website or visit our store for walk-in consultations.
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="accordion-item" data-category="services">
+                    <h2 class="accordion-header">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwelve">
+                            <i class="fas fa-concierge-bell me-2"></i>Do you offer pet adoption services?
+                        </button>
+                    </h2>
+                    <div id="collapseTwelve" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+                        <div class="accordion-body">
+                            Yes! We support pet adoption by partnering with local shelters. You can browse available pets on our website or visit our store to find your new furry friend.
+                        </div>
+                    </div>
+                </div>
+                <!-- Other FAQ items with similar structure and data-category attributes -->
+                <!-- ... rest of FAQ items ... -->
+            </div>
+        </section>
+
+        <!-- Sticky Contact Button -->
+        <div class="sticky-contact">
+            <a href="contact.html" class="btn btn-pink btn-lg shadow">
+                <i class="fas fa-comments me-2"></i>Need More Help?
+            </a>
+        </div>
+    </main>
+
+    <!-- Enhanced Footer -->
+    <footer class="bg-pink text-white py-4">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6 text-center text-md-start">
+                    <p>&copy; 2024 Paw Palace. All Rights Reserved.</p>
+                </div>
+                <div class="col-md-6 text-center text-md-end">
+                    <a href="https://www.facebook.com/profile.php?id=100063566378453" class="social-link"><i class="fab fa-facebook"></i></a>
+                    <a href="https://www.instagram.com/_sahilnaik_45/" class="social-link"><i class="fab fa-instagram"></i></a>
+                    <a href="https://x.com/_sahilnaik_45" class="social-link"><i class="fab fa-twitter"></i></a>
+                    <a href="https://www.youtube.com" class="social-link"><i class="fab fa-youtube"></i></a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Search Functionality
+        document.getElementById('faqSearch').addEventListener('input', function(e) {
+            const searchTerm = e.target.value.toLowerCase();
+            const faqItems = document.querySelectorAll('.accordion-item');
+
+            faqItems.forEach(item => {
+                const question = item.querySelector('.accordion-button').textContent.toLowerCase();
+                const answer = item.querySelector('.accordion-body').textContent.toLowerCase();
+                const matches = question.includes(searchTerm) || answer.includes(searchTerm);
+                
+                item.style.display = matches ? 'block' : 'none';
+                
+                if (matches && searchTerm) {
+                    const regex = new RegExp(`(${searchTerm})`, 'gi');
+                    item.querySelector('.accordion-body').innerHTML = 
+                        item.querySelector('.accordion-body').textContent
+                            .replace(regex, '<span class="highlight">$1</span>');
+                }
+            });
+        });
+
+        // Category Filter
+        document.querySelectorAll('.category-btn').forEach(btn => {
+            btn.addEventListener('click', function() {
+                const category = this.dataset.category;
+                document.querySelectorAll('.accordion-item').forEach(item => {
+                    item.style.display = (category === 'all' || item.dataset.category === category) 
+                        ? 'block' 
+                        : 'none';
+                });
+            });
+        });
+
+        // Print FAQ Functionality
+        document.addEventListener('keydown', (e) => {
+            if (e.ctrlKey && e.key === 'p') {
+                e.preventDefault();
+                window.print();
+            }
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,127 @@
+body {
+    background-color: #ffffff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+    font-family: 'Inter', sans-serif;
+}
+
+.login-card {
+    width: 100%;
+    max-width: 420px;
+    padding: 2rem;
+    border-radius: 15px;
+    background: #ffffff;
+    box-shadow: 0px 10px 30px rgba(0, 0, 0, 0.1);
+    position: relative;
+    overflow: hidden;
+}
+
+.login-card::before {
+    content: "";
+    position: absolute;
+    top: -50px;
+    right: -50px;
+    width: 120px;
+    height: 120px;
+    background: #ff69b4;
+    border-radius: 50%;
+    opacity: 0.1;
+}
+
+.login-card::after {
+    content: "";
+    position: absolute;
+    bottom: -50px;
+    left: -50px;
+    width: 120px;
+    height: 120px;
+    background: #ff8ec5;
+    border-radius: 50%;
+    opacity: 0.1;
+}
+
+.logo-header {
+    text-align: center;
+    margin-bottom: 1.5rem;
+}
+
+.logo-header h1 {
+    font-size: 2rem;
+    color: #ff69b4;
+    font-weight: 700;
+}
+
+.form-label {
+    font-weight: 500;
+    color: #333;
+}
+
+.btn-custom {
+    background-color: #ff69b4;
+    border: none;
+    font-size: 1rem;
+    padding: 0.8rem;
+    border-radius: 8px;
+    color: #ffffff;
+    transition: all 0.3s ease;
+    width: 100%;
+}
+
+.btn-custom:hover {
+    background-color: #ff82c6;
+    transform: translateY(-2px);
+}
+
+.btn-back-home {
+    background-color: #ff1493; /* Hot pink */
+    color: #fff;
+    border: none;
+    padding: 0.8rem 1.5rem;
+    border-radius: 8px;
+    font-size: 1rem;
+    margin-top: 2rem;
+    transition: all 0.3s ease;
+    display: inline-block;
+    text-align: center;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+.btn-back-home:hover {
+    background-color: #ff57b2;
+    transform: translateY(-3px);
+}
+
+.footer-text {
+    margin-top: 1.5rem;
+    text-align: center;
+    font-size: 0.9rem;
+    color: #777;
+}
+
+.footer-text a {
+    color: #ff69b4;
+    text-decoration: none;
+    font-weight: 500;
+}
+
+.footer-text a:hover {
+    text-decoration: underline;
+}
+
+.notification {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: #ff69b4;
+    color: #fff;
+    padding: 1rem 2rem;
+    border-radius: 15px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+    display: none;
+    z-index: 9999;
+    text-align: center;
+}

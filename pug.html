@@ -1,0 +1,483 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pug Info</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Merriweather:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Merriweather', serif;
+            background-color: #f4f4f4;
+        }
+        header h1 {
+            font-family: 'Merriweather', serif;
+            font-weight: 700;
+            color: white;
+        }
+        .container {
+            margin-top: 40px;
+        }
+        .golden-retriever-info {
+            padding: 40px;
+            background-color: #ffffff;
+            border-radius: 12px;
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+        }
+       /* Custom Nav Bar Styling */
+    .nav-tabs .nav-link {
+      font-weight: 600;
+      text-transform: uppercase;
+      border: none;
+      color: #ff4f8b;
+    }
+
+    .nav-tabs .nav-link.active {
+      color: #ff4f8b;
+      border-radius: 8px;
+    }
+
+    /* Centering the nav links */
+    .nav-tabs {
+      display: flex;
+      justify-content: center;
+      margin-bottom: 20px;
+    }
+        .tab-content {
+            margin-top: 30px;
+        }
+        .products {
+            display: flex;
+            gap: 30px;
+            justify-content: space-between;
+        }
+        .product-item {
+            width: 48%;
+            background-color: #f9f9f9;
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .product-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+        }
+        .product-item img {
+            width: 20%;
+            border-radius: 8px;
+            transition: transform 0.3s ease;
+        }
+        .product-item:hover img {
+            transform: scale(1.05);
+        }
+        .purchase-button {
+            background-color: #ff4f8b;
+            color: white;
+            padding: 12px 25px;
+            border-radius: 8px;
+            font-weight: 600;
+            text-decoration: none;
+            margin-top: 15px;
+            display: inline-block;
+            transition: background-color 0.3s ease;
+        }
+        .purchase-button:hover {
+            background-color: #ff4f8b;
+        }
+        .highlight-box {
+            background-color: #ffffff;
+            padding: 25px;
+            border-radius: 12px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+            margin-top: 20px;
+        }
+        .info-section p {
+            font-size: 1.2rem;
+            line-height: 1.7;
+        }
+        .details-section h6 {
+            font-weight: 700;
+        }
+        .colors span {
+            padding: 8px 18px;
+            font-size: 1rem;
+        }
+        .gallery img {
+            width: 100%;
+            border-radius: 12px;
+            margin-bottom: 20px;
+        }
+
+        .breeds-container {
+    display: flex;
+    justify-content: center;
+    gap: 10px; /* Reduced gap for compact alignment */
+    padding: 20px;
+}
+
+.breed {
+    text-align: center;
+    cursor: pointer;
+    transition: transform 0.2s;
+}
+
+.breed img {
+    width: 100px; /* Reduced size */
+    height: 100px; /* Reduced size */
+    border-radius: 50%;
+    border: 2px solid #c2f0c2; /* Adjusted border size */
+    transition: border-color 0.2s, transform 0.2s;
+}
+
+.breed p {
+    margin: 5px 0 0; /* Reduced margin */
+    font-size: 14px; /* Adjusted font size */
+    color: #333;
+}
+
+.breed:hover img {
+    border-color: #ff4f8b;
+    transform: scale(1.05);
+}
+
+.breed:hover {
+    transform: translateY(-3px); /* Slight hover effect */
+}
+
+/* About Section Styling */
+.highlight-box {
+  background-color: #f9f9f9;
+  border-radius: 12px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+}
+
+.info-section {
+  background-color: #fff;
+  border-radius: 10px;
+  padding: 15px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.details-section h6, .info-section h6 {
+  color: #ff4f8b;
+  font-weight: 600;
+}
+
+.colors .badge {
+  transition: transform 0.3s ease;
+}
+
+.colors .badge:hover {
+  transform: scale(1.1);
+}
+
+.card {
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+}
+
+.text-primary {
+  color: #ff4f8b !important;
+}
+
+.text-muted {
+  color: #6c757d !important;
+}
+
+.text-uppercase {
+  text-transform: uppercase !important;
+}
+
+.mb-4 {
+  margin-bottom: 2rem;
+}
+
+.gap-2 {
+  gap: 1rem;
+}
+
+.p-3 {
+  padding: 1rem;
+}
+
+.gallery {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr); /* 2 images per row */
+    gap: 25px; /* Space between images */
+}
+
+.gallery img {
+    width: 90%; /* Ensures the image fits the column */
+    border-radius: 8px; /* Optional: Adds rounded corners */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Optional: Adds shadow for better appearance */
+    transition: transform 0.3s ease-in-out;
+}
+
+.gallery img:hover {
+    transform: scale(1.05); /* Zoom effect on hover */
+}
+
+
+    </style>
+</head>
+<body>
+
+    <header class="py-4 d-flex justify-content-between align-items-center" style="background-color: #ff4f8b; padding-left: 20px; padding-right: 20px;">
+        <h1 class="text-white" style="font-size: 24px;">Paw Palace</h1>
+        <a href="dogs by breeds.html" class="text-white text-decoration-none" style="font-size: 16px; transition: text-decoration 0.3s;">
+            Back
+        </a>
+    </header>
+     
+ <!-- Dog Breeds Section -->
+ <section class="breeds-container">
+    <div class="breed" onclick="navigateTo('goldenretriver.html')">
+        <img src="Golden Retriver.avif" alt="Golden Retriever">
+        <p>Golden Retriever</p>
+    </div>
+    <div class="breed" onclick="navigateTo('german-shepherd.html')">
+        <img src="German Shepherd.avif" alt="German Shepherd">
+        <p>German Shepherd</p>
+    </div>
+    <div class="breed" onclick="navigateTo('labrador.html')">
+        <img src="Labrador.avif" alt="Labrador">
+        <p>Labrador</p>
+    </div>
+    <div class="breed" onclick="navigateTo('Rottweiler.html')">
+        <img src="Rottwieler.avif" alt="Rottweiler">
+        <p>Rottweiler</p>
+    </div>
+    <div class="breed" onclick="navigateTo('beagle.html')">
+        <img src="beagle.avif" alt="Beagle">
+        <p>Beagle</p>
+    </div>
+    <div class="breed" onclick="navigateTo('shih-tzu.html')">
+        <img src="shih tzu.webp" alt="Shih Tzu">
+        <p>Shih Tzu</p>
+    </div>
+    <div class="breed" onclick="navigateTo('boxer.html')">
+        <img src="boxer.webp" alt="Boxer">
+        <p>Boxer</p>
+    </div>
+    <div class="breed" onclick="navigateTo('pug.html')">
+        <img src="pug.webp" alt="Pug">
+        <p>Pug</p>
+    </div>
+    <div class="breed" onclick="navigateTo('husky.html')">
+        <img src="husky.webp" alt="Husky">
+        <p>Husky</p>
+    </div>
+</section>
+    
+    
+    
+        <!-- Golden Retriever Info -->
+        <div class="golden-retriever-info">
+            <ul class="nav nav-tabs mb-4" id="info-tabs">
+                <li class="nav-item"><a class="nav-link active" data-bs-toggle="tab" href="#about">About</a></li>
+                <li class="nav-item"><a class="nav-link" data-bs-toggle="tab" href="#diet">Diet</a></li>
+                <li class="nav-item"><a class="nav-link" data-bs-toggle="tab" href="#training">Training</a></li>
+                <li class="nav-item"><a class="nav-link" data-bs-toggle="tab" href="#grooming">Grooming</a></li>
+                <li class="nav-item"><a class="nav-link" data-bs-toggle="tab" href="#photo-gallery">Photo Gallery</a></li>
+            </ul>
+    
+            <div class="tab-content">
+              <!-- About Section -->
+<div id="about" class="tab-pane fade show active">
+    <h5 class="text-center text-primary mb-4">About Pug</h5>
+    <div class="highlight-box shadow-lg rounded p-4 bg-light">
+  
+      <!-- Info Section -->
+      <div class="info-section mb-4">
+        <h6 class="text-uppercase text-muted">General Info</h6>
+        <div class="row">
+          <div class="col-md-6">
+            <p><strong>Coat:</strong> Short, Smooth and Glossy</p>
+            <p><strong>Shedding:</strong> Medium</p>
+          </div>
+          <div class="col-md-6">
+            <p><strong>Size:</strong> Small</p>
+            <p><strong>Life Expectancy:</strong> 12-15 years</p>
+          </div>
+        </div>
+      </div>
+  
+      <!-- Weight and Height Section -->
+      <div class="stats d-flex justify-content-between mt-3">
+        <div class="card shadow-sm p-3 rounded text-center">
+          <h6 class="text-muted">Weight</h6>
+          <p>6.3-8.2kg (male)</p>
+          <p>5.9-7.7kg (female)</p>
+        </div>
+        <div class="card shadow-sm p-3 rounded text-center">
+          <h6 class="text-muted">Height</h6>
+          <p>30-36cm (male)</p>
+          <p>25-30cm (female)</p>
+        </div>
+      </div>
+  
+    </div>
+  </div>
+  
+    
+                <!-- Diet Section -->
+                <div id="diet" class="tab-pane fade">
+                    <h5 class="text-center text-primary mb-4">Diet Pug</h5>
+                    <p>Follow these tips for choosing the right food for your Pug:</p>
+                    <ul>
+                        <li> Choose a protein-rich diet
+                            <p>Pugs benefit from a well-rounded diet that includes a mix of proteins, carbohydrates, fats, vitamins, and minerals. Select a high-quality dry kibble or wet food designed for small breeds.</p>
+                            <div class="products">
+                                <div class="product-item">
+                                    <img src="C:\Users\naiks\OneDrive\Desktop\PAW PALACE\dog info product\beagle dry.webp" alt="Chicken Based Food">
+                                    <p>Dry Food</p>
+                                    <a href="food.html" class="purchase-button">Purchase</a>
+                                </div>
+                                <div class="product-item">
+                                    <img src="C:\Users\naiks\OneDrive\Desktop\PAW PALACE\dog info product\beagle wet.webp" alt="Fish Based Food">
+                                    <p>Wet Food</p>
+                                    <a href="food.html" class="purchase-button">Purchase</a>
+                                </div>
+                            </div>
+                        </li>
+                        <li>Avoid fillers & additives
+                            <p>Most commercial dog food contains fillers like corn, wheat and soy which can be difficult for them to digest and may cause allergies. Choose dog food that is made with whole, natural ingredients and free from unnecessary additives.</p>
+                            <div class="products">
+                                <div class="product-item">
+                                    <img src="C:\Users\naiks\OneDrive\Desktop\PAW PALACE\dog info product\baked dry food.webp" alt="High-Protein Dog Food">
+                                    <p>Baked Dry Food</p>
+                                    <a href="food.html" class="purchase-button">Purchase</a>
+                                </div>
+                                <div class="product-item">
+                                    <img src="C:\Users\naiks\OneDrive\Desktop\PAW PALACE\dog info product\soy free.webp" alt="Premium Protein Dog Kibble">
+                                    <p>Soy Free Food</p>
+                                    <a href="food.html" class="purchase-button">Purchase</a>
+                                </div>
+                            </div>
+                        </li>
+                        <li>Consider their age
+                            <p>Pugs may have different dietary needs at various life stages. Opt for a dog food that is labeled or formulated for your Pug's specific age group like, puppy, adult and senior dog food for small breeds.</p>
+                            <div class="products">
+                                <div class="product-item">
+                                    <img src="C:\Users\naiks\OneDrive\Desktop\PAW PALACE\dog info product\puppy food.webp" alt="Chicken Based Food">
+                                    <p>Puppy Food</p>
+                                    <a href="food.html" class="purchase-button">Purchase</a>
+                                </div>
+                                <div class="product-item">
+                                    <img src="C:\Users\naiks\OneDrive\Desktop\PAW PALACE\dog info product\adult food.webp" alt="Fish Based Food">
+                                    <p>Adult Dog Food</p>
+                                    <a href="food.html" class="purchase-button">Purchase</a>
+                                </div>
+                                <div class="product-item">
+                                    <img src="C:\Users\naiks\OneDrive\Desktop\PAW PALACE\dog info product\senior food.avif" alt="Premium Protein Dog Kibble">
+                                    <p>Senior Dog Food</p>
+                                    <a href="food.html" class="purchase-button">Purchase</a>
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+    
+                <!-- Training Section -->
+                <div id="training" class="tab-pane fade">
+                    <h5 class="text-center text-primary mb-4">Training Pug</h5>
+                    <p>Pugs have a remarkable adaptability to training sessions. Their intelligence and social disposition makes them highly trainable companions. Let’s see the ways of training your Pug.</p>
+                    <ul>
+                        <li>Lots of physical exercise
+                            <p>Pugs enjoy leisurely walks, providing physical stimulation and enjoy indoor activities like brief play and training sessions with their.</p>
+                            <div class="products">
+                                <div class="product-item">
+                                    <img src="C:\Users\naiks\OneDrive\Desktop\PAW PALACE\dog info product\collar.avif" alt="Dog Walking Leash">
+                                    <p>Collar & Leashes</p>
+                                    <a href="belts-and-collars.html" class="purchase-button">Purchase</a>
+                                </div>
+                                <div class="product-item">
+                                    <img src="C:\Users\naiks\OneDrive\Desktop\PAW PALACE\dog info product\rope.webp" alt="Swim Training Equipment">
+                                    <p>Rope Toys</p>
+                                    <a href="toys.html" class="purchase-button">Purchase</a>
+                                </div>
+                            </div>
+                        </li>
+                        <li>Engage in interactive play
+                            <p>Pugs enjoy problem-solving games like treat-dispensing toys or interactive puzzle feeders for mental enrichment.</p>
+                            <div class="products">
+                                <div class="product-item">
+                                    <img src="C:\Users\naiks\OneDrive\Desktop\PAW PALACE\dog info product\interactive.avif" alt="Dog Walking Leash">
+                                    <p>Interactive Toys</p>
+                                    <a href="toys.html" class="purchase-button">Purchase</a>
+                                </div>
+                                <div class="product-item">
+                                    <img src="C:\Users\naiks\OneDrive\Desktop\PAW PALACE\dog info product\puzzle.webp" alt="Swim Training Equipment">
+                                    <p>Puzzle Toys</p>
+                                    <a href="toys.html" class="purchase-button">Purchase</a>
+                                </div>
+                            </div>
+                        </li>
+                        <li>Train and teach new tricks
+                            <p>Pugs excel in training, and utilising treats enhances their obedience to basic commands like 'sit,' 'stay,' 'come,' 'heel,' and 'down.' Positive reinforcement and reward-based training methods make the process enjoyable and highly effective.</p>
+                            <div class="products">
+                                <div class="product-item">
+                                    <img src="C:\Users\naiks\OneDrive\Desktop\PAW PALACE\dog info product\dogs treats.avif" alt="Dog Walking Leash">
+                                    <p>Training Treats</p>
+                                    <a href="dog-treats.html" class="purchase-button">Purchase</a>
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+    
+                <!-- Grooming Section -->
+                <div id="grooming" class="tab-pane fade">
+                    <h5 class="text-center text-primary mb-4">Grooming Pug</h5>
+                    <ul>
+                        <li>Brush and bath
+                            <p>Regularly brush Pugs to minimise shedding and maintain a healthy coat by bathing them every 2-3 months using a mild dog shampoo.</p>
+                        </li>
+                        <li> Keep their ears clean
+                            <p>Keep ears clean by gently using a vet-recommended ear cleaner and cotton ball and avoid inserting anything into the ear canal.</p>
+                           
+                        </li>
+                        <li>Brush their coat regularly to reduce shedding.
+                            <p>Trim their nails regularly and carefully and check their paw pads for injuries or irritation.</p>
+                        </li>
+                        <li>Brush their coat regularly to reduce shedding.
+                            <p>Brush teeth regularly with dog-specific toothbrush and toothpaste, for this, use dental chews or toys to promote oral health.</p>
+                        </li>
+                    </ul>
+                </div>
+    
+                <!-- Photo Gallery Section -->
+                <div id="photo-gallery" class="tab-pane fade">
+                    <h5 class="text-center text-primary mb-4">Pug</h5>
+                    <div class="gallery">
+                        <img src="pug 1.jpeg" alt="Golden Retriever Photo 1">
+                        <img src="pug 2.jpeg" alt="Golden Retriever Photo 2">
+                        <img src="pug 3.jpeg" alt="Golden Retriever Photo 3">
+                        <img src="pug 4.webp" alt="Golden Retriever Photo 4">
+                        <img src="pug 5.jpeg" alt="Golden Retriever Photo 5">
+                        <img src="pug 6.webp" alt="Golden Retriever Photo 6">
+                        <img src="pug 7.jpeg" alt="Golden Retriever Photo 7">
+                        <img src="pug 8.jpeg" alt="Golden Retriever Photo 8">
+                        <img src="pug 9.webp" alt="Golden Retriever Photo 9">
+                        <img src="pug 10.webp" alt="Golden Retriever Photo 10">
+                    </div>
+                </div>                
+            </div>
+        </div>
+    </div>
+    <script>
+        function navigateTo(page) {
+            window.location.href = page;
+        }
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+</body>    
+</html>

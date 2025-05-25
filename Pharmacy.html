@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dog Pharmacy - Paw Palace</title>
+  <link rel="stylesheet" href="product.css" />
+</head>
+<body>
+  <header>
+    <h1>Paw Palace</h1>
+    <div class="header-extras">
+      <a href="products.html" style="color: #fff; text-decoration: none;">All Products</a>
+      <a href="cart.html" style="color: #fff; text-decoration: none;">Cart <span id="cart-count" class="cart-count">0</span></a>
+      <span class="compare-link" onclick="openCompareModal()">View Compare (<span id="compare-count">0</span>)</span>
+    </div>
+  </header>
+  
+  <!-- Category Tabs -->
+  <div class="category-tabs">
+    <a href="food.html" class="tab">Food</a>
+    <a href="accessories.html" class="tab">Accessories</a>
+    <a href="toys.html" class="tab">Toys</a>
+    <a href="treats.html" class="tab">Treats</a>
+    <a href="pharmacy.html" class="tab active">Pharmacy</a>
+    <a href="grooming.html" class="tab">Grooming</a>
+    <a href="clothes.html" class="tab">Clothes</a>
+</div>
+
+  
+  <div class="container">
+    <h2 style="text-align: center; color: #ff4f8b; margin-bottom: 1rem;">Dog Pharmacy</h2>
+    
+    <!-- Filter Section: Sort on Left, Search on Right -->
+    <div class="filter-section">
+      <div class="filter-left">
+        <select id="sort-filter">
+          <option value="">Sort By</option>
+          <option value="popularity">Popularity</option>
+          <option value="price-low-high">Price: Low to High</option>
+          <option value="price-high-low">Price: High to Low</option>
+        </select>
+      </div>
+      <div class="filter-right">
+        <input type="text" id="search-bar" placeholder="Search Dog Food...">
+      </div>
+    </div>
+    
+    <!-- Product Grid -->
+    <div class="product-grid" id="product-grid">
+      <!-- Products will be appended here dynamically -->
+    </div>
+    <div id="load-more-container">
+      <button id="load-more-btn" onclick="loadMoreProducts()">Load More</button>
+    </div>
+  </div>
+  
+  <!-- Quick View Modal -->
+  <div id="quick-view-modal" class="modal">
+    <div class="modal-content">
+      <span class="close-modal" id="close-modal">&times;</span>
+      <div id="quick-view-content">
+        <!-- Quick view details here -->
+      </div>
+    </div>
+  </div>
+  
+  <!-- Compare Modal -->
+  <div id="compare-modal" class="compare-modal">
+    <div class="compare-modal-content">
+      <span class="close-modal" id="close-compare-modal">&times;</span>
+      <h2 style="color: #ff4f8b; text-align: center;">Compare Products</h2>
+      <div id="compare-list" class="compare-list">
+        <!-- Compared products here -->
+      </div>
+    </div>
+  </div>
+  
+  <script>
+    // Global arrays and variables
+    let compareList = [];
+    const selectedRatings = {};
+    let productsPerPage = 8;  // 8 products per load
+    let currentDisplayCount = 0;
+    let filteredProductsGlobal = [];
+    
+    // Dog Products Array with total 16 products
+    const products = [
+    { "id": 1, "category": "pharmacy", "name": "Multivitamin Supplements", "price": 799, "image": "pharm1.jpg", "description": "Essential vitamins and minerals for overall health.", "rating": 4.6, "ratingCount": 14, "availableSizes": ["60 tablets", "120 tablets"], "features": "Supports immune system and joint health." },
+{ "id": 2, "category": "pharmacy", "name": "Pawfy Joint Support Chews", "price": 899, "image": "pharm2.jpg", "description": "Glucosamine chews for healthy joints.", "rating": 4.7, "ratingCount": 15, "availableSizes": ["60 chews", "120 chews"], "features": "Promotes mobility and flexibility." },
+{ "id": 3, "category": "pharmacy", "name": "Defender Pro Deworming Tablets", "price": 499, "image": "pharm3.jpg", "description": "Effective deworming solution for dogs.", "rating": 4.5, "ratingCount": 12, "availableSizes": ["Single Dose", "3 Tablets"], "features": "Eliminates intestinal parasites safely." },
+{ "id": 4, "category": "pharmacy", "name": "Vets Best Flea & Tick Control Drops", "price": 999, "image": "pharm4.jpg", "description": "Protection against fleas, ticks, and lice.", "rating": 4.7, "ratingCount": 16, "availableSizes": ["Small Dog", "Large Dog"], "features": "Long-lasting 30-day protection." },
+{ "id": 5, "category": "pharmacy", "name": "Petvit Skin & Coat Omega Oil", "price": 899, "image": "pharm5.webp", "description": "Supports healthy skin and shiny coat.", "rating": 4.6, "ratingCount": 14, "availableSizes": ["250ml", "500ml"], "features": "Rich in omega-3 and omega-6." },
+{ "id": 6, "category": "pharmacy", "name": "Zymox Ear Cleaning Solution", "price": 699, "image": "pharm6.jpg", "description": "Gently cleans ears and prevents infections.", "rating": 4.5, "ratingCount": 13, "availableSizes": ["100ml", "200ml"], "features": "Removes wax buildup and odor." },
+{ "id": 7, "category": "pharmacy", "name": "Antibacterial Wound Spray", "price": 749, "image": "pharm7.jpg", "description": "Quick healing for minor cuts and wounds.", "rating": 4.6, "ratingCount": 14, "availableSizes": ["100ml", "200ml"], "features": "Fast-acting antibacterial formula." },
+{ "id": 8, "category": "pharmacy", "name": "Digestive Enzymes Powder", "price": 899, "image": "pharm8.jpg", "description": "Improves digestion and nutrient absorption.", "rating": 4.5, "ratingCount": 12, "availableSizes": ["150g", "300g"], "features": "Prevents bloating and stomach issues." },
+{ "id": 9, "category": "pharmacy", "name": "Calming Chews for Anxiety", "price": 849, "image": "pharm9.jpg", "description": "Helps reduce stress and anxiety in dogs.", "rating": 4.7, "ratingCount": 16, "availableSizes": ["60 chews", "120 chews"], "features": "Natural ingredients for a calming effect." },
+{ "id": 10, "category": "pharmacy", "name": "Oxyfresh Dental Hygiene Water Additive", "price": 799, "image": "pharm10.jpg", "description": "Freshens breath and supports oral health.", "rating": 4.6, "ratingCount": 14, "availableSizes": ["250ml", "500ml"], "features": "Reduces plaque and tartar buildup." },
+{ "id": 11, "category": "pharmacy", "name": "Wow Dog Advance Probiotic Supplements", "price": 899, "image": "pharm11.jpg", "description": "Supports gut health and digestion.", "rating": 4.8, "ratingCount": 18, "availableSizes": ["60 tablets", "120 tablets"], "features": "Boosts immunity and prevents diarrhea." },
+{ "id": 12, "category": "pharmacy", "name": "Petvit Allergy Relief Tablets", "price": 749, "image": "pharm12.jpg", "description": "Relieves itching and skin allergies.", "rating": 4.5, "ratingCount": 13, "availableSizes": ["30 tablets", "60 tablets"], "features": "Contains antihistamines for quick relief." },
+{ "id": 13, "category": "pharmacy", "name": "Vet Classics Hydrating Electrolyte Solution", "price": 699, "image": "pharm13.jpg", "description": "Replenishes lost fluids and electrolytes.", "rating": 4.6, "ratingCount": 14, "availableSizes": ["250ml", "500ml"], "features": "Ideal for dehydration recovery." },
+{ "id": 14, "category": "pharmacy", "name": "Petvit Liver Support Tonic", "price": 899, "image": "pharm14.jpg", "description": "Promotes liver health and detoxification.", "rating": 4.7, "ratingCount": 16, "availableSizes": ["100ml", "200ml"], "features": "Essential amino acids and antioxidants." },
+{ "id": 15, "category": "pharmacy", "name": "Paw & Nose Balm", "price": 599, "image": "pharm15.jpg", "description": "Moisturizes dry paws and noses.", "rating": 4.8, "ratingCount": 18, "availableSizes": ["50g", "100g"], "features": "All-natural healing formula." },
+{ "id": 16, "category": "pharmacy", "name": "Weight Management Supplements", "price": 999, "image": "pharm16.jpg", "description": "Supports healthy weight control.", "rating": 4.7, "ratingCount": 15, "availableSizes": ["60 tablets", "120 tablets"], "features": "Boosts metabolism and maintains energy levels." }
+
+    ];
+  </script>
+  <script src="products.js" defer></script>
+  <script>
+    function loadProducts() {
+        fetch('fetch_products.php?category=pharmacy')
+        .then(response => response.json())
+        .then(data => {
+            let productContainer = document.getElementById("products");
+            productContainer.innerHTML = "";
+            data.forEach(product => {
+                productContainer.innerHTML += `
+                    <div>
+                        <img src="${product.image_url}" width="100" />
+                        <h3>${product.name}</h3>
+                        <p>Price: ₹${product.price}</p>
+                        <p>${product.description}</p>
+                        <p>Stock: ${product.stock}</p>
+                    </div>
+                `;
+            });
+        });
+    }
+    window.onload = loadProducts;
+</script>
+
+</body>
+</html>
